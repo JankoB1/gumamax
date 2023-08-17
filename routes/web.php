@@ -64,7 +64,7 @@ use App\Http\Controllers\BackofficeController;
 Auth::routes();
 
 Route::get('/', [MainController::class, 'index'])->name('show-homepage');
-Route::get('/proizvod', [ProductController::class, 'showSingleProduct'])->name('show-single-product');
+Route::get('/proizvod/{id}', [ProductController::class, 'showSingleProduct'])->name('show-single-product');
 Route::get('/prodavnica', [ProductController::class, 'showShop'])->name('show-shop');
 Route::get('/uporedi', [ProductController::class, 'showCompare'])->name('show-compare');
 Route::get('/mreza-partnera', [PartnerController::class, 'showPartners'])->name('show-partners');

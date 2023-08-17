@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\File;
 class MainController extends Controller
 {
 
+    public function __construct()
+    {
+
+    }
+
     public function index() {
         $logoFiles = File::files(public_path('images/visuals/car-logos'));
         $logos = [];

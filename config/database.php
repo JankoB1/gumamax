@@ -67,7 +67,7 @@ return [
             'driver' => 'mysql',
             'host' => '5.9.54.73',
             'port' => env('DB_DELMAX_GUMAMAX_PORT', '3306'),
-            'database' => 'delmax_gumamax',
+            'database' => 'delmaxapi',
             'username' => 'nora_adm',
             'password' => env('DB_PASSWORD', ''),
             // ...
