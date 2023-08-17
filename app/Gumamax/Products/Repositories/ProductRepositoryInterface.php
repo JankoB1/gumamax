@@ -1,4 +1,6 @@
-<?php namespace Gumamax\Products\Repositories;
+<?php
+
+namespace Gumamax\Products\Repositories;
 /**
  * Created by PhpStorm.
  * User: nikola

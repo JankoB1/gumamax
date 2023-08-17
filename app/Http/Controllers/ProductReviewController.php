@@ -3,7 +3,7 @@
 use Exception;
 use Delmax\Products\SaveProductReviewRequest;
 use App\Http\Requests;
-use Gumamax\Products\Repositories\ProductRepositoryInterface;
+use App\Gumamax\Products\Repositories\ProductRepositoryInterface;
 use Delmax\Products\ProductReview;
 use Yajra\Datatables\Facades\Datatables;
 use Illuminate\Http\Request;

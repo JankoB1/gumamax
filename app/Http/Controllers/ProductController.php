@@ -10,7 +10,7 @@ use Gumamax\Products\ElasticTyresTransformerExternal;
 use Gumamax\Products\Repositories\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductController extends DmxBaseController
 {
 
     protected $repository;

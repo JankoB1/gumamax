@@ -12,7 +12,7 @@
 
 namespace Delmax\elastic;
 
-use Elasticsearch\ClientBuilder;
+use Elastic\Elasticsearch\ClientBuilder;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -39,7 +39,7 @@ class DelmaxElastic
     public function __construct($indexName='', $typeName='', $idFieldName='',  $repository=null){
 
         $this->esClient = ClientBuilder::create()
-            ->setHosts(config('elasticsearch.hosts'))
+            ->setHosts(['127.0.0.1:9200'])
             ->build();
 
         $this->indexName    = $indexName;

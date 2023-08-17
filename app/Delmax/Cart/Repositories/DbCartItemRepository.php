@@ -10,7 +10,7 @@
 use Delmax\Cart\Exceptions\CartItemNotFoundException;
 use Delmax\Cart\Interfaces\CartItemsRepositoryInterface;
 use Delmax\Cart\Models\CartItem;
-use Gumamax\Products\Repositories\ProductRepositoryInterface;
+use App\Gumamax\Products\Repositories\ProductRepositoryInterface;
 
 
 class DbCartItemRepository implements CartItemsRepositoryInterface{
