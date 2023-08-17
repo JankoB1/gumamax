@@ -1,0 +1,21 @@
+{
+  "properties": {
+
+    "vehicle_category": {
+      "type": "string"
+    },
+
+    "width": {
+      "type": "string"
+    },
+
+    "ratio": {
+      "type": "string"
+    },
+
+    "diameter": {
+      "type": "string"
+    }
+
+  }
+}

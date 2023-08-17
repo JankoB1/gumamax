@@ -1,0 +1,140 @@
+{
+  "properties": {
+
+    "id" :{
+      "type" : "string",
+      "index": "not_analyzed"
+    },
+
+    "brand": {
+      "type": "multi_field",
+      "fields": {
+        "brand": {
+          "type": "string"
+        },
+        "facet": {
+          "type": "string",
+          "index": "not_analyzed",
+          "omit_norms": true,
+          "index_options": "docs",
+          "include_in_all": false
+        }
+      }
+    },
+
+    "model": {
+      "type": "multi_field",
+      "fields": {
+        "model": {
+          "type": "string",
+          "copy_to" : "range_and_model"
+        },
+        "facet": {
+          "type": "string",
+          "index": "not_analyzed",
+          "omit_norms": true,
+          "index_options": "docs",
+          "include_in_all": false
+        }
+      }
+    },
+
+    "range" : {
+      "type": "multi_field",
+      "fields": {
+        "range": {
+          "type": "string",
+          "copy_to" : "range_and_model"
+        },
+        "facet": {
+          "type": "string",
+          "index": "not_analyzed",
+          "omit_norms": true,
+          "index_options": "docs",
+          "include_in_all": false
+        }
+      }
+    },
+    "range_and_model" :{
+      "type":"string",
+      "index":"not_analyzed"
+    },
+    "engine" : {
+      "type": "multi_field",
+      "fields": {
+        "engine": {
+          "type": "string"
+        },
+        "facet": {
+          "type": "string",
+          "index": "not_analyzed",
+          "omit_norms": true,
+          "index_options": "docs",
+          "include_in_all": false
+        }
+      }
+    },
+
+    "production_start": {
+      "type":"long"
+    },
+
+    "production_end": {
+      "type":"long"
+    },
+
+    "production": {
+      "type": "multi_field",
+      "fields": {
+        "production": {
+          "type": "string"
+        },
+        "facet": {
+          "type": "string",
+          "index": "not_analyzed",
+          "omit_norms": true,
+          "index_options": "docs",
+          "include_in_all": false
+        }
+      }
+    },
+
+    "dimensions": {
+
+      "properties" : {
+        "package" : {
+          "properties": {
+            "position": {
+              "type": "string"
+            },
+            "width": {
+              "type": "string"
+            },
+            "ratio": {
+              "type": "string"
+            },
+            "radial": {
+              "type": "string"
+            },
+            "load": {
+              "type": "string"
+            },
+            "speed": {
+              "type": "string"
+            }
+          }
+        },
+        "normalpressure": {
+          "type":"string"
+        },
+        "highwaypressure": {
+          "type":"string"
+        },
+        "season": {
+          "type":"string"
+        }
+      }
+
+    }
+  }
+}

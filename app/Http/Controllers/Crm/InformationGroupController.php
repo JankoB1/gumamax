@@ -1,0 +1,23 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: nikola
+ * Date: 25.10.2016
+ * Time: 10:27
+ */
+
+namespace App\Http\Controllers\Crm;
+
+
+use App\Http\Controllers\DmxBaseController;
+
+class InformationGroupController extends DmxBaseController
+{
+
+    public function index(){
+
+        return view('crm.information-groups.index');
+
+    }
+
+}
