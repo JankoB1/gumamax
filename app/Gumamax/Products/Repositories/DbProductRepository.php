@@ -181,4 +181,9 @@ class DbProductRepository  implements ProductRepositoryInterface{
     {
         // TODO: Implement tyresReplacements() method.
     }
+
+    public function productCount()
+    {
+        // TODO: Implement productCount() method.
+    }
 }

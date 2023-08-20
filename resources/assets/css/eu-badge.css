@@ -1,0 +1,113 @@
+#modal-eu-badge .modal-content {
+	width:720px;
+}
+
+.eu_badge{ background:#fff; padding: 0 17px 15px; text-align: center;}
+
+.eu_badge_pic {
+	margin: 0 auto;
+	height: 270px;
+    width: 200px;
+	position: relative;
+	background: transparent url('../img/eu_badge_pic.png') no-repeat top left;
+	z-index: 1;
+	-webkit-background-size: contain;
+	background-size: contain;
+}
+
+.consumption_a{z-index: 6; background: transparent url('../img/eu_badge_pic_consumption_a.png') no-repeat top left;}
+.consumption_b{z-index: 6; background: transparent url('../img/eu_badge_pic_consumption_b.png') no-repeat top left;}
+.consumption_c{z-index: 6; background: transparent url('../img/eu_badge_pic_consumption_c.png') no-repeat top left;}
+.consumption_d{z-index: 6; background: transparent url('../img/eu_badge_pic_consumption_d.png') no-repeat top left;}
+.consumption_e{z-index: 6; background: transparent url('../img/eu_badge_pic_consumption_e.png') no-repeat top left;}
+.consumption_f{z-index: 6; background: transparent url('../img/eu_badge_pic_consumption_f.png') no-repeat top left;}
+.consumption_g{z-index: 6; background: transparent url('../img/eu_badge_pic_consumption_g.png') no-repeat top left;}
+.eu_badge_pic_consumption {
+	position: relative;
+	top: 0;left: 0;
+	width:55.93%;
+	height:69.75%;
+	z-index:3;
+	-webkit-background-size: contain;
+	-moz-background-size: contain;
+	background-size: contain;
+	float:left;
+}
+
+
+.grip_a{background: transparent url('../img/eu_badge_pic_grip_a.png') no-repeat top right; z-index: 5}
+.grip_b{background: transparent url('../img/eu_badge_pic_grip_b.png') no-repeat top right; z-index: 5}
+.grip_c{background: transparent url('../img/eu_badge_pic_grip_c.png') no-repeat top right; z-index: 5}
+.grip_d{background: transparent url('../img/eu_badge_pic_grip_d.png') no-repeat top right; z-index: 5}
+.grip_e{background: transparent url('../img/eu_badge_pic_grip_e.png') no-repeat top right; z-index: 5}
+.grip_f{background: transparent url('../img/eu_badge_pic_grip_f.png') no-repeat top right; z-index: 5}
+.grip_g{background: transparent url('../img/eu_badge_pic_grip_g.png') no-repeat top right; z-index: 5}
+.eu_badge_pic_grip{
+	position: relative;
+	top: 0;right: 0;
+	width:44.06%;
+	height:69.75%;
+	z-index:4;
+	float:right;
+	-webkit-background-size: contain;
+	-moz-background-size: contain;
+	background-size: contain;
+}
+
+
+.noise_1 {background: transparent url('../img/eu_badge_pic_noise_1.png') no-repeat top left; position: relative; z-index: 2; }
+.noise_2 {background: transparent url('../img/eu_badge_pic_noise_2.png') no-repeat top left; position: relative; z-index: 2; }
+.noise_3 {background: transparent url('../img/eu_badge_pic_noise_3.png') no-repeat top left; position: relative; z-index: 2; }
+.ndb {position:relative; width:25.42%; left:63.56%; top:30.61%; font-weight:bold; font-size:12px; color:white; }
+.eu_badge_pic_noise {
+	position:relative;
+	width:100%; height:30.25%;
+	bottom: 0;
+	clear:both;
+	-webkit-background-size: contain;
+	-moz-background-size: contain;
+	background-size: contain;
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+    .eu_badge_pic {
+        height: 270px;
+        width: 200px;
+    }
+    .ndb {font-size: 12px}
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+    .eu_badge_pic {
+    }
+    .ndb {font-size: 14px}
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+    .eu_badge_pic {
+        width: 316px;
+        height: 430px;
+    }
+    .ndb {font-size: 18px}
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+    .eu_badge_pic {
+        height: 340px;
+        width: 250px;
+    }
+    .ndb {font-size: 18px}
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+    .eu_badge_pic {
+        height: 430px;
+        width: 316px;
+    }
+    .ndb {font-size: 18px}
+}

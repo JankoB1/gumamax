@@ -28,6 +28,8 @@ class ProductController extends DmxBaseController
     }
 
     public function showShop() {
+        $data = $this->repository->findFiltered();
+
         return view('shop');
     }
 
