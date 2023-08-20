@@ -39,5 +39,4 @@ interface ProductRepositoryInterface {
      */
     public function findById($id);
 
-
 }

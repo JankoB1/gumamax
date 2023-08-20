@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    protected $connection = 'CRM';
+    protected $connection = 'delmax_crm';
 
     protected $table = 'company';
 

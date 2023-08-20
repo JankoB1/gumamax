@@ -9,7 +9,7 @@
 namespace App\Http\Controllers;
 
 use Delmax\elastic\DelmaxElastic;
-use Elasticsearch\ClientBuilder;
+use Elastic\Elasticsearch\ClientBuilder;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -55,7 +55,7 @@ class ElasticController extends DmxBaseController {
                 $appIndex['exists'] = true;
                 $appIndex['total']['docs']['count']   = $indices[$indexName]['total']['docs']['count'];
                 $appIndex['total']['docs']['deleted'] = $indices[$indexName]['total']['docs']['deleted'];
-                $appIndex['type_exists'] = $this->client->indices()->existsType(['index'=>$indexName, 'type'=>$typeName]);
+                $appIndex['type_exists'] = $this->client->indices()->exists(['index'=>$indexName, 'type'=>$typeName]);
             }  else {
                 $appIndex['exists'] = false;
             }

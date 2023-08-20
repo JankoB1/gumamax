@@ -93,6 +93,16 @@ return [
             // ...
         ],
 
+        'FW' => [
+            'driver' => 'mysql',
+            'host' => '5.9.54.73',
+            'port' => env('DB_DELMAX_CRM_PORT', '3306'),
+            'database' => 'fw_001',
+            'username' => 'nora_adm',
+            'password' => env('DB_PASSWORD', ''),
+            // ...
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
