@@ -49,6 +49,7 @@ use App\Http\Controllers\Crm\PhotoController;
 use App\Http\Controllers\Crm\MemberUserRoleController;
 use App\Http\Controllers\PaymentGatewayController;
 use App\Http\Controllers\BackofficeController;
+use Elastic\Elasticsearch;
 
 /*
 |--------------------------------------------------------------------------
