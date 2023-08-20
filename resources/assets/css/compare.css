@@ -1,0 +1,17 @@
+.product_compare {font-size:13px;}
+.product_compare > label {font-size: 13px;}
+.product_compare > label > input[type="checkbox"] {margin-left: 0; margin-right: 5px;}
+.product_compare > label > a {margin-left: 10px;}
+.product_compare h1,.product_compare h2,.product_compare h3,.product_compare h4,.product_compare h5 {margin:0; padding:0;}
+.product_compare h3 {font-size:21px;}
+.product_img {text-align:center;}
+.product_img img {height:220px; margin-bottom: 10px;}
+.product_manufacturer img {height:48px;}
+.product_shopping {text-align: right;}
+.product_shopping h3,.product_shopping h5 {display: inline-block;}
+.add_to_cart_c {text-align: left;}
+.add_to_cart_c > * {display: inline-block; padding: 0; margin: 0;}
+.add_to_cart_c > button {padding:4px;}
+/*.add_to_cart_c > select {margin-top: 11px;}*/
+/*.add_to_cart_c > label {padding-top: 12px !important;}*/
+.product_compare > .eu_badge {border:none;}

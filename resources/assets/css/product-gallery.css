@@ -1,0 +1,9 @@
+.gallery .product_image_container {background: #fff; border-bottom: 1px solid #ddd; text-align: center; display: table; vertical-align: middle; width: 100%}
+.gallery .product_image {width: 220px; height: 220px; text-align: center; margin: auto;display: table-cell; vertical-align: middle;}
+.gallery .product_image img { max-width:100%; max-height:100%;   margin: auto;}
+.gallery .thumbs {margin-top:7px;}
+.gallery a.product_thumb { background: #fff; text-align: center; opacity: 0.7; width: 62px; height: 62px; }
+.gallery a:hover { opacity: 1;}
+.gallery a.active { opacity: 1;}
+.gallery a.product_thumb { margin-bottom: 7px;}
+.gallery a.product_thumb  img { max-width:100%; max-height:100%;}

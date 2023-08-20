@@ -1,0 +1,10 @@
+.admin-carousel-img-list {
+    padding:10px;
+    margin:10px;
+    border:1px solid #eee;
+    display: inline-block;
+    float:left;
+    width:255px;
+    height:170px;
+}
+
