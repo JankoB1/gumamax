@@ -202,7 +202,7 @@
 
 @yield('page-plugin-js')
 
-	<script>
+	<script type="text/javascript">
 		var dtLanguage =  {
 			"emptyTable":     "No data available in table",
 			"info":           "_START_ - _END_ / _TOTAL_",

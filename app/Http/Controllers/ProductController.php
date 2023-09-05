@@ -141,7 +141,6 @@ class ProductController extends DmxBaseController
             return $this->respond($data);
 
             */
-
         $data = $this->repository->tyresWidths($vehicle_category);
 
         return $this->respondWithData($data);

@@ -222,7 +222,7 @@ class EsProductRepository implements ProductRepositoryInterface {
 
         if ($testString!='') {
 
-            $this->must[] = ['match' => ['vehicle_category.facet' => $vehicle_category]];
+            $this->must[] = ['match' => ['vehicle_category' => $vehicle_category]];
 
             return $this->getBuckets('widths', 'width');
         }

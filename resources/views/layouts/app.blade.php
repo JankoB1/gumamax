@@ -20,6 +20,7 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @yield('scriptsTop')
+
 </head>
 <body>
     <div id="app">

@@ -1,7 +1,7 @@
 var el = {
-        width:      $("#width").prop("disabled", "disabled"),
-        ratio:      $("#ratio").prop("disabled", "disabled"),
-        diameter:   $("#diameter").prop("disabled", "disabled")
+        width:      $("#tyre-width").prop("disabled", "disabled"),
+        ratio:      $("#tyre-height").prop("disabled", "disabled"),
+        diameter:   $("#tyre-diameter").prop("disabled", "disabled")
     },
 
     vehicleSearchControl = {
@@ -57,12 +57,10 @@ var el = {
     submitVehicles = $('#getTiresByVehicle');
 
 function init_form() {
-
     initializeFormData();
 
-    $('ul.vehicles.clearfix li > a[data-vehicle_category="' + tFilter.vehicle_category + '"]').addClass("active");
-
-    $('.search ul.nav.nav-tabs li > a[data-search_method="'+tFilter.search_method+'"]').tab('show');
+    /*$('ul.vehicles.clearfix li > a[data-vehicle_category="' + tFilter.vehicle_category + '"]').addClass("active");
+    $('.search ul.nav.nav-tabs li > a[data-search_method="'+tFilter.search_method+'"]').tab('show');*/
 
     updateSearchForm(tFilter.search_method)
 }
@@ -123,7 +121,6 @@ function initializeFormData() {
 }
 
 function updateAllDimensions(){
-
     $.ajax({
         type: "GET",
         url: urlTo('api/products/dimensions/selected/bundle'),
@@ -131,7 +128,6 @@ function updateAllDimensions(){
         dataType: "json",
         data : tFilter
     }).done(function(result) {
-
         $.each(el, function(i, element){
             element.off('change');
         });
@@ -228,7 +224,6 @@ function updateSearchFormByDimension() {
         tFilter.source='';
     } else {
         disableSelect2(1, el);
-
         loadWidths(el.width, tFilter.width);
     }
 

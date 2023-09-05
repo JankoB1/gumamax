@@ -1,7 +1,7 @@
 var el = {
-        width:      $("#width").prop("disabled", "disabled"),
-        ratio:      $("#ratio").prop("disabled", "disabled"),
-        diameter:   $("#diameter").prop("disabled", "disabled")
+        width:      $("#tyre-width").prop("disabled", "disabled"),
+        ratio:      $("#tyre-height").prop("disabled", "disabled"),
+        diameter:   $("#tyre-diameter").prop("disabled", "disabled")
     },
 
     vehicleSearchControl = {
@@ -57,7 +57,7 @@ var el = {
     submitVehicles = $('#getTiresByVehicle');
 
 function init_form() {
-
+    alert("Test vite")
     initializeFormData();
 
     $('ul.vehicles.clearfix li > a[data-vehicle_category="' + tFilter.vehicle_category + '"]').addClass("active");

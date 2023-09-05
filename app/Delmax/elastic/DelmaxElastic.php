@@ -12,7 +12,7 @@
 
 namespace Delmax\elastic;
 
-use Elastic\Elasticsearch\ClientBuilder;
+use Elasticsearch\ClientBuilder;
 use Exception;
 use Illuminate\Support\Facades\Log;
 

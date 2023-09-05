@@ -49,8 +49,8 @@ use App\Http\Controllers\Crm\PhotoController;
 use App\Http\Controllers\Crm\MemberUserRoleController;
 use App\Http\Controllers\PaymentGatewayController;
 use App\Http\Controllers\BackofficeController;
-use Elastic\Elasticsearch;
 
+use Elasticsearch\ClientBuilder;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -101,7 +101,19 @@ Route::get('/read-tyre', [HomeController::class, 'howToReadTyre']);
 |
 */
 
-Route::get('products', [ProductController::class, 'index'])->name('products_index');
+Route::get('products', function ()
+    {
+        $es = ClientBuilder::create()
+            ->setHosts(['localhost:9200'])
+            ->build();
+
+        $params = [
+            'index' => 'gumamax',
+        ];
+        $response = $es->search($params);
+        dd($response);
+    }
+)->name('products_index');
 
 Route::get('api/products/search', [ProductController::class, 'apiSearch'])->name('api.product.search');
 
