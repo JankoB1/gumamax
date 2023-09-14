@@ -61,6 +61,7 @@
 
     <section id="tyres-search">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <input type="hidden" id="search_method" name="search_method" value="byDimension">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="tyre-dimensions" data-bs-toggle="tab" data-bs-target="#tyre-dimensions-tab-pane" type="button" role="tab" aria-controls="tyre-dimensions-tab-pane" aria-selected="true">Izbor gume po dimenziji</button>
             </li>
@@ -253,19 +254,23 @@
                                     @endforeach
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
+                                        <p>Marka</p>
+                                        <select name="brand" id="brand"></select>
+                                    </div>
+                                    <div class="col-md-2">
                                         <p>Model</p>
                                         <select name="model" id="model"></select>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <p>Tip</p>
                                         <select name="type" id="type"></select>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <p>Godište</p>
                                         <select name="year" id="year"></select>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <p>Veličina</p>
                                         <select name="size" id="size"></select>
                                     </div>

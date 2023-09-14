@@ -5,11 +5,11 @@ var el = {
     },
 
     vehicleSearchControl = {
-        brand:      $("#vehicle_brand").prop("disabled", "disabled"),
-        model:      $("#vehicle_model").prop("disabled", "disabled"),
-        engine:     $("#vehicle_engine").prop("disabled", "disabled"),
-        years:      $("#vehicle_years").prop("disabled", "disabled"),
-        dimensions: $("#tire_dimension").prop("disabled", "disabled")
+        brand:      $("#brand").prop("disabled", "disabled"),
+        model:      $("#model").prop("disabled", "disabled"),
+        engine:     $("#type").prop("disabled", "disabled"),
+        years:      $("#year").prop("disabled", "disabled"),
+        dimensions: $("#size").prop("disabled", "disabled")
     },
 
     vehicleCategory =   $("#vehicle_category"),
@@ -846,3 +846,20 @@ function getFilterFromUrl(){
     }
 }
 
+//dodato u redizajnu
+
+$("#tyre-dimensions").on("click", function (){
+    setSearchMethod("byDimension");
+
+    setProductFilterCookie();
+
+    updateSearchForm(tFilter.search_method);
+});
+
+$("#tyre-vehicle-tab").on("click", function (){
+    setSearchMethod("byVehicle");
+
+    setProductFilterCookie();
+
+    updateSearchForm(tFilter.search_method);
+});

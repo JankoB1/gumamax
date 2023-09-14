@@ -71,7 +71,7 @@ Route::get('/uporedi', [ProductController::class, 'showCompare'])->name('show-co
 Route::get('/mreza-partnera', [PartnerController::class, 'showPartners'])->name('show-partners');
 Route::get('/partner', [PartnerController::class, 'showSinglePartner'])->name('show-single-partner');
 Route::get('/porudzbina', [OrderController::class, 'showMakeOrder'])->name('show-make-order');
-
+Route::get('/prodavnica/items', [ProductController::class, 'showStoreItems'])->name('show-store-items');
 
 Route::get('partners/login', [PartnerController::class, 'login']);
 

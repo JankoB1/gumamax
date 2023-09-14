@@ -391,4 +391,11 @@ class EsProductRepository implements ProductRepositoryInterface {
         return  ($order=='')?$directive:$directive.';'.$order;
 
     }
+
+    public function findFiltered()
+    {
+        $this->searchParams['body']['size'] = 25;
+        $queryResponse = $this->elastic->executeQuery($this->searchParams);
+        return $queryResponse;
+    }
 }
