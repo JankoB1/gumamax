@@ -1306,6 +1306,20 @@ span.letter.sound-letters {
     justify-content: end;
 }
 
+
+.sort-bar .navigation .ripple {
+    background-position: center;
+    transition: background 0.5s;
+}
+.sort-bar .navigation .ripple:hover{
+    background: DarkGray radial-gradient(circle, transparent 1%, DarkGray 1%) center/15000%;
+}
+.sort-bar .navigation .ripple:active{
+    background-color: LightGray;
+    background-size: 100%;
+    transition: background 0s;
+}
+
 #shop-inner .filters {
     border-radius: 6px;
     border: 1px solid #E7E7E7;

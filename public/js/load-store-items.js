@@ -15,7 +15,7 @@ const initPage = () => {
         forward.style.color = "LightGray"
         forward.onclick = null
     }
-    if (current_page === 0) {
+    if (current_page === 1) {
         backward.style.color = "LightGray"
         backward.onclick = null
     }
@@ -24,14 +24,22 @@ const initPage = () => {
 const navForward = () => {
     current_page++
 
+    forward.onclick = null
+    backward.onclick = null
+
     loadStoreItems(PER_PAGE)
     loadItemData(PER_PAGE).then(() => {
         if (current_page === last_page) {
             forward.style.color = "LightGray"
+            forward.classList.remove("ripple")
             forward.onclick = null
+        } else {
+            forward.onclick = navForward
         }
-        if (current_page !== 0) {
+
+        if (current_page !== 1) {
             backward.style.color = ""
+            backward.classList.add("ripple")
             backward.onclick = navBackward
         }
     })
@@ -40,16 +48,24 @@ const navForward = () => {
 const navBackward = () => {
     current_page--
 
+    forward.onclick = null
+    backward.onclick = null
+
     loadStoreItems(PER_PAGE)
     loadItemData(PER_PAGE).then(() => {
         console.log(current_page + " - " + last_page)
         if (current_page !== last_page) {
             forward.style.color = ""
+            forward.classList.add("ripple")
             forward.onclick = navForward
         }
-        if (current_page === 0) {
+
+        if (current_page === 1) {
             backward.style.color = "LightGray"
+            backward.classList.remove("ripple")
             backward.onclick = null
+        }else{
+            backward.onclick = navBackward
         }
     })
 }
@@ -72,7 +88,7 @@ const loadItemData = async (per_page) => {
     const perPage = jsonData["pagination"]["per_page"]
     const currPage = jsonData["pagination"]["current_page"]
     const total = jsonData["pagination"]["total"]
-    const ofTotalResultText = (currPage*perPage+1)  + "-" + ((currPage+1)*perPage) + " od " + total + " rezultata"
+    const ofTotalResultText = ((currPage-1)*perPage+1)  + "-" + ((currPage)*perPage) + " od " + total + " rezultata"
 
     last_page = total/perPage + (total%perPage>0?1:0)
     console.log(total + ", " + perPage + ", " + total/perPage + ", " + last_page)

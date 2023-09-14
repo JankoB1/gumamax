@@ -22,8 +22,8 @@
                         <option value="2">Ceni rastuće</option>
                     </select>
                     <div class="navigation">
-                        <span id="navBackward" class="left"><i class="fa-solid fa-chevron-left"></i></span>
-                        <span id="navForward" class="right"><i class="fa-solid fa-chevron-right"></i></span>
+                        <span id="navBackward" class="left ripple"><i class="fa-solid fa-chevron-left"></i></span>
+                        <span id="navForward" class="right ripple"><i class="fa-solid fa-chevron-right"></i></span>
                     </div>
                 </div>
             </div>
