@@ -555,5 +555,13 @@
                 prevEl: ".swiper-button-prev",
             },
         });
+
+        jQuery.ajax({
+            url: window.location.origin + '/api/products/dimensions/selected/bundle?total=0&current_page=1&last_page=0&per_page=10&from=0&to=0&next_page=0&prev_page=0&order=price_with_tax%7Casc&vehicle_category=Putni%C4%8Dko&search_method=byDimension&searchQuery=&width=130&ratio=90&diameter=10&vehicle_brand=&vehicle_model=&vehicle_engine=&vehicle_years=&vehicle_tire_dimension=&manufacturers=&speed_indexes=&seasons=&source=cookie&page=1', method: 'get', headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            }, success: function (result) {
+                console.log(result);
+            }
+        });
     </script>
 @endsection
