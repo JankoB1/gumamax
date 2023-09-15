@@ -12,18 +12,18 @@
         <div class="sort-bar">
             <div class="row">
                 <div class="col-md-4">
-                    <p>1-20 od 100 rezultata</p>
+                    <p id="result-numbering" >1-20 od 100 rezultata</p>
                 </div>
                 <div class="col-md-5 offset-md-3">
-                    <span>Poredaj po</span>
+                    <span>Sortiraj prema</span>
                     <select name="sort" id="sort">
-                        <option value="1">Popularnosti</option>
-                        <option value="2">Popularnosti</option>
-                        <option value="3">Popularnosti</option>
+                        <!--<option value="1">Popularnosti</option>-->
+                        <option value="1">Ceni opadajuće</option>
+                        <option value="2">Ceni rastuće</option>
                     </select>
                     <div class="navigation">
-                        <span class="left"><i class="fa-solid fa-chevron-left"></i></span>
-                        <span class="right"><i class="fa-solid fa-chevron-right"></i></span>
+                        <span id="navBackward" class="left ripple"><i class="fa-solid fa-chevron-left"></i></span>
+                        <span id="navForward" class="right ripple"><i class="fa-solid fa-chevron-right"></i></span>
                     </div>
                 </div>
             </div>
@@ -146,8 +146,9 @@
 
                 </div>
 
-                <div class="col-md-8">
-                    <div class="single-shop-product">
+                <div id="item-col" class="col-md-8">
+
+                    <!--<div class="single-shop-product">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="single-shop-product-left">
@@ -211,8 +212,8 @@
                                 <button class="add-to-cart">Dodaj u korpu</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="single-shop-product">
+                    </div>-->
+                    <!--<div class="single-shop-product">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="single-shop-product-left">
@@ -276,8 +277,8 @@
                                 <button class="add-to-cart">Dodaj u korpu</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="single-shop-product">
+                    </div>-->
+                    <!--<div class="single-shop-product">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="single-shop-product-left">
@@ -341,72 +342,7 @@
                                 <button class="add-to-cart">Dodaj u korpu</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="single-shop-product">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="single-shop-product-left">
-                                    <img src="{{ asset('images/visuals/dot-tag.png') }}" class="dot-img" alt="dot">
-                                    <img src="{{ asset('images/visuals/product-image.png') }}" alt="product image" class="featured-image">
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="top-shop-product">
-                                    <h3 class="product-title">Tigar winted 195/65 R15</h3>
-                                    <img src="{{ asset('images/visuals/compare.svg') }}" alt="compare" class="compare">
-                                    <div class="stock">
-                                        <div class="stock-status in-stock"></div>
-                                        <p class="stock-status-text">Na stanju <strong>(10 kom)</strong></p>
-                                    </div>
-                                </div>
-                                <div class="bottom-shop-product">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <img src="{{ asset('images/visuals/jeep.svg') }}" alt="car">
-                                            <p>Putničko</p>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <img src="{{ asset('images/visuals/winter.svg') }}" alt="winter">
-                                            <p>Zimska</p>
-                                        </div>
-                                    </div>
-                                    <div class="price-details">
-                                        <h5 class="single-shop-price">4,650 RSD</h5>
-                                        <a href="#">Detalji o proizvodu</a>
-                                    </div>
-                                    <p>Isporuka od tri do sedam radnih dana</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row bottom-single-product">
-                            <div class="col-md-1">
-                                <div class="single-tag">
-                                    <img src="{{ asset('images/visuals/bi_fuel-pump.svg') }}" alt="gas">
-                                    <span class="letter">C</span>
-                                </div>
-                            </div>
-                            <div class="col-md-1">
-                                <div class="single-tag">
-                                    <img src="{{ asset('images/visuals/carbon_rain-heavy.svg') }}" alt="weather">
-                                    <span class="letter">B</span>
-                                </div>
-                            </div>
-                            <div class="col-md-1">
-                                <div class="single-tag">
-                                    <img src="{{ asset('images/visuals/sound.svg') }}" alt="sound">
-                                    <span class="letter sound-letters">72db</span>
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="quantity-area">
-                                    <span class="minus">-</span>
-                                    <span class="qty">1</span>
-                                    <span class="plus">+</span>
-                                </div>
-                                <button class="add-to-cart">Dodaj u korpu</button>
-                            </div>
-                        </div>
-                    </div>
+                    </div>-->
                 </div>
 
             </div>
@@ -491,4 +427,13 @@
         </div>
     </section>
 
+@endsection
+
+@section("scriptsBottom")
+    <script src="{{ asset("js/load-store-items.js") }}"></script>
+    <script>
+        initPage()
+        loadStoreItems(4)
+        loadItemData(4)
+    </script>
 @endsection

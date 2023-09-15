@@ -49,8 +49,8 @@ use App\Http\Controllers\Crm\PhotoController;
 use App\Http\Controllers\Crm\MemberUserRoleController;
 use App\Http\Controllers\PaymentGatewayController;
 use App\Http\Controllers\BackofficeController;
-use Elastic\Elasticsearch;
 
+use Elasticsearch\ClientBuilder;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,7 +71,7 @@ Route::get('/uporedi', [ProductController::class, 'showCompare'])->name('show-co
 Route::get('/mreza-partnera', [PartnerController::class, 'showPartners'])->name('show-partners');
 Route::get('/partner', [PartnerController::class, 'showSinglePartner'])->name('show-single-partner');
 Route::get('/porudzbina', [OrderController::class, 'showMakeOrder'])->name('show-make-order');
-
+Route::get('/prodavnica/items', [ProductController::class, 'showStoreItems'])->name('show-store-items');
 
 Route::get('partners/login', [PartnerController::class, 'login']);
 
@@ -101,7 +101,19 @@ Route::get('/read-tyre', [HomeController::class, 'howToReadTyre']);
 |
 */
 
-Route::get('products', [ProductController::class, 'index'])->name('products_index');
+Route::get('products', function ()
+    {
+        $es = ClientBuilder::create()
+            ->setHosts(['localhost:9200'])
+            ->build();
+
+        $params = [
+            'index' => 'gumamax',
+        ];
+        $response = $es->search($params);
+        dd($response);
+    }
+)->name('products_index');
 
 Route::get('api/products/search', [ProductController::class, 'apiSearch'])->name('api.product.search');
 

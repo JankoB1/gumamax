@@ -61,6 +61,7 @@
 
     <section id="tyres-search">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <input type="hidden" id="search_method" name="search_method" value="byDimension">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="tyre-dimensions" data-bs-toggle="tab" data-bs-target="#tyre-dimensions-tab-pane" type="button" role="tab" aria-controls="tyre-dimensions-tab-pane" aria-selected="true">Izbor gume po dimenziji</button>
             </li>
@@ -130,25 +131,16 @@
                                     <div class="col-4">
                                         <p>Širina <span>pneumatika</span></p>
                                         <select name="tyre-width" id="tyre-width">
-                                            <option value="201">201</option>
-                                            <option value="202">202</option>
-                                            <option value="203">203</option>
                                         </select>
                                     </div>
                                     <div class="col-4">
                                         <p>Visina <span>pneumatika</span></p>
                                         <select name="tyre-height" id="tyre-height">
-                                            <option value="55">55</option>
-                                            <option value="56">56</option>
-                                            <option value="57">57</option>
                                         </select>
                                     </div>
                                     <div class="col-4">
                                         <p>Prečnik <span>pneumatika</span></p>
                                         <select name="tyre-diameter" id="tyre-diameter">
-                                            <option value="R16">R16</option>
-                                            <option value="R17">R17</option>
-                                            <option value="R18">R18</option>
                                         </select>
                                     </div>
                                     <img src="{{ asset('images/visuals/tyre-filter.png') }}" alt="tyre filter">
@@ -262,19 +254,23 @@
                                     @endforeach
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
+                                        <p>Marka</p>
+                                        <select name="brand" id="brand"></select>
+                                    </div>
+                                    <div class="col-md-2">
                                         <p>Model</p>
                                         <select name="model" id="model"></select>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <p>Tip</p>
                                         <select name="type" id="type"></select>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <p>Godište</p>
                                         <select name="year" id="year"></select>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <p>Veličina</p>
                                         <select name="size" id="size"></select>
                                     </div>
@@ -547,8 +543,17 @@
 
 @endsection
 
+<script src="{{ asset("js/vendor/jquery.js") }}"></script>
+<script src="{{ asset("js/common.js") }}"></script>
+<script src="{{ asset("js/shop.js") }}"></script>
+
+
+
 @section('scriptsBottom')
+    <script src="{{ asset("js/tyre-search.js") }}"></script>
+
     <script>
+        init_form();
         let heroSlider = new Swiper(".hero-swiper", {
             navigation: {
                 nextEl: ".swiper-button-next",

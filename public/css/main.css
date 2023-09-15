@@ -552,10 +552,20 @@ section#featured-products {
     justify-content: center;
 }
 
-.stock-status {
+.stock-status-in {
     height: 7px;
     width: 7px;
     background: #00C62B;
+    position: relative;
+    right: 7px;
+    top: 4.5px;
+    border-radius: 100%;
+}
+
+.stock-status-out {
+    height: 7px;
+    width: 7px;
+    background: #FF0000;
     position: relative;
     right: 7px;
     top: 4.5px;
@@ -1294,6 +1304,20 @@ span.letter.sound-letters {
     display: flex;
     align-items: center;
     justify-content: end;
+}
+
+
+.sort-bar .navigation .ripple {
+    background-position: center;
+    transition: background 0.5s;
+}
+.sort-bar .navigation .ripple:hover{
+    background: DarkGray radial-gradient(circle, transparent 1%, DarkGray 1%) center/15000%;
+}
+.sort-bar .navigation .ripple:active{
+    background-color: LightGray;
+    background-size: 100%;
+    transition: background 0s;
 }
 
 #shop-inner .filters {

@@ -222,7 +222,7 @@ class EsProductRepository implements ProductRepositoryInterface {
 
         if ($testString!='') {
 
-            $this->must[] = ['match' => ['vehicle_category.facet' => $vehicle_category]];
+            $this->must[] = ['match' => ['vehicle_category' => $vehicle_category]];
 
             return $this->getBuckets('widths', 'width');
         }
@@ -390,5 +390,12 @@ class EsProductRepository implements ProductRepositoryInterface {
 
         return  ($order=='')?$directive:$directive.';'.$order;
 
+    }
+
+    public function findFiltered()
+    {
+        $this->searchParams['body']['size'] = 25;
+        $queryResponse = $this->elastic->executeQuery($this->searchParams);
+        return $queryResponse;
     }
 }

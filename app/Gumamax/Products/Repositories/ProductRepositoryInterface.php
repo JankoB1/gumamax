@@ -39,4 +39,6 @@ interface ProductRepositoryInterface {
      */
     public function findById($id);
 
+    public function findFiltered();
+
 }

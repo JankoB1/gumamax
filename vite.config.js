@@ -11,4 +11,12 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+        rollupOptions: {
+            input: {
+                tyresearch: 'resources/assets/js/tyre-search.js',
+            },
+        },
+        outDir: 'public/', // This will output assets to public/
+    },
 });

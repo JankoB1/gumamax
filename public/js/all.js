@@ -47,7 +47,7 @@ var iosOverlay = function(params) {
 	// setup overlay settings
 	var settings = merge(defaults,params);
 
-	// 
+	//
 	var handleAnim = function(anim) {
 		if (anim.animationName === "ios-overlay-show") {
 			settings.onshow();
@@ -81,7 +81,7 @@ var iosOverlay = function(params) {
 		} else {
 			document.body.appendChild(overlayDOM);
 		}
-		
+
 		settings.onbeforeshow();
 		// begin fade in
 		if (doesTransitions) {
@@ -547,10 +547,10 @@ function dmxErrorModalDialogLight($title, $content){
 
 function dmxModalDialog($title, $loadingMessage, $url, $formId, $successMessage, $dataTable){
 
-    return new BootstrapDialog({  
+    return new BootstrapDialog({
         title: $title,
         data: {formId: $formId},
-        message: $('<div>'+$loadingMessage+'</div>').load($url),       
+        message: $('<div>'+$loadingMessage+'</div>').load($url),
         draggable: true,
         //autospin: true,
         buttons: [
@@ -727,7 +727,7 @@ jQuery.cachedScript = function( url, options ) {
       cache: true,
       url: url
     });
-      
+
     return jQuery.ajax( options );
 };
 var loadingScreen = $('#loading-screen');
@@ -893,9 +893,9 @@ Handlebars.registerHelper('hb_cart_item_select_qty', function(value){
 
 Handlebars.registerHelper('hb_cart_item_select_state', function(value){
     var state = '';
-    if (value == 0) 
+    if (value == 0)
         state = 'disabled';
-    
+
     return new Handlebars.SafeString(state);
 });
 
@@ -1149,7 +1149,7 @@ $('.container').on('click', '.checkbox.product-compare input[type=checkbox]', fu
 
     if(selItem.prop('checked')){
         if(arrC.length>2) {
-            sweetAlert('Obaveštenje','Moguće je izabrati najviše 3 proizvoda za poređenje.','info');       
+            sweetAlert('Obaveštenje','Moguće je izabrati najviše 3 proizvoda za poređenje.','info');
             return false;
         } else if(c.indexOf(id+'='+n+'='+nn) < 0) {
             arrC.push(id+'='+n+'='+nn);

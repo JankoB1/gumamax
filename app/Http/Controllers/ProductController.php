@@ -28,13 +28,26 @@ class ProductController extends DmxBaseController
     }
 
     public function showShop() {
-        $data = $this->repository->findFiltered();
-
-        return view('shop');
+        /*$data = $this->repository->findFiltered();
+        $products = $data["hits"]["hits"];*/
+        //dd($products);
+        return view('shop');//, compact("products"));
     }
 
     public function showCompare() {
         return view('compare');
+    }
+
+    public function showStoreItems(Request $request){
+        $resp = $this->apiTyresSearch($request);
+
+        $data = json_decode($resp->content(), true);
+
+        $products = $data['data'];
+
+        $nItems = $data['pagination']['per_page'];
+
+        return view('store-item', compact('products', 'nItems'));
     }
 
     /**
@@ -141,7 +154,6 @@ class ProductController extends DmxBaseController
             return $this->respond($data);
 
             */
-
         $data = $this->repository->tyresWidths($vehicle_category);
 
         return $this->respondWithData($data);

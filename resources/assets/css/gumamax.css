@@ -1913,9 +1913,9 @@ table.specs th {
     text-decoration: none;
 }
 :is(div.modal-body) #static-page {
-    margin: 0;    
+    margin: 0;
     padding-left: 7px;
-    padding-right: 15px; 
+    padding-right: 15px;
 }
 
 #compare-products,#static-page {
@@ -2847,7 +2847,7 @@ table.specs th {
 @media (max-width: 990px) {
     .modal .modal-dialog {
         width: 90%;
-    }    
+    }
 
     .gmx-map{
         margin-left: 15px!important;
@@ -2856,7 +2856,7 @@ table.specs th {
 }
 
 @media (min-width: 992px) {
-    
+
     .gmx-map{
         margin-left: 15px!important;
         width: 98%;
@@ -2939,12 +2939,12 @@ tr.group:hover {
 
 .cart-item-info {
     margin: 0;
-}  
+}
 
 .cart-item-info .alert-msg {
     padding: 10px 10px 0;
     border: 1px solid #e8ced2;
-    border-radius: 3px 3px 0 0; 
+    border-radius: 3px 3px 0 0;
     color: #a94442;
     background-color: #f2dede;
 }
@@ -2998,7 +2998,7 @@ tr.group:hover {
 .payment-method-btn > span {
     position: absolute;
     top: 22px;
-    left: 37px;   
+    left: 37px;
 }
 
 .payment-method-btn p {
@@ -3068,7 +3068,7 @@ fieldset[disabled] .btn-gray.focus {
 }
 
 #payment-method-change-box .panel-body > button:active,
-#payment-method-change-box .panel-body > button.active {   
+#payment-method-change-box .panel-body > button.active {
     background: url( '../img/checked.png' ) no-repeat center center #e8ebee;
     background-position: 75px 6px;
 }

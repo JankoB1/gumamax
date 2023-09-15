@@ -60,7 +60,7 @@ class ElasticTyresTransformer extends Transformer {
             'price_with_tax'=>$product['_source']['price_with_tax'],
             'price_without_tax'=>$product['_source']['price_without_tax'],
             'images'=> isset($product['_source']['images']) ? $product['_source']['images'] : [],
-            'dimensions'=>$product['_source']['dimensions'],
+            //'dimensions'=>$product['_source']['dimensions'],
             'action_price'=>$product['_source']['action_price'],
             'list_price'=>$product['_source']['list_price'],
             'super_price'=>$product['_source']['super_price'],
@@ -70,7 +70,7 @@ class ElasticTyresTransformer extends Transformer {
             'product_weight'=>$product['_source']['product_weight'],
             'tax_id'=>$product['_source']['tax_id'],
             'tax_rate'=>$product['_source']['tax_rate'],
-            'eu_badge' => $this->transformEuBadge($product['_source']['dimensions'])
+            //'eu_badge' => $this->transformEuBadge($product['_source']['dimensions'])
         ];
     }
 
@@ -94,4 +94,4 @@ class ElasticTyresTransformer extends Transformer {
 
         return $euBadge;
     }
-} 
+}
