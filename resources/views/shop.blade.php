@@ -12,7 +12,7 @@
         <div class="sort-bar">
             <div class="row">
                 <div class="col-md-4">
-                    <p id="result-numbering" >1-20 od 100 rezultata</p>
+                    <p id="result-numbering" ></p>
                 </div>
                 <div class="col-md-5 offset-md-3">
                     <span>Sortiraj prema</span>

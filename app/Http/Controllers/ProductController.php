@@ -23,8 +23,18 @@ class ProductController extends DmxBaseController
 
     }
 
-    public function showSingleProduct() {
-        return view('single-product');
+    public function showSingleProduct($productId) {
+        $data = $this->repository->findById($productId);
+
+        if (!$data) {
+            abort(404);
+        }
+
+        $product = $data;
+
+        $template = DimensionDescriptionTemplate::tyresTemplateArray()->toArray();
+
+        return view('single-product', compact('product','template'));
     }
 
     public function showShop() {
