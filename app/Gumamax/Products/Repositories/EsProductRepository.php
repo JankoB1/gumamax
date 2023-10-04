@@ -285,7 +285,6 @@ class EsProductRepository implements ProductRepositoryInterface {
 
             $product_id = $this->escapeSlash($value);
 
-
             if ($product_id != '') {
 
                 $newMust = ['match' => ['product_id' => $product_id]];

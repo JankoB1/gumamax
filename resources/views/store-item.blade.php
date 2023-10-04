@@ -76,19 +76,37 @@
         <div class="col-md-1">
             <div class="single-tag">
                 <img src="{{ asset('images/visuals/bi_fuel-pump.svg') }}" alt="gas">
-                <span class="letter">C</span>
+                <span class="letter">
+                    @if(in_array($products[$cnt]["eu_badge"]["consumption"],$unknwVals))
+                        -
+                    @else
+                        {{$products[$cnt]["eu_badge"]["consumption"]}}
+                    @endif
+                </span>
             </div>
         </div>
         <div class="col-md-1">
             <div class="single-tag">
                 <img src="{{ asset('images/visuals/carbon_rain-heavy.svg') }}" alt="weather">
-                <span class="letter">B</span>
+                <span class="letter">
+                    @if(in_array($products[$cnt]["eu_badge"]["grip"],$unknwVals))
+                        -
+                    @else
+                        {{$products[$cnt]["eu_badge"]["grip"]}}
+                    @endif
+                </span>
             </div>
         </div>
         <div class="col-md-1">
             <div class="single-tag">
                 <img src="{{ asset('images/visuals/sound.svg') }}" alt="sound">
-                <span class="letter sound-letters">72db</span>
+                <span class="letter sound-letters">
+                    @if($products[$cnt]["eu_badge"]["noise_db"] == "" || $products[$cnt]["eu_badge"]["noise_db"] == "-")
+                        -db
+                    @else
+                        {{intval($products[$cnt]["eu_badge"]["noise_db"])}}db
+                    @endif
+                </span>
             </div>
         </div>
         <div class="col-md-9">

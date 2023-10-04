@@ -34,6 +34,8 @@ class ProductController extends DmxBaseController
 
         $template = DimensionDescriptionTemplate::tyresTemplateArray()->toArray();
 
+        //dd($template,$product);
+
         return view('single-product', compact('product','template'));
     }
 
@@ -57,7 +59,9 @@ class ProductController extends DmxBaseController
 
         $nItems = $data['pagination']['per_page'];
 
-        return view('store-item', compact('products', 'nItems'));
+        $unknwVals = array("","-");
+
+        return view('store-item', compact('products', 'nItems', 'unknwVals'));
     }
 
     /**

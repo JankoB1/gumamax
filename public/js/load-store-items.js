@@ -91,7 +91,6 @@ const loadItemData = async (per_page) => {
     const ofTotalResultText = ((currPage-1)*perPage+1)  + "-" + ((currPage)*perPage) + " od " + total + " rezultata"
 
     last_page = total/perPage + (total%perPage>0?1:0)
-    console.log(total + ", " + perPage + ", " + total/perPage + ", " + last_page)
 
     document.getElementById("result-numbering").innerText = ofTotalResultText
 
