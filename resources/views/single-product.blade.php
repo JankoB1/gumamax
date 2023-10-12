@@ -4,7 +4,7 @@
 
     <section id="single-product-container" class="container-fluid">
         <div class="breadcrumb">
-            <p>Početna / Autogume / <strong>Tigar Wintera</strong></p>
+            <p>Početna / Autogume / <strong>{{$product["manufacturer"]}} {{$product["additional_description"]}}</strong></p>
         </div>
         <div class="single-product-inner">
             <div class="row">
@@ -15,19 +15,19 @@
                                 <img src="{{ asset('images/visuals/dot-tag.png') }}" alt="dot tag" class="dot-tag">
                                 <div class="single-product-gallery">
                                     <div class="single-image">
+                                        <img src="{{ $product["thumbnail_url_110"] }}" alt="product image">
+                                    </div>
+                                   <!-- <div class="single-image">
                                         <img src="{{ asset('images/visuals/product-image.png') }}" alt="product image">
                                     </div>
                                     <div class="single-image">
                                         <img src="{{ asset('images/visuals/product-image.png') }}" alt="product image">
-                                    </div>
-                                    <div class="single-image">
-                                        <img src="{{ asset('images/visuals/product-image.png') }}" alt="product image">
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                             <div class="col-10">
                                 <span class="tag">Najtraženije</span>
-                                <img src="{{ asset('images/visuals/product-image.png') }}" alt="featured product image" class="single-featured-image">
+                                <img src="{{ $product["image_url"] }}" alt="featured product image" class="single-featured-image">
                             </div>
                         </div>
                         <div class="row bottom-tags">
@@ -54,8 +54,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="single-product-meta">
-                        <p class="single-product-cat">Automobilske gume</p>
-                        <h2 class="single-product-title">Tigar Winter 195/65 R15</h2>
+                        <p class="single-product-cat">{{$product["description"]}}</p>
+                        <h2 class="single-product-title">{{$product["manufacturer"]}} {{$product["additional_description"]}}</h2>
                         <div class="vws-cont">
                             <div class="row">
                                 <div class="col-md-2">

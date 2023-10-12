@@ -37,54 +37,54 @@
                             <h4>Kategorije</h4>
                             <div class="form-group">
                                 <input type="checkbox" name="cat1">
-                                <label for="cat1">Zimske gumee</label>
+                                <label for="cat1">Zimske gume</label>
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="cat2">
-                                <label for="cat1">Zimske gumee</label>
+                                <label for="cat1">Letnje gume</label>
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="cat3">
-                                <label for="cat1">Zimske gumee</label>
+                                <label for="cat1">Sve sezone</label>
                             </div>
                         </div>
 
-                        <div class="brands">
+                        <div class="brands" id="brands-filter">
                             <h4>Brendovi</h4>
                             <div class="form-group">
-                                <input type="checkbox" name="brand1">
+                                <input type="checkbox" name="brand1" value="Pirelli">
                                 <label for="cat1">Pirelli</label>
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" name="brand2">
+                                <input type="checkbox" name="brand2" value="Tigar">
                                 <label for="cat1">Tigar</label>
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" name="brand3">
+                                <input type="checkbox" name="brand3" value="Sawa">
                                 <label for="cat1">Sawa</label>
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" name="brand3">
+                                <input type="checkbox" name="brand3" value="Orium">
                                 <label for="cat1">Orium</label>
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" name="brand3">
+                                <input type="checkbox" name="brand3" value="Michelin">
                                 <label for="cat1">Michelin</label>
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" name="brand3">
+                                <input type="checkbox" name="brand3" value="BFGoodrichi">
                                 <label for="cat1">BFGoodrichi</label>
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" name="brand3">
+                                <input type="checkbox" name="brand3" value="Continental">
                                 <label for="cat1">Continental</label>
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" name="brand3">
+                                <input type="checkbox" name="brand3" value="Kleber">
                                 <label for="cat1">Kleber</label>
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" name="brand3">
+                                <input type="checkbox" name="brand3" value="Mitas">
                                 <label for="cat1">Mitas</label>
                             </div>
                         </div>
@@ -102,7 +102,7 @@
                             </div>
                         </div>
 
-                        <button>Osveži</button>
+                        <button onclick="refresh()">Osveži</button>
                     </div>
 
                     <div class="shop-filter-banner">
@@ -433,7 +433,7 @@
     <script src="{{ asset("js/load-store-items.js") }}"></script>
     <script>
         initPage()
-        loadStoreItems(4)
-        loadItemData(4)
+        loadStoreItems(4,"")
+        loadItemData(4,"")
     </script>
 @endsection
