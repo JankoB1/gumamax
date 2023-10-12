@@ -1,11 +1,14 @@
 let current_page = 1
 let last_page
 
+let product_ids = []
+
 const PER_PAGE = 4
 
 const forward = document.getElementById("navForward")
 const backward = document.getElementById("navBackward")
 
+let mManufacturers = ""
 const initPage = () => {
 
     forward.onclick = navForward
@@ -27,8 +30,8 @@ const navForward = () => {
     forward.onclick = null
     backward.onclick = null
 
-    loadStoreItems(PER_PAGE)
-    loadItemData(PER_PAGE).then(() => {
+    loadStoreItems(PER_PAGE,mManufacturers)
+    loadItemData(PER_PAGE,mManufacturers).then(() => {
         if (current_page === last_page) {
             forward.style.color = "LightGray"
             forward.classList.remove("ripple")
@@ -51,8 +54,8 @@ const navBackward = () => {
     forward.onclick = null
     backward.onclick = null
 
-    loadStoreItems(PER_PAGE)
-    loadItemData(PER_PAGE).then(() => {
+    loadStoreItems(PER_PAGE,mManufacturers)
+    loadItemData(PER_PAGE,mManufacturers).then(() => {
         console.log(current_page + " - " + last_page)
         if (current_page !== last_page) {
             forward.style.color = ""
@@ -70,17 +73,19 @@ const navBackward = () => {
     })
 }
 
-const loadStoreItems = async (per_page) => {
+const loadStoreItems = async (per_page, manufacturers) => {
     let htmlDiv = await fetch(urlTo("prodavnica/items")
         + "?page=" + current_page
+        + "&manufacturers=" + manufacturers
         + "&per_page=" + per_page
         )
     document.getElementById("item-col").innerHTML = await htmlDiv.text()
 }
 
-const loadItemData = async (per_page) => {
+const loadItemData = async (per_page, manufacturers) => {
     let data = await fetch(urlTo("api/products/tyres/search")
         + "?page=" + current_page
+        + "&manufacturers=" + manufacturers
         + "&per_page=" + per_page
     )
     let jsonData = await data.json()
@@ -92,9 +97,25 @@ const loadItemData = async (per_page) => {
 
     last_page = total/perPage + (total%perPage>0?1:0)
 
+    data = jsonData["data"]
+    //mapiraj poziciju na stranici u koloni na product_id
+    let cnt = -1
+    data.forEach((e) => product_ids[++cnt] = e["product_id"])
+
     document.getElementById("result-numbering").innerText = ofTotalResultText
 
     current_page = currPage
+}
+
+const itemDetails = (index) => {
+    let mProdId = product_ids[index]
+    window.location.href = urlTo("proizvod/" + mProdId)
+}
+
+const addToCart = (index) => {
+    //ovo je prod id konkretnog proizvoda
+    let mProdId = product_ids[index]
+    //TODO: dodavanje proizvoda u korpu
 }
 
 const urlTo = (uri) => {
@@ -105,5 +126,10 @@ const urlTo = (uri) => {
     }else
         s = window.location.hostname + uri;
     return  window.location.protocol+'//'+ s;
+}
+
+const refresh = () => {
+    console.log(document.getElementById("brands-filter").querySelectorAll("input[type=checkbox]:checked"))
+
 }
 

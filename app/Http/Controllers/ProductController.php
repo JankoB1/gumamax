@@ -39,11 +39,12 @@ class ProductController extends DmxBaseController
         return view('single-product', compact('product','template'));
     }
 
-    public function showShop() {
-        /*$data = $this->repository->findFiltered();
-        $products = $data["hits"]["hits"];*/
-        //dd($products);
-        return view('shop');//, compact("products"));
+    public function showShop(Request $request) {
+        $manufacturers = $this->repository->getTyreBrands();
+        if ($request->session()->has("current_page")){
+            $request->session()->put("current_page", "1");
+        }
+        return view('shop', compact('manufacturers'));//, compact("products"));
     }
 
     public function showCompare() {
@@ -51,11 +52,14 @@ class ProductController extends DmxBaseController
     }
 
     public function showStoreItems(Request $request){
+        $request->session()->put('current_page', (int) $request->get('page', 1));
         $resp = $this->apiTyresSearch($request);
 
         $data = json_decode($resp->content(), true);
 
         $products = $data['data'];
+
+        if ($data['pagination']['per_page'] > $data['pagination']['total']) $data['pagination']['per_page'] = $data['pagination']['total'];
 
         $nItems = $data['pagination']['per_page'];
 

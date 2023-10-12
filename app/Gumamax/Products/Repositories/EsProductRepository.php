@@ -24,6 +24,8 @@ class EsProductRepository implements ProductRepositoryInterface {
 
     private $must = [];
 
+    private $should = [];
+
     private $mustNot = [];
 
     private $filter = [];
@@ -82,13 +84,19 @@ class EsProductRepository implements ProductRepositoryInterface {
 
             if ($query['manufacturer'] != '') {
 
-                $this->must[] = ['match' => ['manufacturer.facet' => $query['manufacturer']]];
+                $manufacturers = explode(",", $query['manufacturer']);
+                $mshould = [];
+                foreach ($manufacturers as $m){
+                    $mshould[] = ['match' => ['manufacturer' => $m]];
+                }
+
+                $this->must[] = ['bool' => ['should' => $mshould]];
 
             }
 
             if ($query['season'] != '') {
 
-                $this->must[] = ['match' => ['season.facet' => $query['season']]];
+                $this->must[] = ['match' => ['season' => $query['season']]];
 
             }
 
@@ -102,17 +110,21 @@ class EsProductRepository implements ProductRepositoryInterface {
 
             $this->searchParams['body']['query']['bool']['must_not'] = $this->mustNot;
 
-            $this->searchParams['body']['aggregations']['manufacturers']['terms']['field'] = 'manufacturer.facet';
+            $this->searchParams['body']['aggregations']['manufacturers']['terms']['field'] = 'manufacturer';
 
-            $this->searchParams['body']['aggregations']['seasons']['terms']['field'] = 'season.facet';
+            $this->searchParams['body']['aggregations']['seasons']['terms']['field'] = 'season';
 
-            $this->searchParams['body']['aggregations']['speed_indexes']['terms']['field'] = 'speed_index.facet';
+            $this->searchParams['body']['aggregations']['speed_indexes']['terms']['field'] = 'speed_index';
+
+            //dd($this->searchParams);
 
             $newOrder = $this->addSeasonOrder($order);
 
             $this->elastic->setOrder($this->searchParams, $newOrder);
 
             $this->data = $this->elastic->executeQuery($this->searchParams);
+
+            //dd($this->data);
 
             return $this->data;
         }
@@ -202,6 +214,8 @@ class EsProductRepository implements ProductRepositoryInterface {
             }
 
             $this->searchParams['body']['query']['bool']['must'] = $this->must;
+
+            $this->searchParams['body']['query']['bool']['should'] = $this->should;
 
             $this->searchParams['body']['query']['bool']['must_not'] = $this->mustNot;
 
@@ -391,10 +405,12 @@ class EsProductRepository implements ProductRepositoryInterface {
 
     }
 
-    public function findFiltered()
-    {
-        $this->searchParams['body']['size'] = 25;
-        $queryResponse = $this->elastic->executeQuery($this->searchParams);
-        return $queryResponse;
+    public function getTyreBrands(){
+        $this->searchParams['body']['fields'] = ['manufacturer'];
+        //$this->searchParams['body']['collapse']['field'] = 'manufacturer';
+        $results = $this->elastic->executeQuery($this->searchParams)['hits']['hits'];
+        $brands = array_map(function ($val) {
+            return $val['fields']['manufacturer'][0];
+        }, $results);
     }
 }

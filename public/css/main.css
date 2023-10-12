@@ -1103,10 +1103,24 @@ h5.single-shop-price {
     font-weight: 600;
     line-height: normal;
     padding-top: 18px;
+    cursor: pointer;
 }
 
 .quantity-area .plus {
     border-radius: 0px 4px 4px 0px;
+}
+
+.ripple{
+    background-position: center;
+    transition: background 0.5s;
+}
+.ripple:hover{
+    background: DarkGray radial-gradient(circle, transparent 1%, DarkGray 1%) center/15000%;
+}
+.ripple:active{
+    background-color: LightGray;
+    background-size: 100%;
+    transition: background 0s;
 }
 
 .qty {
