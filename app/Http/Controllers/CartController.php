@@ -139,7 +139,7 @@ class CartController extends DmxBaseController
 
         try {
             $this->cartService->setPaymentStatus($cartId, $paymentStatusId);
-            
+
             return $this->respondWithInfo('OK');
         } catch (\Exception $e) {
             return $this->respondInternalError($e->getMessage());
