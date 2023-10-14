@@ -561,12 +561,143 @@
             },
         });
 
-        jQuery.ajax({
-            url: window.location.origin + '/api/products/tyres/dimensions/widths/Putni%C4%8Dko', method: 'get', headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            }, success: function (result) {
-                console.log(result);
-            }
-        });
+        const cart = {
+            uuid: '1a7a6546-7927-420c-85df-501711bdfd22',
+            member_id: '',
+            subdomain: '',
+            currency_str: 'din',
+            currency: 'RSD',
+            shipping_option_id: 2,
+            shipping_method_id: 2,
+            shipping_to_partner_id: '',
+            payment_method_id: 5,
+            shipping_recipient: 'klasdkl',
+            shipping_address: 'kladklsd',
+            shipping_address2: '',
+            shipping_postal_code: '25212',
+            shipping_city: 'Aleksa Šantic',
+            shipping_phone: '12343524653',
+            shipping_email: 'jasd@gmail.com',
+            shipping_additional_info: '',
+            shipping_country_code: 'SRB',
+            shipping_country_iso_alpha_2: 'RS',
+            shipping_country_iso_alpha_3: 'SRB',
+            shipping_courier_price: 820,
+            billing_recipient: '',
+            billing_address: '',
+            billing_address2: '',
+            billing_postal_code: '',
+            billing_city: '',
+            billing_additional_info: '',
+            billing_phone: '',
+            billing_email: '',
+            billing_country_code: '',
+            items: [
+                {
+                    product_id: 2,
+                    merchant_id: 8080,
+                    description: 'Spoljna guma',
+                    description_id: 1679,
+                    additional_description: '130/90-10 Touring Force 61 L TL',
+                    manufacturer: 'Mitas',
+                    manufacturer_id: 796,
+                    uom_id: 'kom',
+                    packing: '1/1',
+                    cat_no: 598264,
+                    img_xs_url: 'https://delmaxapi.com/_img?img=/images/products/315000/271169.jpg&transform=resize,40',
+                    img_sm_url: 'https://delmaxapi.com/_img?img=/images/products/315000/271169.jpg&transform=resize,110',
+                    img_lg_url: 'https://delmaxapi.com/_img?img=/images/products/315000/271169.jpg',
+                    diameter: 10,
+                    vehicle_category: 'Putničko',
+                    tax_id: 4,
+                    product_weight: 3.4,
+                    season: 'Letnja',
+                    country_of_origin: '',
+                    year_of_production: '',
+                    action_price: 0,
+                    list_price: 4240,
+                    super_price: 4070.4,
+                    price_with_tax: 4070.4,
+                    discount: 4,
+                    weight: 10.2,
+                    tax_rate: 20,
+                    requested_qty: '',
+                    qty: 3,
+                    list_amount: 12720,
+                    amount_with_tax: 12211.2,
+                    discount_amount: 508.7999999999993,
+                    tax_amount: 2035.2,
+                    amount_without_tax: 10176,
+                    },
+                ],
+                installation: {
+                    alu: 0,
+                        cel: 0,
+                },
+                showInstallationCosts: false,
+                    list_amount: 16960,
+                    discount_amount: 678.3999999999996,
+                    amount_with_tax: 16281.6,
+                    shipping_amount_without_tax: 683.33,
+                    shipping_tax_amount: 136.67,
+                    shipping_amount_with_tax: 820,
+                    total_amount_without_tax: 14251.33,
+                    total_tax_amount: 2850.27,
+                    total_amount_with_tax: 17101.6,
+                    total_qty: 4,
+                    items_count: 1,
+                    total_weight: 13.6,
+                    available_payment_methods: [
+            {
+                payment_method_id: 5,
+                description: 'Karticom na sajtu',
+                is_default: 1,
+                icon: 'fa-credit-card',
+            },
+            {
+                payment_method_id: 4,
+                description: 'Opštom uplatnicom',
+                is_default: 0,
+                icon: 'fa-university',
+            },
+        ],
+            amount_without_tax: 13568,
+            tax_amount: 2713.6,
+        };
+
+        function testCart(cart, callback) {
+            const csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+            // Add the CSRF token to the headers of your AJAX request
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            });
+            $.ajax({
+                type: "post",
+                url: urlTo("api/cart/costs"),
+                data: {cart:cart},
+                dataType: "json",
+                complete: function(response) {
+                    $.ajax({
+                        type: "post",
+                        url: urlTo("/checkout/start"),
+                        data: {cart:cart},
+                        dataType: "json"
+                    }).done(function(costs) {
+
+                        console.log(costs);
+
+                    }).fail(function(jqXHR, textStatus) {
+                    });
+
+                }
+            })
+
+        }
+
+        testCart(cart, function() {});
+
     </script>
 @endsection

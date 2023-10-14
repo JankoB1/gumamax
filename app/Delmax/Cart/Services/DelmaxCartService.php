@@ -35,7 +35,7 @@ class DelmaxCartService
 
     public function create(Array $localCart)
     {
-        
+
         $cart_items = $this->CheckItemsQty($localCart['items']);
 
         if (empty($cart_items)) {
@@ -173,13 +173,13 @@ class DelmaxCartService
 
         $erp_order_items = $this->transformResponseOrderItems($response);
 
-        $order = Order::create($erp_order_header); 
+        $order = Order::create($erp_order_header);
 
         $order->items()->createMany($erp_order_items);
 
         if ($order->payment_method_id != PaymentMethod::CARDS_ONLINE) {
 
-            event('order.created', compact('order'));       
+            event('order.created', compact('order'));
 
             if ($order->payment_method_id == PaymentMethod::BANK_TRANSFER) {
 
@@ -188,7 +188,7 @@ class DelmaxCartService
             }
         }
 
-        event('user.order.created', [$user, compact('order')]);        
+        event('user.order.created', [$user, compact('order')]);
 
         return $order;
     }
@@ -250,11 +250,11 @@ class DelmaxCartService
 
             if ($i['qty'] != 0) {
                 $result[] = $i;
-            }           
+            }
         }
 
         return $result;
     }
 
-    
+
 }
