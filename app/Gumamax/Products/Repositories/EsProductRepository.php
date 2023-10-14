@@ -378,7 +378,7 @@ class EsProductRepository implements ProductRepositoryInterface {
      * @param $fieldName
      * @return mixed
      */
-    private function getBuckets($bucketsName, $fieldName)
+    public function getBuckets($bucketsName, $fieldName)
     {
         $this->searchParams['body']['size'] = 0;
 
@@ -406,11 +406,10 @@ class EsProductRepository implements ProductRepositoryInterface {
     }
 
     public function getTyreBrands(){
-        $this->searchParams['body']['fields'] = ['manufacturer'];
-        //$this->searchParams['body']['collapse']['field'] = 'manufacturer';
-        $results = $this->elastic->executeQuery($this->searchParams)['hits']['hits'];
-        $brands = array_map(function ($val) {
-            return $val['fields']['manufacturer'][0];
+
+        $results = $this->getBuckets("brands", "manufacturer");
+        return array_map(function ($val) {
+            return $val['key'];
         }, $results);
     }
 }

@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="single-shop-product-left">
-                <img src="{{ asset('images/visuals/dot-tag.png') }}" class="dot-img" alt="dot">
+                @if(sizeof(explode("/",$products[$cnt]["cat_no"])) > 1 && explode("/",$products[$cnt]["cat_no"])[1] == "2021") <img src="{{ asset('images/visuals/dot-tag.png') }}" class="dot-img" alt="dot"> @endif
                 <img style="cursor: pointer" src="{{ $products[$cnt]["image_url"] }}" alt="product image" class="featured-image" onclick="itemDetails( {{ $cnt }} )">
             </div>
         </div>
@@ -49,11 +49,11 @@
                     </div>
                     <div class="col-md-2">
                         @switch($products[$cnt]["season"])
-                            @case("Zimska")
+                            @case("Zimske")
                                 <img src="{{ asset('images/visuals/winter.svg') }}" alt="winter">
                                 <p>Zimska</p>
                                 @break
-                            @case("Letnja")
+                            @case("Letnje")
                                 <img src="{{ asset('images/visuals/summer.svg') }}" alt="winter">
                                 <p>Letnja</p>
                                 @break

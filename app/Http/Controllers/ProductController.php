@@ -40,11 +40,11 @@ class ProductController extends DmxBaseController
     }
 
     public function showShop(Request $request) {
-        $manufacturers = $this->repository->getTyreBrands();
+        $manufacturersArray = $this->repository->getTyreBrands();
         if ($request->session()->has("current_page")){
             $request->session()->put("current_page", "1");
         }
-        return view('shop', compact('manufacturers'));//, compact("products"));
+        return view('shop', compact('manufacturersArray'));//, compact("products"));
     }
 
     public function showCompare() {
