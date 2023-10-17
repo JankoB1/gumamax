@@ -10,7 +10,7 @@
         <div class="col-md-8">
             <div class="top-shop-product">
                 <h3 style="cursor: pointer" class="product-title" onclick="itemDetails( {{ $cnt }} )">{{ $products[$cnt]["manufacturer"] }} {{ $products[$cnt]["additional_description"] }}</h3>
-                <img src="{{ asset('images/visuals/compare.svg') }}" alt="compare" class="compare">
+                <img src="{{ asset('images/visuals/compare.svg') }}" alt="compare" class="compare ripple" onclick="selectForCompare(this,{{ $cnt }})">
                 <div class="stock">
                     @if($products[$cnt]["stock_status"] != 0)
                         <div class="stock-status-in"></div>
@@ -115,7 +115,7 @@
                 <span class="qty">1</span>
                 <span class="plus ripple">+</span>
             </div>
-            <button class="add-to-cart" onclick="addToCart( {{ $cnt }})">Dodaj u korpu</button>
+            <button class="add-to-cart" onclick="addToCart( {{ $cnt }}, this)">Dodaj u korpu</button>
         </div>
     </div>
 </div>

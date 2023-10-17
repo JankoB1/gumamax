@@ -2399,6 +2399,51 @@ section#choose-partner h2 {
     display: none;
 }
 
+#compare-popup {
+    display: none;
+    position: fixed;
+    right:0;
+    bottom:0;
+    width: 20%;
+    background-color: white;
+    -webkit-box-shadow: 0 2px 15px 0 rgba(0,0,0,0.6);
+    box-shadow: 0 2px 15px 0 rgba(0,0,0,0.6);
+    -moz-box-shadow: 0 2px 15px 0 rgba(0,0,0,0.6);
+    z-index: 9999;
+    margin: 1%;
+    padding: 2%;
+}
+
+#compare-popup-delete {
+    cursor: pointer;
+}
+
+button.compare-popup-btn {
+    width: calc(100% - 150px);
+    float: none;
+    height: 54px;
+    color: #FFF;
+    text-align: center;
+    font-family: Barlow;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border-radius: 4px;
+    background: #E70F18;
+    border: none;
+    outline: none;
+    margin: 25px auto auto 23%;
+}
+
+.compare-popup-product-image{
+    display: block;
+    max-width:80%;
+    max-height:100%;
+    width: auto;
+    height: auto;
+}
+
 @media only screen and (max-width: 768px) {
     #hero-homepage .swiper-slide {
         padding: 0 5% 6vh;

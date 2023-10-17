@@ -18,8 +18,8 @@
                     <span>Sortiraj prema</span>
                     <select name="sort" id="sort">
                         <!--<option value="1">Popularnosti</option>-->
-                        <option value="1">Ceni opadajuće</option>
-                        <option value="2">Ceni rastuće</option>
+                        <option value="price_with_tax%7Casc">Ceni rastuće</option>
+                        <option value="price_with_tax%7Cdesc">Ceni opadajuće</option>
                     </select>
                     <div class="navigation">
                         <span id="navBackward" class="left ripple"><i class="fa-solid fa-chevron-left"></i></span>
@@ -59,20 +59,20 @@
                             @endforeach
                         </div>
 
-                        <div class="price-filter">
+                        <div class="price-filter" id="radio-sort">
                             <h4>Cena</h4>
                             <p>Sortiraj prema</p>
                             <div class="form-group">
-                                <input type="checkbox" name="brand3">
+                                <input type="radio" name="radio-sort" value="price_with_tax%7Casc">
                                 <label for="cat1">Najnižoj ka najvišoj</label>
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" name="brand3">
+                                <input type="radio" name="radio-sort" value="price_with_tax%7Cdesc">
                                 <label for="cat1">Najvišoj ka najnižoj</label>
                             </div>
                         </div>
 
-                        <button onclick="refresh()">Osveži</button>
+                        <button id="refresh-btn">Osveži</button>
                     </div>
 
                     <div class="shop-filter-banner">
@@ -85,7 +85,18 @@
                     <div class="best-sellers">
                         <h4>Najprodavanije</h4>
                         <div class="divider"></div>
-                        <div class="single-best-seller row">
+                        @foreach($bestsellers as $b)
+                        <div class="single-best-seller row" product_id="{{ $b['product_id'] }}">
+                            <div class="col-md-3">
+                                <img style="cursor: pointer" src="{{ $b['image_url'] }}" alt="best seller image">
+                            </div>
+                            <div class="col-md-9">
+                                <p style="cursor: pointer">{{ $b['additional_description'] }}</p>
+                                <h6> {{ number_format($b["price_with_tax"], 2, ",", ".") }} RSD</h6>
+                            </div>
+                        </div>
+                        @endforeach
+                       <!-- <div class="single-best-seller row">
                             <div class="col-md-3">
                                 <img src="{{ asset('images/visuals/best-seller.png') }}" alt="best seller image">
                             </div>
@@ -102,16 +113,7 @@
                                 <p>Gume za motocikl</p>
                                 <h6>4,650 RSD</h6>
                             </div>
-                        </div>
-                        <div class="single-best-seller row">
-                            <div class="col-md-3">
-                                <img src="{{ asset('images/visuals/best-seller.png') }}" alt="best seller image">
-                            </div>
-                            <div class="col-md-9">
-                                <p>Gume za motocikl</p>
-                                <h6>4,650 RSD</h6>
-                            </div>
-                        </div>
+                        </div>-->
                     </div>
 
                 </div>
@@ -396,6 +398,10 @@
             </div>
         </div>
     </section>
+
+    <div id="compare-popup">
+        <button class="compare-popup-btn">Uporedi &gt;</button>
+    </div>
 
 @endsection
 

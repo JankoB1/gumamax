@@ -92,6 +92,7 @@ Route::get('/faq', [HomeController::class, 'faq']);
 Route::get('/popup/{slug}', [HomeController::class, 'popup']);
 Route::get('/read-tyre', [HomeController::class, 'howToReadTyre']);
 
+Route::get('/api/products/tyres/{id}', [ProductController::class, 'fetchSingleItem'])->where('id', '[0-9]+')->name('fetch_tyres');
 /*
 |--------------------------------------------------------------------------
 | Products

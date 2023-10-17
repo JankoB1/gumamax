@@ -34,17 +34,19 @@ class ProductController extends DmxBaseController
 
         $template = DimensionDescriptionTemplate::tyresTemplateArray()->toArray();
 
-        //dd($template,$product);
-
         return view('single-product', compact('product','template'));
     }
 
     public function showShop(Request $request) {
+        $request->session()->put("to_compare", "4411");
+
+        $request->session()->put("test", "323");
+
         $manufacturersArray = $this->repository->getTyreBrands();
-        if ($request->session()->has("current_page")){
-            $request->session()->put("current_page", "1");
-        }
-        return view('shop', compact('manufacturersArray'));//, compact("products"));
+
+        $bestsellers = $this->repository->getBestsellers();
+
+        return view('shop', compact('manufacturersArray', 'bestsellers'));//, compact("products"));
     }
 
     public function showCompare() {
@@ -52,7 +54,6 @@ class ProductController extends DmxBaseController
     }
 
     public function showStoreItems(Request $request){
-        $request->session()->put('current_page', (int) $request->get('page', 1));
         $resp = $this->apiTyresSearch($request);
 
         $data = json_decode($resp->content(), true);
@@ -66,6 +67,16 @@ class ProductController extends DmxBaseController
         $unknwVals = array("","-");
 
         return view('store-item', compact('products', 'nItems', 'unknwVals'));
+    }
+
+    public function fetchSingleItem($productId){
+        $data = $this->repository->findById($productId);
+
+        if (!$data){
+            abort(404);
+        }
+
+        return $data;
     }
 
     /**

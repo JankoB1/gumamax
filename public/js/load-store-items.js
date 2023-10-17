@@ -2,11 +2,17 @@ let current_page = 1
 let last_page
 
 let product_ids = []
+let compare_btn_map = new Map();
 
 const PER_PAGE = 4
 
+const COMPARE_LIST_COOKIE_NAME = "to_compare"
+
+const refreshBtn = document.getElementById("refresh-btn")
 const forward = document.getElementById("navForward")
 const backward = document.getElementById("navBackward")
+const sort = document.getElementById("sort")
+const comparePopup = document.getElementById("compare-popup")
 
 let mManufacturers = ""
 let mSeasons = ""
@@ -24,9 +30,41 @@ const initPage = () => {
         backward.onclick = null
     }
 
-    loadStoreItems(4,"","").then(
-        () => loadItemData(4,"","")
+    loadStoreItems(4,"","", sort.value).then(() => {
+            loadItemData(4, "", "", sort.value).then(() =>  {})
+        for (let elem of document.getElementsByClassName("plus")) {
+            elem.onclick = () => {
+                let qtyElem = elem.parentNode.querySelector(".qty")
+                let currQty = parseInt(qtyElem.innerText)
+                qtyElem.innerText = currQty + 1
+            }
+        }
+            for (let elem of document.getElementsByClassName("minus")) {
+                elem.onclick = () => {
+                    let qtyElem = elem.parentNode.querySelector(".qty")
+                    let currQty = parseInt(qtyElem.innerText)
+                    if (currQty > 0)
+                        qtyElem.innerText = currQty - 1
+                }
+            }
+        }
     )
+
+    refreshBtn.onclick = refresh
+    sort.onchange = () => {
+        document.getElementById("radio-sort")
+            .querySelectorAll("input[type=radio]")
+            .forEach(
+                (e,k,p) => e.checked = false
+            )
+        refresh()
+    }
+
+    for(let elem of document.getElementsByClassName("single-best-seller")){
+        elem.onclick = () => {
+            window.location.href = urlTo("proizvod/" + elem.getAttribute("product_id"))
+        }
+    }
 }
 
 const checkNavForward = () => {
@@ -51,8 +89,8 @@ const navForward = () => {
     forward.onclick = null
     backward.onclick = null
 
-    loadStoreItems(PER_PAGE,mManufacturers, mSeasons).then( () =>
-        loadItemData(PER_PAGE,mManufacturers, mSeasons).then(() => checkNavForward())
+    loadStoreItems(PER_PAGE,mManufacturers, mSeasons, sort.value).then( () =>
+        loadItemData(PER_PAGE,mManufacturers, mSeasons, sort.value).then(() => checkNavForward())
     )
 }
 
@@ -78,14 +116,15 @@ const navBackward = () => {
     forward.onclick = null
     backward.onclick = null
 
-    loadStoreItems(PER_PAGE,mManufacturers, mSeasons).then( () =>
-        loadItemData(PER_PAGE,mManufacturers, mSeasons).then(() => checkNavBackward())
+    loadStoreItems(PER_PAGE,mManufacturers, mSeasons, sort.value).then( () =>
+        loadItemData(PER_PAGE,mManufacturers, mSeasons, sort.value).then(() => checkNavBackward())
     )
 }
 
-const loadStoreItems = async (per_page, manufacturers, seasons) => {
+const loadStoreItems = async (per_page, manufacturers, seasons, order) => {
     let htmlDiv = await fetch(urlTo("prodavnica/items")
         + "?page=" + current_page
+        + "&order=" + order
         + "&manufacturers=" + manufacturers
         + "&seasons="+ seasons
         + "&per_page=" + per_page
@@ -93,9 +132,10 @@ const loadStoreItems = async (per_page, manufacturers, seasons) => {
     document.getElementById("item-col").innerHTML = await htmlDiv.text()
 }
 
-const loadItemData = async (per_page, manufacturers, seasons) => {
+const loadItemData = async (per_page, manufacturers, seasons, order) => {
     let data = await fetch(urlTo("api/products/tyres/search")
         + "?page=" + current_page
+        + "&order=" + order
         + "&manufacturers=" + manufacturers
         + "&seasons="+ seasons
         + "&per_page=" + per_page
@@ -117,6 +157,17 @@ const loadItemData = async (per_page, manufacturers, seasons) => {
     document.getElementById("result-numbering").innerText = ofTotalResultText
 
     current_page = currPage
+
+    compare_btn_map.clear()
+    let compareBtns = [].slice.call(document.getElementById("item-col").getElementsByClassName("compare"))
+    for (let b of compareBtns){
+        let pr_id = product_ids[compareBtns.indexOf(b)]
+        compare_btn_map.set(pr_id,b);
+        if (getCookie(COMPARE_LIST_COOKIE_NAME).includes(pr_id + "#")) {
+            b.style.backgroundColor = "lightgrey"
+            addToComparePopup(pr_id)
+        }
+    }
 }
 
 const itemDetails = (index) => {
@@ -124,9 +175,82 @@ const itemDetails = (index) => {
     window.location.href = urlTo("proizvod/" + mProdId)
 }
 
-const addToCart = (index) => {
+const addToComparePopup = async (prodId) => {
+    let prod = await (await fetch(urlTo("/api/products/tyres/") + prodId)).json()
+    if (getCookie(COMPARE_LIST_COOKIE_NAME).split("#").length !== 1) comparePopup.style.display = "block"
+    comparePopup.innerHTML = " <div class=\"single-best-seller row\" product_id=\'" + prodId + "\'>\n" +
+        "                            <div class=\"col-md-3\">\n" +
+        "                                <img src=\"" + prod["image_url"] + "\" alt=\"product image\"\n class=\"compare-popup-product-image\">" +
+        "                            </div>\n" +
+        "                            <div class=\"col-md-9\">\n" +
+        "                                <p>" + prod["additional_description"] + "</p>\n" +
+        "                                <h6>" + parseFloat(prod["price_with_tax"]).toString().replace(".",",") + "RSD</h6>\n" +
+        "                            </div>" +
+        "                           <div class=\"col-md-2\">" +
+        "                               <img src=\"http://localhost/images/visuals/delete-icon.svg\" id=\"compare-popup-delete\" onclick=\"iconRemoveFromComparePopup(" + prodId + ")\">" +
+        "                           </div>"+
+        "                        </div>"+
+         comparePopup.innerHTML
+}
+const removeFromComparePopup = (prodId) => {
+    for(let el of comparePopup.getElementsByClassName("single-best-seller")){
+        if (parseInt(el.getAttribute("product_id")) === prodId)
+            comparePopup.removeChild(el)
+    }
+}
+
+const iconRemoveFromComparePopup = (prodId) => {
+    setCookie(COMPARE_LIST_COOKIE_NAME,getCookie(COMPARE_LIST_COOKIE_NAME).replace(prodId + "#",""),1)
+    compare_btn_map.get(prodId).style.backgroundColor = "white"
+    removeFromComparePopup(prodId);
+    if(getCookie(COMPARE_LIST_COOKIE_NAME).split("#").length === 1) comparePopup.style.display = "none"
+}
+
+const selectForCompare = (caller, index) => {
+    let mProdId = product_ids[index]
+    if (getCookie(COMPARE_LIST_COOKIE_NAME).includes(mProdId+"#")){
+        setCookie(COMPARE_LIST_COOKIE_NAME,getCookie(COMPARE_LIST_COOKIE_NAME).replace(mProdId + "#",""),1)
+        caller.style.backgroundColor = "white"
+        removeFromComparePopup(mProdId);
+        if(getCookie(COMPARE_LIST_COOKIE_NAME).split("#").length === 1) comparePopup.style.display = "none"
+    }else if(getCookie(COMPARE_LIST_COOKIE_NAME).split("#").length < 5){
+        setCookie(COMPARE_LIST_COOKIE_NAME,getCookie(COMPARE_LIST_COOKIE_NAME).concat(mProdId + "#"),1)
+        caller.style.backgroundColor = "lightgrey"
+        addToComparePopup(mProdId).then(r => {})
+    }else{
+        //TODO: Upozori o maks 4
+        console.log("Max 4 " + getCookie(COMPARE_LIST_COOKIE_NAME).split("#").length)
+    }
+}
+
+const getCookie = (cname) => {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+const setCookie = (cname, cvalue, exdays) => {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+const addToCart = (index,caller) => {
     //ovo je prod id konkretnog proizvoda
     let mProdId = product_ids[index]
+    let quantity = parseInt(caller.parentNode.querySelector(".qty").innerText)
+    console.log("ITEM " + mProdId + " qty " + quantity)
     //TODO: dodavanje proizvoda u korpu
 }
 
@@ -157,11 +281,14 @@ const refresh = () => {
             mSeasons = mSeasons.concat("," + e.value)
     })
     mSeasons = mSeasons.slice(1,)
-    console.log(mSeasons)
 
     current_page = 1
-    loadStoreItems(4,mManufacturers,mSeasons).then(
-        () => loadItemData(4,mManufacturers,mSeasons).then( () => {
+
+    document.getElementById("radio-sort")
+        .querySelectorAll("input[type=radio]:checked").forEach((e,k,p) => sort.value = e.value)
+
+    loadStoreItems(4,mManufacturers,mSeasons, sort.value).then(
+        () => loadItemData(4,mManufacturers,mSeasons, sort.value).then( () => {
             checkNavForward()
             checkNavBackward()
             })

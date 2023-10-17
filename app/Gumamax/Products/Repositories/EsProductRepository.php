@@ -406,10 +406,35 @@ class EsProductRepository implements ProductRepositoryInterface {
     }
 
     public function getTyreBrands(){
-
+        //dojvati sve postojece brendove iz indeksa
         $results = $this->getBuckets("brands", "manufacturer");
         return array_map(function ($val) {
             return $val['key'];
         }, $results);
+    }
+
+    public function getBestsellers()
+    {
+        $mSearchParams['body']['size'] = 3;
+        $mSearchParams['body']['query']['function_score'] = ['random_score' => ['seed' => date('Ym')]];
+        $mSearchParams['body']['query']['function_score']['query']['bool']['should'] =[
+            ['bool' => ['must' => [["match" => ["width" => "225"]],["match" =>  ["ratio" => "45"]],["match" =>  ["diameter" => "17"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "205"]],["match" =>  ["ratio" => "55"]],["match" =>  ["diameter" => "16"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "205"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "16"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "195"]],["match" =>  ["ratio" => "65"]],["match" =>  ["diameter" => "15"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "185"]],["match" =>  ["ratio" => "65"]],["match" =>  ["diameter" => "15"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "185"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "15"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "185"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "14"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "175"]],["match" =>  ["ratio" => "65"]],["match" =>  ["diameter" => "14"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "165"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "14"]]]]]
+        ];
+
+        $mSearchParams['body']['query']['function_score']['query']['bool']['must'] = $this->must;
+
+        $mSearchParams['body']['query']['function_score']['query']['bool']['must_not'] = $this->mustNot;
+
+        //dd(json_encode($mSearchParams));
+        $results = $this->elastic->executeQuery($mSearchParams);
+        return array_map(function ($val) { return $val["_source"]; },$results["hits"]["hits"]);
     }
 }
