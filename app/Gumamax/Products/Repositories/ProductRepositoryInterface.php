@@ -41,5 +41,5 @@ interface ProductRepositoryInterface {
 
     public function getTyreBrands();
 
-    public function getBestsellers();
+    public function getBestsellers($seed,$size);
 }

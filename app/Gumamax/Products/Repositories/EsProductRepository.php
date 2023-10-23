@@ -413,10 +413,10 @@ class EsProductRepository implements ProductRepositoryInterface {
         }, $results);
     }
 
-    public function getBestsellers()
+    public function getBestsellers($seed,$size)
     {
-        $mSearchParams['body']['size'] = 3;
-        $mSearchParams['body']['query']['function_score'] = ['random_score' => ['seed' => date('Ym')]];
+        $mSearchParams['body']['size'] = $size;
+        $mSearchParams['body']['query']['function_score'] = ['random_score' => ['seed' => $seed]];
         $mSearchParams['body']['query']['function_score']['query']['bool']['should'] =[
             ['bool' => ['must' => [["match" => ["width" => "225"]],["match" =>  ["ratio" => "45"]],["match" =>  ["diameter" => "17"]]]]],
             ['bool' => ['must' => [["match" => ["width" => "205"]],["match" =>  ["ratio" => "55"]],["match" =>  ["diameter" => "16"]]]]],

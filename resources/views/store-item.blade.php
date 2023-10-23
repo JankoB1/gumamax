@@ -10,7 +10,7 @@
         <div class="col-md-8">
             <div class="top-shop-product">
                 <h3 style="cursor: pointer" class="product-title" onclick="itemDetails( {{ $cnt }} )">{{ $products[$cnt]["manufacturer"] }} {{ $products[$cnt]["additional_description"] }}</h3>
-                <img src="{{ asset('images/visuals/compare.svg') }}" alt="compare" class="compare ripple" onclick="selectForCompare(this,{{ $cnt }})">
+                <img src="{{ asset('images/visuals/compare.svg') }}" alt="compare" class="compare-icon ripple" onclick="selectForCompare(this,{{ $cnt }})">
                 <div class="stock">
                     @if($products[$cnt]["stock_status"] != 0)
                         <div class="stock-status-in"></div>
@@ -66,7 +66,7 @@
                 </div>
                 <div class="price-details">
                     <h5 class="single-shop-price"> {{ number_format($products[$cnt]["price_with_tax"], 2, ",", ".") }} RSD</h5>
-                    <a href="#" onclick="itemDetails( {{ $cnt }} )">Detalji o proizvodu</a>
+                    <a href="/proizvod/{{ $products[$cnt]["product_id"] }}">Detalji o proizvodu</a>
                 </div>
                 <p>Isporuka od tri do sedam radnih dana</p>
             </div>

@@ -16,7 +16,16 @@ const comparePopup = document.getElementById("compare-popup")
 
 let mManufacturers = ""
 let mSeasons = ""
-const initPage = () => {
+
+
+function interceptUndefined(s){
+    if (s === undefined)
+        return ""
+    else
+        return s
+}
+
+const initPage = (seasons,diameter) => {
 
     forward.onclick = navForward
     backward.onclick = navBackward
@@ -30,20 +39,20 @@ const initPage = () => {
         backward.onclick = null
     }
 
-    loadStoreItems(4,"","", sort.value).then(() => {
-            loadItemData(4, "", "", sort.value).then(() =>  {})
-        for (let elem of document.getElementsByClassName("plus")) {
-            elem.onclick = () => {
-                let qtyElem = elem.parentNode.querySelector(".qty")
-                let currQty = parseInt(qtyElem.innerText)
-                qtyElem.innerText = currQty + 1
+    loadStoreItems(PER_PAGE,"", seasons, sort.value).then(() => {
+            loadItemData(PER_PAGE, "", seasons, sort.value).then(() =>  {})
+            for (let elem of document.getElementsByClassName("plus")) {
+                elem.onclick = () => {
+                    let qtyElem = elem.parentNode.querySelector(".qty")
+                    let currQty = parseInt(qtyElem.innerText)
+                    qtyElem.innerText = currQty + 1
+                }
             }
-        }
             for (let elem of document.getElementsByClassName("minus")) {
                 elem.onclick = () => {
                     let qtyElem = elem.parentNode.querySelector(".qty")
                     let currQty = parseInt(qtyElem.innerText)
-                    if (currQty > 0)
+                    if (currQty > 1)
                         qtyElem.innerText = currQty - 1
                 }
             }
@@ -184,7 +193,7 @@ const addToComparePopup = async (prodId) => {
         "                            </div>\n" +
         "                            <div class=\"col-md-9\">\n" +
         "                                <p>" + prod["additional_description"] + "</p>\n" +
-        "                                <h6>" + parseFloat(prod["price_with_tax"]).toString().replace(".",",") + "RSD</h6>\n" +
+        "                                <h6>" + parseFloat(prod["price_with_tax"]).toString().replace(".",",") + " RSD</h6>\n" +
         "                            </div>" +
         "                           <div class=\"col-md-2\">" +
         "                               <img src=\"http://localhost/images/visuals/delete-icon.svg\" id=\"compare-popup-delete\" onclick=\"iconRemoveFromComparePopup(" + prodId + ")\">" +

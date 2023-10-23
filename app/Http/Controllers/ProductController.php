@@ -15,6 +15,8 @@ class ProductController extends DmxBaseController
 
     protected $repository;
 
+    protected const unknwnVals = array("","-");
+
     public function __construct(ProductRepositoryInterface $repository)
     {
         parent::__construct();
@@ -26,6 +28,8 @@ class ProductController extends DmxBaseController
     public function showSingleProduct($productId) {
         $data = $this->repository->findById($productId);
 
+        $featured = $this->repository->getBestsellers(date("Ymd"),4);
+
         if (!$data) {
             abort(404);
         }
@@ -34,19 +38,31 @@ class ProductController extends DmxBaseController
 
         $template = DimensionDescriptionTemplate::tyresTemplateArray()->toArray();
 
-        return view('single-product', compact('product','template'));
+        $bestsellingDimens = [
+            "165/70/R14",
+            "175/65/R14",
+            "185/60/R14",
+            "185/60/R15",
+            "185/65/R15",
+            "195/65/R15",
+            "205/60/R16",
+            "205/55/R16",
+            "225/45/R17"
+        ];
+
+        $unknwVals = self::unknwnVals;
+
+        //dd($product);
+        return view('single-product', compact('product','template', 'bestsellingDimens', 'unknwVals', 'featured'));
     }
 
     public function showShop(Request $request) {
-        $request->session()->put("to_compare", "4411");
-
-        $request->session()->put("test", "323");
 
         $manufacturersArray = $this->repository->getTyreBrands();
 
-        $bestsellers = $this->repository->getBestsellers();
+        $bestsellers = $this->repository->getBestsellers(date("Ym"),3);
 
-        return view('shop', compact('manufacturersArray', 'bestsellers'));//, compact("products"));
+        return view('shop', compact('manufacturersArray', 'bestsellers', 'request'));//, compact("products"));
     }
 
     public function showCompare() {
@@ -64,7 +80,7 @@ class ProductController extends DmxBaseController
 
         $nItems = $data['pagination']['per_page'];
 
-        $unknwVals = array("","-");
+        $unknwVals = self::unknwnVals;
 
         return view('store-item', compact('products', 'nItems', 'unknwVals'));
     }

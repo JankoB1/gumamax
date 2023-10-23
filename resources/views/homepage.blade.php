@@ -185,7 +185,7 @@
                                     <p>165/70 R14</p>
                                 </div>
                             </div>
-                            <button type="button">Pretraga</button>
+                            <button type="button" id="homepage-dims-search-btn">Pretraga</button>
                         </div>
                     </div>
                 </div>
@@ -551,9 +551,11 @@
 
 @section('scriptsBottom')
     <script src="{{ asset("js/tyre-search.js") }}"></script>
+    <script src="{{ asset("js/main.js") }}"></script>
 
     <script>
         init_form();
+        init_home();
         let heroSlider = new Swiper(".hero-swiper", {
             navigation: {
                 nextEl: ".swiper-button-next",

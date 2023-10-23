@@ -400,7 +400,7 @@
     </section>
 
     <div id="compare-popup">
-        <button class="compare-popup-btn">Uporedi &gt;</button>
+        <button class="compare-popup-btn" onclick="window.location.href = urlTo('uporedi')">Uporedi &gt;</button>
     </div>
 
 @endsection
@@ -408,6 +408,6 @@
 @section("scriptsBottom")
     <script src="{{ asset("js/load-store-items.js") }}"></script>
     <script>
-        initPage()
+        initPage(interceptUndefined("{{$request->query("seasons")}}"),{{$request->query("diameter")}})
     </script>
 @endsection
