@@ -16,6 +16,8 @@
                 </div>
                 <div class="col-md-5 offset-md-3">
                     <span>Sortiraj prema</span>
+                    <img src="{{ asset('images/visuals/filter.svg') }}" alt="filter">
+                    <span class="filters-mobile">Filteri</span>
                     <select name="sort" id="sort">
                         <!--<option value="1">Popularnosti</option>-->
                         <option value="1">Ceni opadajuće</option>
@@ -402,6 +404,12 @@
 @section("scriptsBottom")
     <script src="{{ asset("js/load-store-items.js") }}"></script>
     <script>
-        initPage()
+        initPage();
+
+        let filterTrigger = document.querySelector('.sort-bar .col-md-5.offset-md-3 img');
+        let filters = document.querySelector('.filters');
+        filterTrigger.addEventListener('click', function () {
+            filters.classList.toggle('active');
+        });
     </script>
 @endsection

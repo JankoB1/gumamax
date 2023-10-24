@@ -26,8 +26,8 @@
 </head>
 <body>
     <div id="app">
-        <header class="{{ Request::path() == '/'? 'homepage-header': '' }}">
-            <nav class="navbar navbar-expand-md secondary-nav">
+        <header class="{{ Request::path() == '/'? 'homepage-header': '' }} desktop">
+            <nav class="navbar navbar-expand-lg secondary-nav">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         <img src="{{ asset('images/visuals/logo.svg') }}" alt="gumamax logo">
@@ -92,6 +92,49 @@
                     </div>
                 </div>
             </nav>
+        </header>
+
+        <header class="mobile">
+            <div class="top-mobile-header">
+                <div class="burger">
+                    <img src="{{ asset('images/visuals/burger.svg') }}" alt="burger">
+                </div>
+                <div class="logo-mobile">
+                    <a href="#">
+                        <img src="{{ asset('images/visuals/logo.svg') }}" alt="gumamax logo">
+                    </a>
+                </div>
+                <a href="#">
+                    <img src="{{ asset('images/visuals/location-pin.svg') }}" alt="location pin">
+                </a>
+                <div class="cart-li">
+                    <a href="#">
+                        <img src="{{ asset('images/visuals/cart.svg') }}" alt="cart">
+                        <span class="cart-num">0</span>
+                    </a>
+                </div>
+                <a href="#">
+                    <img src="{{ asset('images/visuals/account.svg') }}" alt="account">
+                </a>
+            </div>
+            <div class="bottom-mobile-header">
+                <div class="bottom-mobile-header-inner">
+                    <div class="mobile-top-ul">
+                        <ul>
+                            <li><a href="#">Gume</a></li>
+                            <li><a href="#">Ratkapne</a></li>
+                            <li><a href="#">Ulja</a></li>
+                            <li><a href="#">Akumulatori</a></li>
+                            <li><a href="#">Auto oprema</a></li>
+                            <li><a href="#">O nama</a></li>
+                            <li><a href="#">Kontakt</a></li>
+                        </ul>
+                    </div>
+                    <div class="mobile-bottom-ul">
+                        <a href="#">Prijava</a>
+                    </div>
+                </div>
+            </div>
         </header>
 
         <main>
@@ -163,5 +206,14 @@
     </footer>
 
 @yield('scriptsBottom')
+
+    <script type="text/javascript">
+        let burger = document.querySelector('.top-mobile-header .burger');
+        let mobileHeader = document.querySelector('.bottom-mobile-header');
+        burger.addEventListener('click', function() {
+            mobileHeader.classList.toggle('active');
+        });
+    </script>
+
 </body>
 </html>

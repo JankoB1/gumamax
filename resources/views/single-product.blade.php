@@ -82,7 +82,37 @@
                                     <span class="qty">1</span>
                                     <span class="plus">+</span>
                                 </div>
-                                <button class="add-to-cart">Dodaj u korpu</button>
+                                <button class="add-to-cart addToCartBtn"
+                                        data-product_id="{!! $product['product_id'] !!}"
+                                        data-merchant_id="{!! $product['merchant_id'] !!}"
+                                        data-list_price="{!!$product['list_price']!!}"
+                                        data-super_price="{!!$product['super_price']!!}"
+                                        data-action_price="{!!$product['super_price']!!}"
+                                        data-price_with_tax="{!!$product['price_with_tax']!!}"
+                                        data-tax_id="{!!$product['tax_id']!!}"
+                                        data-tax_rate="{!!$product['tax_rate']!!}"
+                                        data-discount="{!!$product['discount']!!}"
+
+                                        data-description="{!!$product['description']!!}"
+                                        data-description_id="{!!$product['description_id']!!}"
+
+                                        data-additional_description="{!!$product['additional_description']!!}"
+                                        data-manufacturer="{!!$product['manufacturer']!!}"
+                                        data-manufacturer_id="{!!$product['manufacturer_id']!!}"
+                                        data-cat_no="{!!$product['cat_no']!!}"
+
+                                        data-uom_id="{!!$product['uom_id']!!}"
+                                        data-packing="{!!$product['packing']!!}"
+
+                                        data-img_xs_url="{!!$product['thumbnail_url_40']!!}"
+                                        data-img_sm_url="{!!$product['thumbnail_url_110']!!}"
+                                        data-img_lg_url="{!!$product['image_url']!!}"
+                                        data-vehicle_category="{!!$product['vehicle_category']!!}"
+                                        data-diameter="{!!$product['diameter']!!}"
+                                        data-product_weight="{!!$product['product_weight']!!}"
+                                        data-country_of_origin="{!!$product['country_of_origin']!!}"
+                                        data-season="{!!$product['season']!!}"
+                                        data-year_of_production="{!!$product['year_of_production']!!}">Dodaj u korpu</button>
                             </div>
                         </div>
                         <div class="product-table-info">
@@ -279,4 +309,9 @@
         </div>
     </section>
 
+@endsection
+
+@section('scriptsBottom')
+    <script src="{{ asset('js/common.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/shop.js') }}" type="text/javascript"></script>
 @endsection

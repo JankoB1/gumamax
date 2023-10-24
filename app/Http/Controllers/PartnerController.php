@@ -23,7 +23,7 @@ class PartnerController extends Controller
 
     public function __construct(DelmaxCartService $cartService, PartnerLocator $partnerLocator)
     {
-        parent::__construct();
+//        parent::__construct();
 
         $this->cartService = $cartService;
 

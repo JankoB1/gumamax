@@ -65,11 +65,11 @@ return [
 
         'delmax_gumamax' => [
             'driver' => 'mysql',
-            'host' => '5.9.54.73',
+            'host' => '127.0.0.1',
             'port' => env('DB_DELMAX_GUMAMAX_PORT', '3306'),
             'database' => 'delmax_gumamax',
-            'username' => 'nora_adm',
-            'password' => env('DB_PASSWORD', ''),
+            'username' => 'root',
+            'password' => '',
             // ...
         ],
 
@@ -79,7 +79,7 @@ return [
             'port' => env('DB_DELMAX_CATALOG_PORT', '3306'),
             'database' => 'delmax_catalog',
             'username' => 'nora_adm',
-            'password' => env('DB_PASSWORD', ''),
+            'password' => 'B6xxv474$A0yv49c6~',
             // ...
         ],
 
@@ -89,7 +89,7 @@ return [
             'port' => env('DB_DELMAX_CRM_PORT', '3306'),
             'database' => 'delmax_crm',
             'username' => 'nora_adm',
-            'password' => env('DB_PASSWORD', ''),
+            'password' => 'B6xxv474$A0yv49c6~',
             // ...
         ],
 
@@ -99,7 +99,7 @@ return [
             'port' => env('DB_DELMAX_CRM_PORT', '3306'),
             'database' => 'delmaxapi',
             'username' => 'nora_adm',
-            'password' => env('DB_PASSWORD', ''),
+            'password' => 'B6xxv474$A0yv49c6~',
             // ...
         ],
 
@@ -109,7 +109,7 @@ return [
             'port' => env('DB_DELMAX_CRM_PORT', '3306'),
             'database' => 'fw_001',
             'username' => 'nora_adm',
-            'password' => env('DB_PASSWORD', ''),
+            'password' => 'B6xxv474$A0yv49c6~',
             // ...
         ],
 

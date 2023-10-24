@@ -172,7 +172,9 @@ class ShippingCalculator {
         return $result;
     }
 
-    private function getCalcValue($courierPriceBaseId, $qty=0, $weight=0){
+    private function getCalcValue($courierPriceBaseId, $qty=1, $weight=1){
+        $qty = 1;
+        $weight = 1;
 
         switch ($courierPriceBaseId) {
             case 'PACKAGE':
@@ -237,4 +239,4 @@ class ShippingCalculator {
         return $data;
     }
 
-} 
+}

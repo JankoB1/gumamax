@@ -34,7 +34,7 @@ class ProductController extends DmxBaseController
 
         $template = DimensionDescriptionTemplate::tyresTemplateArray()->toArray();
 
-        //dd($template,$product);
+//        dd($template,$product);
 
         return view('single-product', compact('product','template'));
     }
