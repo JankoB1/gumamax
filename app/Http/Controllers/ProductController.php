@@ -25,7 +25,63 @@ class ProductController extends DmxBaseController
 
     }
 
-    public function showSingleProduct($productId) {
+    public function showShopBatteries(Request $request){
+        $bestsellers = $this->repository->getBestsellersBatteries(date("Ym"),3);
+
+        return view('shop-batteries', compact('bestsellers'));
+    }
+
+    public function showStoreItemsBatteries(Request $request){
+
+        $resp = $this->apiBatteriesSearch($request);
+
+        $data = json_decode($resp->content(), true);
+
+        $products = $data['data'];
+
+        if ($data['pagination']['per_page'] > $data['pagination']['total']) $data['pagination']['per_page'] = $data['pagination']['total'];
+
+        $nItems = $data['pagination']['per_page'];
+
+        $unknwVals = self::unknwnVals;
+
+        return view('store-item-battery', compact('products', 'nItems', 'unknwVals'));
+    }
+
+    public function showSingleProduct($productId, $kind){
+
+        switch ($kind){
+            case 'guma':
+                return $this->showSingleProductTyre($productId);
+            case 'akumulator':
+                return $this->showSingleProductBattery($productId);
+            case 'ulje':
+                return $this->showSingleProductOil($productId);
+            case 'ratkapna':
+                return $this->showSingleProductHubcap($productId);
+            default:
+                abort(404);
+        }
+    }
+
+    public function showSingleProductBattery($productId) {
+
+        $data = $this->repository->findBatteryById($productId);
+
+        $featured = $this->repository->getBestsellersBatteries(date("Ymd"),4);
+
+        if (!$data) {
+            abort(404);
+        }
+
+        $product = $data;
+
+        //dd($product);
+        return view('single-product-battery', compact('product', 'featured'));
+    }
+
+    public function showSingleProductTyre($productId) {
+
         $data = $this->repository->findById($productId);
 
         $featured = $this->repository->getBestsellers(date("Ymd"),4);
@@ -114,6 +170,34 @@ class ProductController extends DmxBaseController
         return view('product.show', compact('product','template'));
     }
 
+    public function apiBatteriesSearch(Request $request){
+
+        $this->setPaginationRequest($request);
+
+        $data = $this->repository->batteriesSearch($this->order, $this->perPage,  $this->currentPage);
+
+        if (!is_null($data)) {
+            $this->total = $this->repository->getTotal();
+
+            event('user.search', [['query'=>$this->query, 'total'=>$this->total]]);
+
+            $items = $data['hits']['hits'];
+
+            $data = $this->repository->transformerBatteries->transformCollection($items);
+
+            $this->data = compact('data');
+        } else {
+
+            event('user.search', [['query'=>$this->query, 'total'=>0]]);
+
+            $data = null;
+
+            $this->data = compact('data');
+        }
+
+        return $this->respondWithPagination();
+    }
+
     /**
      * @param Request $request
      * @return mixed
@@ -141,7 +225,7 @@ class ProductController extends DmxBaseController
 
             $aggregations = $data['aggregations'];
 
-            $data = $this->repository->transformer->transformCollection($items);
+            $data = $this->repository->transformerTyres->transformCollection($items);
 
             $this->data = compact('data', 'aggregations');
         } else {
@@ -174,7 +258,7 @@ class ProductController extends DmxBaseController
 
             //$aggregations = $data['aggregations'];
 
-            $data = $this->repository->transformer->transformCollection($items);
+            $data = $this->repository->transformerTyres->transformCollection($items);
 
             $this->data = compact('data');
         } else {

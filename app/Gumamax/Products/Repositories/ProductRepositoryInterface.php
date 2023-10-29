@@ -12,6 +12,7 @@ namespace Gumamax\Products\Repositories;
 interface ProductRepositoryInterface {
 
     public function range($fromId, $toId);
+    public function batteriesSearch($order='', $perPage=0, $page=-1);
 
     public function tyresSearch($query=[], $order='', $perPage=0, $page=-1);
 
@@ -42,4 +43,8 @@ interface ProductRepositoryInterface {
     public function getTyreBrands();
 
     public function getBestsellers($seed,$size);
+
+    public function getBestsellersBatteries($seed,$size);
+
+    public function findBatteryById($id);
 }

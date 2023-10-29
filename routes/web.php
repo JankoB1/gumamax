@@ -65,13 +65,19 @@ use Elasticsearch\ClientBuilder;
 Auth::routes();
 
 Route::get('/', [MainController::class, 'index'])->name('show-homepage');
-Route::get('/proizvod/{id}', [ProductController::class, 'showSingleProduct'])->name('show-single-product');
-Route::get('/prodavnica', [ProductController::class, 'showShop'])->name('show-shop');
+Route::get('/proizvod/{id}/{kind}', [ProductController::class, 'showSingleProduct'])->name('show-single-product');
+Route::get('/gume', [ProductController::class, 'showShop'])->name('show-shop');
 Route::get('/uporedi', [ProductController::class, 'showCompare'])->name('show-compare');
 Route::get('/mreza-partnera', [PartnerController::class, 'showPartners'])->name('show-partners');
 Route::get('/partner', [PartnerController::class, 'showSinglePartner'])->name('show-single-partner');
 Route::get('/porudzbina', [OrderController::class, 'showMakeOrder'])->name('show-make-order');
-Route::get('/prodavnica/items', [ProductController::class, 'showStoreItems'])->name('show-store-items');
+Route::get('/gume/items', [ProductController::class, 'showStoreItems'])->name('show-store-items');
+
+
+//novi proizvodi
+Route::get('/akumulatori', [ProductController::class, 'showShopBatteries'])->name('show-shop-batteries');
+Route::get('api/products/batteries/search', [ProductController::class, 'apiBatteriesSearch'])->name('api.products.batteries.search');
+Route::get('akumulatori/items', [ProductController::class, 'showStoreItemsBatteries'])->name('show-store-items-batteries');
 
 Route::get('partners/login', [PartnerController::class, 'login']);
 
@@ -93,6 +99,7 @@ Route::get('/popup/{slug}', [HomeController::class, 'popup']);
 Route::get('/read-tyre', [HomeController::class, 'howToReadTyre']);
 
 Route::get('/api/products/tyres/{id}', [ProductController::class, 'fetchSingleItem'])->where('id', '[0-9]+')->name('fetch_tyres');
+
 /*
 |--------------------------------------------------------------------------
 | Products

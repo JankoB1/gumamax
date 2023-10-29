@@ -131,7 +131,7 @@ const navBackward = () => {
 }
 
 const loadStoreItems = async (per_page, manufacturers, seasons, order) => {
-    let htmlDiv = await fetch(urlTo("prodavnica/items")
+    let htmlDiv = await fetch(urlTo("gume/items")
         + "?page=" + current_page
         + "&order=" + order
         + "&manufacturers=" + manufacturers
@@ -181,7 +181,7 @@ const loadItemData = async (per_page, manufacturers, seasons, order) => {
 
 const itemDetails = (index) => {
     let mProdId = product_ids[index]
-    window.location.href = urlTo("proizvod/" + mProdId)
+    window.location.href = urlTo("proizvod/" + mProdId + "/guma")
 }
 
 const addToComparePopup = async (prodId) => {

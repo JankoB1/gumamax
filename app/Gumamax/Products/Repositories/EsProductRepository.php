@@ -3,6 +3,7 @@
 use Delmax\elastic\DelmaxElastic;
 use Delmax\Products\Product;
 use Gumamax\Products\ElasticTyresTransformer;
+use Gumamax\Products\ElasticBatteriesTransformer;
 
 use function PHPUnit\Framework\isNull;
 
@@ -15,12 +16,17 @@ use function PHPUnit\Framework\isNull;
 
 class EsProductRepository implements ProductRepositoryInterface {
 
-
     private $data;
 
     private $searchParams;
 
-    public $transformer;
+    public $transformerTyres;
+
+    public $transformerBatteries;
+
+    public $transformerHubcaps;
+
+    public $transformerOil;
 
     private $must = [];
 
@@ -30,13 +36,20 @@ class EsProductRepository implements ProductRepositoryInterface {
 
     private $filter = [];
 
-    private $elastic;
+    private $elasticTyres;
+    private $elasticHubcaps;
+    private $elasticBatteries;
+    private $elasticOil;
 
     public function __construct(){
 
-        $this->elastic = new DelmaxElastic('gumamax', 'tyres_2016', 'es_id');
+        $this->elasticTyres = new DelmaxElastic('gumamax', 'tyres_2016', 'es_id');
+        $this->elasticBatteries = new DelmaxElastic('gumamax', 'batteries_2023', 'es_id');
+        $this->elasticHubcaps = new DelmaxElastic('gumamax', 'hubcaps_2023', 'es_id');
+        $this->elasticOil = new DelmaxElastic('gumamax', 'oil_2023', 'es_id');
 
-        $this->transformer = new ElasticTyresTransformer();
+        $this->transformerTyres = new ElasticTyresTransformer();
+        $this->transformerBatteries = new ElasticBatteriesTransformer();
 
         $this->must = [
             ['match' => ['company_id' => '8000']],
@@ -63,7 +76,7 @@ class EsProductRepository implements ProductRepositoryInterface {
 
         $this->searchParams['body']['size'] = $perPage;
 
-        if ($this->elastic->queryString !== '') {
+        if ($this->elasticTyres->queryString !== '') {
 
             if($query['vehicle_category'] != '') {
                 $this->must[]= ['match' => ['vehicle_category' => $query['vehicle_category']]];
@@ -120,9 +133,9 @@ class EsProductRepository implements ProductRepositoryInterface {
 
             $newOrder = $this->addSeasonOrder($order);
 
-            $this->elastic->setOrder($this->searchParams, $newOrder);
+            $this->elasticTyres->setOrder($this->searchParams, $newOrder);
 
-            $this->data = $this->elastic->executeQuery($this->searchParams);
+            $this->data = $this->elasticTyres->executeQuery($this->searchParams);
 
             //dd($this->data);
 
@@ -161,7 +174,7 @@ class EsProductRepository implements ProductRepositoryInterface {
             }
         }
 
-        if ($this->elastic->queryString!=='') {
+        if ($this->elasticTyres->queryString!=='') {
 
             if($query['product_id']!=''){
                 $this->mustNot[]= ['match' => ['product_id' => $query['product_id']]];
@@ -219,9 +232,9 @@ class EsProductRepository implements ProductRepositoryInterface {
 
             $this->searchParams['body']['query']['bool']['must_not'] = $this->mustNot;
 
-            $this->elastic->setOrder($this->searchParams, $order);
+            $this->elasticTyres->setOrder($this->searchParams, $order);
 
-            $this->data = $this->elastic->executeQuery($this->searchParams);
+            $this->data = $this->elasticTyres->executeQuery($this->searchParams);
 
             return $this->data;
         }
@@ -308,11 +321,11 @@ class EsProductRepository implements ProductRepositoryInterface {
 
                 $this->searchParams['body']['query']['bool']['must_not'] = $this->mustNot;
 
-                $this->data = $this->elastic->executeQuery($this->searchParams);
+                $this->data = $this->elasticTyres->executeQuery($this->searchParams);
 
                 $items = $this->data['hits']['hits'];
 
-                $data = $this->transformer->transformCollection($items);
+                $data = $this->transformerTyres->transformCollection($items);
 
                 if (!empty($data)) {
                     $result[] = $data[0];
@@ -368,7 +381,7 @@ class EsProductRepository implements ProductRepositoryInterface {
 
             $this->searchParams['body']['query']['bool']['must_not'] = $this->mustNot;
 
-            $this->data = $this->elastic->countQuery($this->searchParams);
+            $this->data = $this->elasticTyres->countQuery($this->searchParams);
 
             return $this->data;
     }
@@ -392,7 +405,7 @@ class EsProductRepository implements ProductRepositoryInterface {
 
         $this->searchParams['body']['aggregations'][$bucketsName]['terms']['size'] = 1000;
 
-        $queryResponse = $this->elastic->executeQuery($this->searchParams);
+        $queryResponse = $this->elasticTyres->executeQuery($this->searchParams);
 
         return $queryResponse['aggregations'][$bucketsName]['buckets'];
     }
@@ -434,7 +447,99 @@ class EsProductRepository implements ProductRepositoryInterface {
         $mSearchParams['body']['query']['function_score']['query']['bool']['must_not'] = $this->mustNot;
 
         //dd(json_encode($mSearchParams));
-        $results = $this->elastic->executeQuery($mSearchParams);
+        $results = $this->elasticTyres->executeQuery($mSearchParams);
         return array_map(function ($val) { return $val["_source"]; },$results["hits"]["hits"]);
+    }
+
+    public function batteriesSearch($order = '', $perPage = 0, $page = -1)
+    {
+        $this->searchParams['body']['query']['bool']['must'] = $this->must;
+
+        $this->searchParams['body']['query']['bool']['must_not'] = $this->mustNot;
+
+        $this->searchParams['body']['from'] = $this->calculateFrom($page, $perPage);
+
+        $this->searchParams['body']['size'] = $perPage;
+
+        $this->data = $this->elasticBatteries->executeQuery($this->searchParams);
+
+        //dd($this->data);
+
+        return $this->data;
+    }
+
+    public function getBestsellersBatteries($seed,$size)
+    {
+        $mSearchParams['body']['size'] = $size;
+        $mSearchParams['body']['query']['function_score'] = ['random_score' => ['seed' => $seed]];
+        /*$mSearchParams['body']['query']['function_score']['query']['bool']['should'] =[
+            ['bool' => ['must' => [["match" => ["width" => "225"]],["match" =>  ["ratio" => "45"]],["match" =>  ["diameter" => "17"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "205"]],["match" =>  ["ratio" => "55"]],["match" =>  ["diameter" => "16"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "205"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "16"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "195"]],["match" =>  ["ratio" => "65"]],["match" =>  ["diameter" => "15"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "185"]],["match" =>  ["ratio" => "65"]],["match" =>  ["diameter" => "15"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "185"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "15"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "185"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "14"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "175"]],["match" =>  ["ratio" => "65"]],["match" =>  ["diameter" => "14"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "165"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "14"]]]]]
+        ];*/
+
+        $mSearchParams['body']['query']['function_score']['query']['bool']['must'] = $this->must;
+
+        $mSearchParams['body']['query']['function_score']['query']['bool']['must_not'] = $this->mustNot;
+
+        //dd(json_encode($mSearchParams));
+        $results = $this->elasticBatteries->executeQuery($mSearchParams);
+        return array_map(function ($val) { return $val["_source"]; },$results["hits"]["hits"]);
+    }
+
+    public function findBatteryById($id)
+    {
+        $data = $this->getBatteryById([$id]);
+
+        if (is_array($data)){
+            return $data[0];
+        }
+
+        return null;
+    }
+
+    private function getBatteryById($query = [])
+    {
+        $this->searchParams['body']['from']  = 0;
+
+        $this->searchParams['body']['size']  = 1;
+        $result = null;
+
+        foreach ($query as $key=>$value) {
+
+            $product_id = $this->escapeSlash($value);
+
+            if ($product_id != '') {
+
+                $newMust = ['match' => ['product_id' => $product_id]];
+
+                $this->searchParams['body']['query']['bool']['must'] = $this->must;
+                $this->searchParams['body']['query']['bool']['must'][] = $newMust;
+
+                $this->searchParams['body']['query']['bool']['must_not'] = $this->mustNot;
+
+                $this->data = $this->elasticBatteries->executeQuery($this->searchParams);
+
+                $items = $this->data['hits']['hits'];
+
+                $data = $this->transformerBatteries->transformCollection($items);
+
+                if (!empty($data)) {
+                    $result[] = $data[0];
+                }
+            }
+        }
+
+        if (is_array($result)){
+            return $result;
+        }
+
+        return null;
     }
 }
