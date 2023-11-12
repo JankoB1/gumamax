@@ -152,7 +152,14 @@
                     <div class="col-md-4 common-used-dimensions">
                         <div class="row">
                             <p>Najčešće dimenzije</p>
-                            <div class="col-md-4">
+                            @for($cnt = 0; $cnt < 9; $cnt++)
+                                @if($cnt % 3 == 0) <div class="col-md-4"> @endif
+                                    <div class="single-dimension" style="cursor: pointer;" onclick="clickCommonDim(this)">
+                                        <p>{{ $bestsellingDimens[$cnt] }}</p>
+                                    </div>
+                                @if($cnt % 3 == 2) </div> @endif
+                            @endfor
+                            <!--<div class="col-md-4">
                                 <div class="single-dimension">
                                     <p>165/70 R14</p>
                                 </div>
@@ -184,7 +191,7 @@
                                 <div class="single-dimension">
                                     <p>165/70 R14</p>
                                 </div>
-                            </div>
+                            </div>-->
                             <button type="button" id="homepage-dims-search-btn">Pretraga</button>
                         </div>
                     </div>

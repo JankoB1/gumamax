@@ -4,7 +4,7 @@
 
     <section id="single-product-container" class="container-fluid">
         <div class="breadcrumb">
-            <p>Početna / Akumulatori / <strong>{{$product["manufacturer"]}} {{$product["additional_description"]}}</strong></p>
+            <p>Početna / Ratkapne / <strong>{{$product["manufacturer"]}} {{$product["additional_description"]}}</strong></p>
         </div>
         <div class="single-product-inner">
             <div class="row">

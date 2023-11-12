@@ -424,6 +424,7 @@ section#tyres-search {
     line-height: normal;
     padding: 12px 10px;
     margin-bottom: 8px;
+    text-align: center;
 }
 
 #tyres-search .common-used-dimensions button,

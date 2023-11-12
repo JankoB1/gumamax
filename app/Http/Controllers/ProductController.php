@@ -25,6 +25,52 @@ class ProductController extends DmxBaseController
 
     }
 
+    public function showShopOil(Request $request){
+        $bestsellers = $this->repository->getBestsellersOil(date("Ym"),3);
+
+        return view('shop-oil', compact('bestsellers'));
+    }
+
+    public function showStoreItemsOil(Request $request){
+
+        $resp = $this->apiOilSearch($request);
+
+        $data = json_decode($resp->content(), true);
+
+        $products = $data['data'];
+
+        if ($data['pagination']['per_page'] > $data['pagination']['total']) $data['pagination']['per_page'] = $data['pagination']['total'];
+
+        $nItems = $data['pagination']['per_page'];
+
+        $unknwVals = self::unknwnVals;
+
+        return view('store-item-oil', compact('products', 'nItems', 'unknwVals'));
+    }
+
+    public function showShopHubcaps(Request $request){
+    $bestsellers = $this->repository->getBestsellersHubcaps(date("Ym"),3);
+
+    return view('shop-hubcaps', compact('bestsellers'));
+    }
+
+    public function showStoreItemsHubcaps(Request $request){
+
+        $resp = $this->apiHubcapsSearch($request);
+
+        $data = json_decode($resp->content(), true);
+
+        $products = $data['data'];
+
+        if ($data['pagination']['per_page'] > $data['pagination']['total']) $data['pagination']['per_page'] = $data['pagination']['total'];
+
+        $nItems = $data['pagination']['per_page'];
+
+        $unknwVals = self::unknwnVals;
+
+        return view('store-item-hubcap', compact('products', 'nItems', 'unknwVals'));
+    }
+
     public function showShopBatteries(Request $request){
         $bestsellers = $this->repository->getBestsellersBatteries(date("Ym"),3);
 
@@ -62,6 +108,38 @@ class ProductController extends DmxBaseController
             default:
                 abort(404);
         }
+    }
+
+    public function showSingleProductOil($productId) {
+
+        $data = $this->repository->findOilById($productId);
+
+        $featured = $this->repository->getBestsellersOil(date("Ymd"),4);
+
+        if (!$data) {
+            abort(404);
+        }
+
+        $product = $data;
+
+        //dd($product);
+        return view('single-product-oil', compact('product', 'featured'));
+    }
+
+    public function showSingleProductHubcap($productId) {
+
+        $data = $this->repository->findHubcapById($productId);
+
+        $featured = $this->repository->getBestsellersHubcaps(date("Ymd"),4);
+
+        if (!$data) {
+            abort(404);
+        }
+
+        $product = $data;
+
+        //dd($product);
+        return view('single-product-hubcap', compact('product', 'featured'));
     }
 
     public function showSingleProductBattery($productId) {
@@ -157,6 +235,7 @@ class ProductController extends DmxBaseController
      */
     public function show($productId)
     {
+
         $data = $this->repository->findById($productId);
 
         if (!$data){
@@ -168,6 +247,62 @@ class ProductController extends DmxBaseController
         $template = DimensionDescriptionTemplate::tyresTemplateArray()->toArray();
 
         return view('product.show', compact('product','template'));
+    }
+
+    public function apiOilSearch(Request $request){
+
+        $this->setPaginationRequest($request);
+
+        $data = $this->repository->oilSearch($this->order, $this->perPage,  $this->currentPage);
+
+        if (!is_null($data)) {
+            $this->total = $this->repository->getTotal();
+
+            event('user.search', [['query'=>$this->query, 'total'=>$this->total]]);
+
+            $items = $data['hits']['hits'];
+
+            $data = $this->repository->transformerOil->transformCollection($items);
+
+            $this->data = compact('data');
+        } else {
+
+            event('user.search', [['query'=>$this->query, 'total'=>0]]);
+
+            $data = null;
+
+            $this->data = compact('data');
+        }
+
+        return $this->respondWithPagination();
+    }
+
+    public function apiHubcapsSearch(Request $request){
+
+        $this->setPaginationRequest($request);
+
+        $data = $this->repository->hubcapsSearch($this->order, $this->perPage,  $this->currentPage);
+
+        if (!is_null($data)) {
+            $this->total = $this->repository->getTotal();
+
+            event('user.search', [['query'=>$this->query, 'total'=>$this->total]]);
+
+            $items = $data['hits']['hits'];
+
+            $data = $this->repository->transformerHubcaps->transformCollection($items);
+
+            $this->data = compact('data');
+        } else {
+
+            event('user.search', [['query'=>$this->query, 'total'=>0]]);
+
+            $data = null;
+
+            $this->data = compact('data');
+        }
+
+        return $this->respondWithPagination();
     }
 
     public function apiBatteriesSearch(Request $request){

@@ -79,6 +79,14 @@ Route::get('/akumulatori', [ProductController::class, 'showShopBatteries'])->nam
 Route::get('api/products/batteries/search', [ProductController::class, 'apiBatteriesSearch'])->name('api.products.batteries.search');
 Route::get('akumulatori/items', [ProductController::class, 'showStoreItemsBatteries'])->name('show-store-items-batteries');
 
+Route::get('/ulja', [ProductController::class, 'showShopOil'])->name('show-shop-batteries');
+Route::get('api/products/oil/search', [ProductController::class, 'apiOilSearch'])->name('api.products.batteries.search');
+Route::get('ulja/items', [ProductController::class, 'showStoreItemsOil'])->name('show-store-items-batteries');
+
+Route::get('/ratkapne', [ProductController::class, 'showShopHubcaps'])->name('show-shop-batteries');
+Route::get('api/products/hubcaps/search', [ProductController::class, 'apiHubcapsSearch'])->name('api.products.batteries.search');
+Route::get('ratkapne/items', [ProductController::class, 'showStoreItemsHubcaps'])->name('show-store-items-batteries');
+
 Route::get('partners/login', [PartnerController::class, 'login']);
 
 Route::get('partners/membership/create', [MembershipRequestController::class, 'create'])->name('partners.membership.create');

@@ -1,9 +1,11 @@
 <?php namespace Gumamax\Products\Repositories;
 
+use App\Gumamax\Products\ElasticOilTransformer;
 use Delmax\elastic\DelmaxElastic;
 use Delmax\Products\Product;
 use Gumamax\Products\ElasticTyresTransformer;
 use Gumamax\Products\ElasticBatteriesTransformer;
+use Gumamax\Products\ElasticHubcapsTransformer;
 
 use function PHPUnit\Framework\isNull;
 
@@ -50,6 +52,8 @@ class EsProductRepository implements ProductRepositoryInterface {
 
         $this->transformerTyres = new ElasticTyresTransformer();
         $this->transformerBatteries = new ElasticBatteriesTransformer();
+        $this->transformerHubcaps = new ElasticHubcapsTransformer();
+        $this->transformerOil = new ElasticOilTransformer();
 
         $this->must = [
             ['match' => ['company_id' => '8000']],
@@ -541,5 +545,190 @@ class EsProductRepository implements ProductRepositoryInterface {
         }
 
         return null;
+    }
+
+    public function getBestsellersHubcaps($seed,$size)
+    {
+        $mSearchParams['body']['size'] = $size;
+        $mSearchParams['body']['query']['function_score'] = ['random_score' => ['seed' => $seed]];
+        /*$mSearchParams['body']['query']['function_score']['query']['bool']['should'] =[
+            ['bool' => ['must' => [["match" => ["width" => "225"]],["match" =>  ["ratio" => "45"]],["match" =>  ["diameter" => "17"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "205"]],["match" =>  ["ratio" => "55"]],["match" =>  ["diameter" => "16"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "205"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "16"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "195"]],["match" =>  ["ratio" => "65"]],["match" =>  ["diameter" => "15"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "185"]],["match" =>  ["ratio" => "65"]],["match" =>  ["diameter" => "15"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "185"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "15"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "185"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "14"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "175"]],["match" =>  ["ratio" => "65"]],["match" =>  ["diameter" => "14"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "165"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "14"]]]]]
+        ];*/
+
+        $mSearchParams['body']['query']['function_score']['query']['bool']['must'] = $this->must;
+
+        $mSearchParams['body']['query']['function_score']['query']['bool']['must_not'] = $this->mustNot;
+
+        //dd(json_encode($mSearchParams));
+        $results = $this->elasticHubcaps->executeQuery($mSearchParams);
+        return array_map(function ($val) { return $val["_source"]; },$results["hits"]["hits"]);
+    }
+
+    public function findHubcapById($id)
+    {
+        $data = $this->getHubcapById([$id]);
+
+        if (is_array($data)){
+            return $data[0];
+        }
+
+        return null;
+    }
+
+    private function getHubcapById($query = [])
+    {
+        $this->searchParams['body']['from']  = 0;
+
+        $this->searchParams['body']['size']  = 1;
+        $result = null;
+
+        foreach ($query as $key=>$value) {
+
+            $product_id = $this->escapeSlash($value);
+
+            if ($product_id != '') {
+
+                $newMust = ['match' => ['product_id' => $product_id]];
+
+                $this->searchParams['body']['query']['bool']['must'] = $this->must;
+                $this->searchParams['body']['query']['bool']['must'][] = $newMust;
+
+                $this->searchParams['body']['query']['bool']['must_not'] = $this->mustNot;
+
+                $this->data = $this->elasticHubcaps->executeQuery($this->searchParams);
+
+                $items = $this->data['hits']['hits'];
+
+                $data = $this->transformerBatteries->transformCollection($items);
+
+                if (!empty($data)) {
+                    $result[] = $data[0];
+                }
+            }
+        }
+
+        if (is_array($result)){
+            return $result;
+        }
+
+        return null;
+    }
+
+    public function hubcapsSearch($order = '', $perPage = 0, $page = -1)
+    {
+        $this->searchParams['body']['query']['bool']['must'] = $this->must;
+
+        $this->searchParams['body']['query']['bool']['must_not'] = $this->mustNot;
+
+        $this->searchParams['body']['from'] = $this->calculateFrom($page, $perPage);
+
+        $this->searchParams['body']['size'] = $perPage;
+
+        $this->data = $this->elasticHubcaps->executeQuery($this->searchParams);
+
+        //dd($this->data);
+
+        return $this->data;
+    }
+
+
+    public function getBestsellersOil($seed,$size)
+    {
+        $mSearchParams['body']['size'] = $size;
+        $mSearchParams['body']['query']['function_score'] = ['random_score' => ['seed' => $seed]];
+        /*$mSearchParams['body']['query']['function_score']['query']['bool']['should'] =[
+            ['bool' => ['must' => [["match" => ["width" => "225"]],["match" =>  ["ratio" => "45"]],["match" =>  ["diameter" => "17"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "205"]],["match" =>  ["ratio" => "55"]],["match" =>  ["diameter" => "16"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "205"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "16"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "195"]],["match" =>  ["ratio" => "65"]],["match" =>  ["diameter" => "15"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "185"]],["match" =>  ["ratio" => "65"]],["match" =>  ["diameter" => "15"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "185"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "15"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "185"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "14"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "175"]],["match" =>  ["ratio" => "65"]],["match" =>  ["diameter" => "14"]]]]],
+            ['bool' => ['must' => [["match" => ["width" => "165"]],["match" =>  ["ratio" => "60"]],["match" =>  ["diameter" => "14"]]]]]
+        ];*/
+
+        $mSearchParams['body']['query']['function_score']['query']['bool']['must'] = $this->must;
+
+        $mSearchParams['body']['query']['function_score']['query']['bool']['must_not'] = $this->mustNot;
+
+        //dd(json_encode($mSearchParams));
+        $results = $this->elasticOil->executeQuery($mSearchParams);
+        return array_map(function ($val) { return $val["_source"]; },$results["hits"]["hits"]);
+    }
+
+    public function findOilById($id)
+    {
+        $data = $this->getOilById([$id]);
+
+        if (is_array($data)){
+            return $data[0];
+        }
+
+        return null;
+    }
+
+    private function getOilById($query = [])
+    {
+        $this->searchParams['body']['from']  = 0;
+
+        $this->searchParams['body']['size']  = 1;
+        $result = null;
+
+        foreach ($query as $key=>$value) {
+
+            $product_id = $this->escapeSlash($value);
+
+            if ($product_id != '') {
+
+                $newMust = ['match' => ['product_id' => $product_id]];
+
+                $this->searchParams['body']['query']['bool']['must'] = $this->must;
+                $this->searchParams['body']['query']['bool']['must'][] = $newMust;
+
+                $this->searchParams['body']['query']['bool']['must_not'] = $this->mustNot;
+
+                $this->data = $this->elasticOil->executeQuery($this->searchParams);
+
+                $items = $this->data['hits']['hits'];
+
+                $data = $this->transformerOil->transformCollection($items);
+
+                if (!empty($data)) {
+                    $result[] = $data[0];
+                }
+            }
+        }
+
+        if (is_array($result)){
+            return $result;
+        }
+
+        return null;
+    }
+
+    public function oilSearch($order = '', $perPage = 0, $page = -1)
+    {
+        $this->searchParams['body']['query']['bool']['must'] = $this->must;
+
+        $this->searchParams['body']['query']['bool']['must_not'] = $this->mustNot;
+
+        $this->searchParams['body']['from'] = $this->calculateFrom($page, $perPage);
+
+        $this->searchParams['body']['size'] = $perPage;
+
+        $this->data = $this->elasticOil->executeQuery($this->searchParams);
+
+        //dd($this->data);
+
+        return $this->data;
     }
 }

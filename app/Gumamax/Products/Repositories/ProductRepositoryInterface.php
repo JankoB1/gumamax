@@ -47,4 +47,12 @@ interface ProductRepositoryInterface {
     public function getBestsellersBatteries($seed,$size);
 
     public function findBatteryById($id);
+
+    public function getBestsellersHubcaps(string $date, int $int);
+
+    public function findHubcapById($productId);
+
+    public function hubcapsSearch($order, $perPage, $currentPage);
+
+    public function getBestsellersOil(string $date, int $int);
 }

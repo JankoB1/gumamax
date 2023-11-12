@@ -4,7 +4,7 @@
 
     <section id="single-product-container" class="container-fluid">
         <div class="breadcrumb">
-            <p>Početna / Akumulatori / <strong>{{$product["manufacturer"]}} {{$product["additional_description"]}}</strong></p>
+            <p>Početna / Ulja / <strong>{{$product["manufacturer"]}} {{$product["additional_description"]}}</strong></p>
         </div>
         <div class="single-product-inner">
             <div class="row">
@@ -300,7 +300,7 @@
 @endsection
 
 @section("scriptsBottom")
-    <script src="{{ asset("js/single-product-battery.js") }}"></script>
+    <script src="{{ asset("js/single-product.js") }}"></script>
     <script>
         initPageSingleItem()
     </script>

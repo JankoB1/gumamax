@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="breadcrumb">
-        <p>Početna / <strong>Akumulatori</strong></p>
+        <p>Početna / <strong>Ratkapne</strong></p>
     </div>
 
     <section id="shop-inner">
@@ -402,7 +402,7 @@
 @endsection
 
 @section("scriptsBottom")
-    <script src="{{ asset("js/load-store-items-batteries.js") }}"></script>
+    <script src="{{ asset("js/load-store-items-hubcaps.js") }}"></script>
     <script>
         initPage()
     </script>

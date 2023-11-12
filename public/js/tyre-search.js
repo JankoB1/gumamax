@@ -297,7 +297,6 @@ function loadDiameters(element, selectedValue) {
 }
 
 var widthOnChange = function (){
-
     if ($(this).val()) {
 
         disableSelect2(1, el);
