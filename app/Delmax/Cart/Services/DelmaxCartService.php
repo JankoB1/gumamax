@@ -35,7 +35,7 @@ class DelmaxCartService
 
     public function create(Array $localCart)
     {
-        
+
         $cart_items = $this->CheckItemsQty($localCart['items']);
 
         if (empty($cart_items)) {
@@ -102,7 +102,88 @@ class DelmaxCartService
 
             $package = $this->createPackage();
 
-            $response = $merchant->sendCart($package);
+            //TODO: DIMITRIJE Uncomment - prod APIs!
+            //$response = $merchant->sendCart($package);
+            //TODO: dummy response
+            $response = json_encode([
+                "status" => "10.00.00",
+                "error" => null,
+                "order" => [
+                    "header" => [
+                        "checkout_id" => null,
+                        "merchant_id" => 8080,
+                        "cart_id" => 10050,
+                        "from_ip" => "11.11.11.11",
+                        "user_id" => 1111111,
+                        "partner_id" => 111111,
+                        "number" => "49",
+                        "date" => "2014-09-12",
+                        "payment_due_date" => null,
+                        "canceled_at" => null,
+                        "erp_reference_id" => 52710835,
+                        "due_date" => null,
+                        "payment_method_id" => 5,
+                        "payment_status_id" => 2,
+                        "currency" => "RSD",
+                        "currency_str" => "din",
+                        "shipping_option_id" => 2,
+                        "shipping_to_partner_id" => null,
+                        "shipping_method_id" => 2,
+                        "list_amount" => "100.00",
+                        "discount_amount" => "10.00",
+                        "amount_with_tax" => "110.00",
+                        "tax_amount" => "10.00",
+                        "amount_without_tax" => "100.00",
+                        "shipping_amount_without_tax" => "10.00",
+                        "shipping_tax_amount" => "15.00",
+                        "shipping_amount_with_tax" => "25.00",
+                        "total_amount_without_tax" => "110.00",
+                        "total_tax_amount" => "25.00",
+                        "total_amount_with_tax" => "135.00",
+                        "tour" => null,
+                        "dispatch_date" => null,
+                        "dispatch_time" => null,
+                        "shipping_recipient" => "Testko Testic",
+                        "shipping_address" => "Gancijeva, NBG",
+                        "shipping_address2" => null,
+                        "shipping_postal_code" => "11070",
+                        "shipping_city" => "Beograd (NBG)",
+                        "shipping_country_code" => null,
+                        "shipping_country_iso_alpha_2" => null,
+                        "shipping_country_iso_alpha_3" => null,
+                        "shipping_phone" => "0653756144",
+                        "shipping_email" => null,
+                        "shipping_additional_info" => "/",
+                        "user_first_name" => "Testko",
+                        "user_last_name" => "Testic",
+                        "user_email" => "test@gmail.com",
+                        "user_phone_number" => "0641234567",
+                        "user_customer_type_id" => 1,
+                        "user_company_name" => "",
+                        "user_tax_identification_number" => "",
+                        "user_erp_partner_id" => null,
+                        "total_weight" => "31.20",
+                        "billing_recipient" => "Testko Testic",
+                        "billing_address" => "Gancijeva, NBG",
+                        "billing_address2" => null,
+                        "billing_city" => "Beograd (NBG)",
+                        "billing_postal_code" => "11070",
+                        "billing_country_code" => null,
+                        "billing_phone" => "06412345674",
+                        "billing_additional_info" => "/",
+                        "billing_email" => null,
+                        "created_at" => "2014-09-12 12:02:12",
+                        "user_vehicle_id" => null,
+                        "updated_at" => "2014-09-12 12:06:25",
+                        "total_qty" => "4.00",
+                        "notification_mail_sent" => null,
+                        "deleted_at" => null
+                    ],
+                    "items" =>[
+
+                    ]
+                ]
+            ]);
 
             $result = $this->processErpResponse($response);
         }
@@ -143,9 +224,7 @@ class DelmaxCartService
         }
 
         if ($response->status == '10.00.00'){
-
             $response->newOrder = $this->createOrder($response);
-
         }
 
         return $response;
@@ -173,13 +252,13 @@ class DelmaxCartService
 
         $erp_order_items = $this->transformResponseOrderItems($response);
 
-        $order = Order::create($erp_order_header); 
+        $order = Order::create($erp_order_header);
 
         $order->items()->createMany($erp_order_items);
 
         if ($order->payment_method_id != PaymentMethod::CARDS_ONLINE) {
 
-            event('order.created', compact('order'));       
+            event('order.created', compact('order'));
 
             if ($order->payment_method_id == PaymentMethod::BANK_TRANSFER) {
 
@@ -188,7 +267,7 @@ class DelmaxCartService
             }
         }
 
-        event('user.order.created', [$user, compact('order')]);        
+        event('user.order.created', [$user, compact('order')]);
 
         return $order;
     }
@@ -243,18 +322,16 @@ class DelmaxCartService
     }
 
     private function CheckItemsQty($items) {
-
         $result = [];
 
         foreach($items as $i) {
-
             if ($i['qty'] != 0) {
                 $result[] = $i;
-            }           
+            }
         }
 
         return $result;
     }
 
-    
+
 }

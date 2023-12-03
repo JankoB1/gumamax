@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Config;
 
 class CheckoutController extends Controller
 {
- 
+
     /**
      * @var DelmaxCartService
      */
@@ -24,7 +24,7 @@ class CheckoutController extends Controller
     /**
      * @var DelmaxPaymentService
      */
-    private $paymentService;    
+    private $paymentService;
 
     /**
      * @param DelmaxCartService $cartService
@@ -39,7 +39,10 @@ class CheckoutController extends Controller
 
     public function start(Request $request){
 
-        $localCart = $request->get('cart');   
+        $localCart = $request->get('cart');
+
+        /*dummy data*/
+        $localCart = ["items" => [["qty" => 2], ["qty" => 3]]];
 
         event('checkout.started', [auth()->user(), $localCart]);
 
@@ -50,7 +53,6 @@ class CheckoutController extends Controller
         $cart = $this->cartService->create($localCart);
 
         if (is_null($cart)) {
-
             return ['cart_id'=>$cart_id,
                     'error'=>'No items in cart',
                     'erp_result'=>$erpResult];
@@ -72,7 +74,7 @@ class CheckoutController extends Controller
                     'erp_result'=>$erpResult];
 
         } catch(\Exception $e) {
-            
+
             $error = $e->getMessage();
             Log::error(__CLASS__. __METHOD__. '(): '. $error);
 
@@ -80,17 +82,17 @@ class CheckoutController extends Controller
                 $error = 'Nije uspelo kreiranje porudžbenice!';
             }
 
-            return response()->json(compact('error'), 500);         
+            return response()->json(compact('error'), 500);
         }
     }
 
-    public function paymentExecute($order_id, $checkout_id){        
+    public function paymentExecute($order_id, $checkout_id){
 
-        $order = Order::where(['id'=>$order_id, 'checkout_id'=>$checkout_id, 
+        $order = Order::where(['id'=>$order_id, 'checkout_id'=>$checkout_id,
             'payment_method_id'=>PaymentMethod::CARDS_ONLINE])->first();
 
         if ($order) {
-        
+
             $order_items = $order->items()->get();
 
             $result_code = $this->paymentService->getResultCode($order);
@@ -109,9 +111,12 @@ class CheckoutController extends Controller
         $order = Order::where(['checkout_id'=>$id])->first();
 
         $status = $this->paymentService->getStatus($order, $resource_path);
-        $status->timestamp_local = Carbon::parse($status->timestamp)->timezone(Config::get('app.timezone'))->format('d.m.Y H:i:s');
 
+        $status->timestamp_local = Carbon::parse($status->timestamp)->timezone(Config::get('app.timezone'))->format('d.m.Y H:i:s');
+        
         $result = $this->paymentService->processPaymentResultCodes($order, $status);
+
+        dd($result);
 
         if ($result == PaymentResultCode::SUCCESSFUL) {
 
@@ -125,9 +130,9 @@ class CheckoutController extends Controller
 
             return view('checkout.pay-online.message-not-ok', compact('status', 'order', 'available_payment_methods'));
         }
-    }    
+    }
 
-    public function paymentMethodChange(Request $request) {   
+    public function paymentMethodChange(Request $request) {
 
         $order_id = $request->get('order_id');
         $payment_method_id = $request->get('payment_method_id');
@@ -137,7 +142,7 @@ class CheckoutController extends Controller
         if ($order) {
 
             $result = null;
-            
+
             try {
                 $result = $this->paymentService->changePaymentMethod($order, $payment_method_id);
 
@@ -159,7 +164,7 @@ class CheckoutController extends Controller
 
         return view('checkout.result', compact('order'));
 
-    }    
+    }
 
     public function thanks(Request $request){
 
@@ -169,5 +174,12 @@ class CheckoutController extends Controller
 
         return view('checkout.result', compact('order'));
 
+    }
+
+    public function testpay(Request $request){
+        $checkoutId = $request->get('coid');
+
+
+        return view('pay-by-card', compact('checkoutId'));
     }
 }

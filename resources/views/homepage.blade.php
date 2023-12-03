@@ -76,25 +76,25 @@
                     <div class="row vehicles-row">
                         <div class="col-md-8">
                             <div class="row">
-                                <div class="col">
+                                <div class="col" id="cat-car">
                                     <img src="{{ asset('images/visuals/car.svg') }}" alt="car">
                                 </div>
-                                <div class="col">
+                                <div class="col" id="cat-jeep">
                                     <img src="{{ asset('images/visuals/jeep.svg') }}" alt="jeep">
                                 </div>
-                                <div class="col">
+                                <div class="col" id="cat-truck">
                                     <img src="{{ asset('images/visuals/truck.svg') }}" alt="truck">
                                 </div>
-                                <div class="col">
+                                <div class="col" id="cat-combi">
                                     <img src="{{ asset('images/visuals/combi.svg') }}" alt="combi">
                                 </div>
-                                <div class="col">
+                                <div class="col" id="cat-moto">
                                     <img src="{{ asset('images/visuals/motocycle.svg') }}" alt="motocycle">
                                 </div>
-                                <div class="col">
+                                <div class="col" id="cat-bike">
                                     <img src="{{ asset('images/visuals/bicycle.svg') }}" alt="bicycle">
                                 </div>
-                                <div class="col">
+                                <div class="col" id="cat-tractor">
                                     <img src="{{ asset('images/visuals/tractor.svg') }}" alt="tractor">
                                 </div>
                             </div>

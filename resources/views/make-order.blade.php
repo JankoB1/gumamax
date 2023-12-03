@@ -4,7 +4,7 @@
 
     <section id="order-details">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-7" id="checkout-content">
                 <div class="order-details-inner">
                     <h2>Podaci za naručivanje</h2>
                     <div class="divider"></div>
@@ -36,7 +36,8 @@
                         <div class="custom-fg">
                             <label for="city">Način plaćanja</label>
                             <select name="payment_method" id="payment_method">
-
+                                <option value="card">Karticom na sajtu</option>
+                                <option value="on-spot">Pouzećem</option>
                             </select>
                         </div>
 
@@ -128,7 +129,7 @@
                             <p>8.510 RSD</p>
                         </div>
                     </div>
-                    <button>Poruči</button>
+                    <button id="orderBtn">Poruči</button>
                 </div>
             </div>
         </div>
@@ -211,3 +212,7 @@
     </section>
 
 @endsection
+
+@yield('scriptsBottom')
+<script src="{{ asset("js/vendor/jquery.js") }}"></script>
+<script src="{{ asset("js/checkout.js") }}"></script>

@@ -15,7 +15,7 @@ class AllSecure {
     private $SSLVerifyPeer = false;
 
     public function __construct() {
-        
+
         $default_config = config('all_secure.default');
         $this->accessToken = config('all_secure.'. $default_config. '.accessToken');
         $this->entityId = config('all_secure.'. $default_config. '.entityId');
@@ -56,7 +56,6 @@ class AllSecure {
             return curl_error($ch);
         }
         curl_close($ch);
-
         return $responseData;
     }
 
@@ -79,15 +78,15 @@ class AllSecure {
     }
 
     public function transactionByPaymentId($paymentId) {
-        $url = $this->baseURL. "/v1/query/{$paymentId}?entityId={$this->entityId}";       
-    
+        $url = $this->baseURL. "/v1/query/{$paymentId}?entityId={$this->entityId}";
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization:Bearer '. $this->accessToken]);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->SSLVerifyPeer);// this should be set to true in production
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        
+
         $responseData = curl_exec($ch);
         if(curl_errno($ch)) {
             return curl_error($ch);
@@ -97,27 +96,27 @@ class AllSecure {
     }
 
     public function transactionByMerchantTransactionId($transactionId) {
-        $url = $this->baseURL. "/v1/query?entityId={$this->entityId}&merchantTransactionId={$transactionId}";       
-    
+        $url = $this->baseURL. "/v1/query?entityId={$this->entityId}&merchantTransactionId={$transactionId}";
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization:Bearer '. $this->accessToken]);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->SSLVerifyPeer);// this should be set to true in production
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        
+
         $responseData = curl_exec($ch);
         if(curl_errno($ch)) {
             return curl_error($ch);
         }
         curl_close($ch);
         return $responseData;
-    } 
+    }
 
     public function backofficeOperation($payment_data) {
         $url = $this->baseURL. "/v1/payments/{$payment_data['payment_id']}";
         $data = "entityId={$this->entityId}";
-        
+
         if (in_array($payment_data['paymentType'], ['CP', 'RF'])) {
             $data .= "&amount={$payment_data['amount']}&currency={$payment_data['currency']}";
         }
@@ -139,8 +138,8 @@ class AllSecure {
         return $responseData;
     }
 
-    public function getBaseUrl() {   
-        
+    public function getBaseUrl() {
+
         return $this->baseURL;
     }
 }

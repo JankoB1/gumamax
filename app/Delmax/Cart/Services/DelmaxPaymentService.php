@@ -15,15 +15,15 @@ use Illuminate\Support\Facades\Log;
 class DelmaxPaymentService
 {
     /**
-     * 
+     *
      * @var AllSecure
      */
     private $paymentGateway;
 
     /**
-     * 
-     * @param AllSecure $paymentGateway 
-     * @return void 
+     *
+     * @param AllSecure $paymentGateway
+     * @return void
      */
     public function __construct(AllSecure $paymentGateway)
     {
@@ -36,12 +36,10 @@ class DelmaxPaymentService
 
         $data['total_amount_with_tax'] = number_format($order->total_amount_with_tax, 2, '.', '');
         $data['shipping_recipient'] = str_replace('&', ' ', $order->shipping_recipient);
-
-        return $data;        
+        return $data;
     }
 
     public function getCheckoutId(Order $order, $paymentType) {
-
         $rawResponse = $this->paymentGateway->checkoutIdRequest($this->prepareOrder($order), $paymentType);
         $respond = json_decode($rawResponse);
         $this->log($order, $respond, $rawResponse, 'payment - prepare');
@@ -67,15 +65,15 @@ class DelmaxPaymentService
 
         $result = json_decode($rawResponse);
 
-        $this->log($order, $result, $rawResponse, 'payment - result');        
+        $this->log($order, $result, $rawResponse, 'payment - result');
 
         return $result;
     }
 
     public function getResultCode(Order $order) {
-        
+
         $result = '';
-        
+
         $log = $this->getPaymentGatewayLog($order);
 
         if ($log) {
@@ -91,40 +89,40 @@ class DelmaxPaymentService
                 ->where('checkout_id', $order->checkout_id)
                 ->where('code', 'not like', '000.200.%')
                 ->first();
-    } 
+    }
 
     private function getStatusDescription($status) {
 
         if (array_key_exists($status->result->code, ResultCodesConst::ERROR_MESSAGES)) {
 
-            $status->result->description = ResultCodesConst::ERROR_MESSAGES[$status->result->code]; 
+            $status->result->description = ResultCodesConst::ERROR_MESSAGES[$status->result->code];
 
-        }  
+        }
     }
 
     public function processPaymentResultCodes(Order $order, $status){
 
         if (preg_match("/^(000\.000\.|000\.100\.1|000\.[36])/", $status->result->code)){
 
-            $status->payment_successful = true; 
-            
+            $status->payment_successful = true;
+
             $order->storeOnlinePayment(auth()->user()->user_id, date('Y-m-d'), $status, $order->total_amount_with_tax);
 
             $this->changePaymentStatus($order, PaymentStatus::FUNDS_RESERVED);
 
-            $result = PaymentResultCode::SUCCESSFUL; 
+            $result = PaymentResultCode::SUCCESSFUL;
 
         } else if (preg_match("/^(000\.400\.0[^3]|000\.400\.100)/", $status->result->code)){
 
             $result = PaymentResultCode::MANUAL_REVIEW;
 
         } else {
-            
+
             $status->payment_successful = false;
-            
+
             $this->getStatusDescription($status);
 
-            $result = PaymentResultCode::REJECTED;            
+            $result = PaymentResultCode::REJECTED;
         }
 
         event('payment.message', [$order, $status]);
@@ -134,8 +132,8 @@ class DelmaxPaymentService
 
     public function changePaymentMethod(Order $order, $new_payment_method_id) {
 
-        $resource_path = '';   
-        $error = false; 
+        $resource_path = '';
+        $error = false;
 
         if ($new_payment_method_id == PaymentMethod::CARDS_ONLINE) {
 
@@ -143,15 +141,15 @@ class DelmaxPaymentService
 
             if ($respond) {
 
-                $resource_path = route('checkout.payment.execute', ['order_id'=>$order->id, 'checkout_id'=>$respond->id]);             
+                $resource_path = route('checkout.payment.execute', ['order_id'=>$order->id, 'checkout_id'=>$respond->id]);
             }
-            
+
         } else {
 
             $old_payment_method_id = $order->payment_method_id;
 
             $result = $this->sendToERP('updateOrderPaymentMethod', [$order->cart_id, $new_payment_method_id]);
-            
+
             if ($result->error) {
 
                 $error = true;
@@ -161,10 +159,10 @@ class DelmaxPaymentService
             } else {
 
                 $order->payment_method_id = $new_payment_method_id;
-                $order->save();  
+                $order->save();
 
                 event('order.created', compact('order'));
-                
+
                 event('payment.method.changed', [auth()->user(), $order, $old_payment_method_id]);
 
                 $resource_path = route('checkout.payment.instructions', ['order_id'=>$order->id]);
@@ -181,7 +179,7 @@ class DelmaxPaymentService
 
         $result = $this->sendToERP('updateOrderPaymentStatus', [$order->cart_id, $new_payment_status_id]);
 
-        if ($result->error) {    
+        if ($result->error) {
 
             Log::error(__CLASS__. __METHOD__. '(): '. $result->message);
         }
@@ -196,9 +194,9 @@ class DelmaxPaymentService
 
         if (!$merchant) {
             throw new \Exception('Merchant does not exists');
-        } 
+        }
 
-        return json_decode(call_user_func_array([$merchant, $function], $params));        
+        return json_decode(call_user_func_array([$merchant, $function], $params));
     }
 
     private function log(Order $order, $respond, $rawResponse, $log_segment){
@@ -209,7 +207,7 @@ class DelmaxPaymentService
         $log->code = $respond->result->code;
         $log->description = $respond->result->description;
         $log->body = $rawResponse;
-        $log->log_segment = $log_segment; 
+        $log->log_segment = $log_segment;
         $order->paymentGatewayLog()->save($log);
     }
 
@@ -218,7 +216,7 @@ class DelmaxPaymentService
         $rawResponse = $this->paymentGateway->transactionByMerchantTransactionId($merchant_transaction_id);
 
         $result = json_decode($rawResponse);
-        
+
         $lastTransactionAction = '';
         $transactionActions = '';
         $shipping = null;
@@ -230,8 +228,8 @@ class DelmaxPaymentService
             }
 
             if (preg_match("/^(000\.000\.|000\.100\.1|000\.[36])/", $p->result->code)) {
-                $transactionActions .= $p->paymentType. '->';    
-                $lastTransactionAction = $p;  
+                $transactionActions .= $p->paymentType. '->';
+                $lastTransactionAction = $p;
             }
         }
 
@@ -241,7 +239,7 @@ class DelmaxPaymentService
         $transaction->transaction_actions = $transactionActions;
         $transaction->shipping = $shipping;
 
-        return $transaction;        
+        return $transaction;
     }
 
     public function backofficeOperation(Order $order, OrderPayment $orderPayment, $req_data) {
@@ -258,7 +256,7 @@ class DelmaxPaymentService
             $data['amount'] = $req_data['partial_amount'];
         }
 
-        $rawResponse = $this->paymentGateway->backofficeOperation($data); 
+        $rawResponse = $this->paymentGateway->backofficeOperation($data);
         $resp = json_decode($rawResponse);
 
         $resp->ndc = null;

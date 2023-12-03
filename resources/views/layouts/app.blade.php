@@ -60,7 +60,11 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="sign-in">Prijavi se</a>
+                                @if(Auth::guest())
+                                    <a href="/login" class="sign-in">Prijavi se</a>
+                                @else
+                                    <a href="/logout" class="sign-in">Odjavi se</a>
+                                @endif
                             </li>
                         </ul>
 
@@ -78,10 +82,10 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                         <ul class="navbar-nav me-auto">
-                            <li><a href="#">Gume</a></li>
-                            <li><a href="#">Ratkapne</a></li>
-                            <li><a href="#">Ulja</a></li>
-                            <li><a href="#">Akumulatori</a></li>
+                            <li><a href="/gume">Gume</a></li>
+                            <li><a href="/ratkapne">Ratkapne</a></li>
+                            <li><a href="/ulja">Ulja</a></li>
+                            <li><a href="/akumulatori">Akumulatori</a></li>
                             <li><a href="#">Auto oprema</a></li>
                             <li><a href="#">O nama</a></li>
                             <li><a href="#" class="contact-us">Kontakt</a></li>
@@ -161,5 +165,7 @@
     </footer>
 
 @yield('scriptsBottom')
+<script src="{{ asset("js/layout.js") }}"></script>
+
 </body>
 </html>

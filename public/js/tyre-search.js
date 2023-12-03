@@ -120,6 +120,63 @@ function initializeFormData() {
     }
 }
 
+const widthOnChange = function (){
+    if ($(this).val()) {
+
+        disableSelect2(1, el);
+
+        tFilter.page = 1;
+
+        tFilter.width = el.width.val();
+
+        setProductFilterCookie();
+
+        clearFacetQuery();
+
+        loadRatios(el.ratio, tFilter.ratio);
+    }
+};
+
+const ratioOnChange =function () {
+    if ($(this).val()) {
+
+        disableSelect2(2, el);
+
+        tFilter.page = 1;
+
+        tFilter.width = el.width.val();
+
+        tFilter.ratio = el.ratio.val();
+
+        setProductFilterCookie();
+        clearFacetQuery();
+        loadDiameters(el.diameter, tFilter.diameter);
+    }
+};
+
+const diameterOnChange = function(){
+
+    if ($(this).val()) {
+
+        disableSelect2(3, el);
+
+        tFilter.page = 1;
+        tFilter.width = el.width.val();
+        tFilter.ratio = el.ratio.val();
+        tFilter.diameter = el.diameter.val();
+
+        setProductFilterCookie();
+
+        clearFacetQuery();
+/*
+        if (!isHomePage()){
+
+            showProducts(tFilter);
+        }
+*/
+    }
+};
+
 function updateAllDimensions(){
     $.ajax({
         type: "GET",
@@ -296,66 +353,12 @@ function loadDiameters(element, selectedValue) {
         element.empty();
 }
 
-var widthOnChange = function (){
-    if ($(this).val()) {
-
-        disableSelect2(1, el);
-
-        tFilter.page = 1;
-
-        tFilter.width = el.width.val();
-
-        setProductFilterCookie();
-
-        clearFacetQuery();
-
-        loadRatios(el.ratio, tFilter.ratio);
-    }
-};
 
 el.width.on("change", widthOnChange);
 
-var ratioOnChange =function () {
-    if ($(this).val()) {
-
-        disableSelect2(2, el);
-
-        tFilter.page = 1;
-
-        tFilter.width = el.width.val();
-
-        tFilter.ratio = el.ratio.val();
-
-        setProductFilterCookie();
-        clearFacetQuery();
-        loadDiameters(el.diameter, tFilter.diameter);
-    }
-};
 
 el.ratio.on("change", ratioOnChange);
 
-var diameterOnChange = function(){
-
-    if ($(this).val()) {
-
-        disableSelect2(3, el);
-
-        tFilter.page = 1;
-        tFilter.width = el.width.val();
-        tFilter.ratio = el.ratio.val();
-        tFilter.diameter = el.diameter.val();
-
-        setProductFilterCookie();
-
-        clearFacetQuery();
-/*
-        if (!isHomePage()){
-
-            showProducts(tFilter);
-        }
-*/
-    }
-};
 
 el.diameter.on("change", diameterOnChange);
 

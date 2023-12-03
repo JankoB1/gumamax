@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PartnerController;
@@ -49,6 +50,7 @@ use App\Http\Controllers\Crm\PhotoController;
 use App\Http\Controllers\Crm\MemberUserRoleController;
 use App\Http\Controllers\PaymentGatewayController;
 use App\Http\Controllers\BackofficeController;
+use Delmax\Cart\Models\Order;
 
 use Elasticsearch\ClientBuilder;
 /*
@@ -295,6 +297,12 @@ Route::get('callback-request/create', [CallbackRequestController::class, 'create
 */
 
 Route::middleware(['auth'])->group(function() {
+
+    Route::get('/ordernpay', [CheckoutController::class, 'start'])->name('start-checkout');
+    Route::get('/testpay', [CheckoutController::class, 'testpay'])->name('testpay');;
+    Route::get('/payment-result', [CheckoutController::class, 'paymentResult'])->name('payres');
+
+    Route::get('logout', [LoginController::class, 'logout'])->name("logout");
 
     /**
      * Users Profile
