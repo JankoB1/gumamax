@@ -10,7 +10,7 @@ let seasons = ""
 let commonlyUsedSelectors = new Map()
 
 let categoryElements = {
-    car: $("#cat-cat"),
+    car: $("#cat-car"),
     jeep: $("#cat-jeep"),
     truck: $("#cat-truck"),
     combi: $("#cat-combi"),
@@ -25,32 +25,66 @@ const init_home = () => {
 
     categoryElements.car.on("click", () => {
         console.log("Putni%C4%8Dko")
-        vehicleType = "Putni%C4%8Dko"
+        vehicleType = "Putni%C4%8Dko";
+        let activeVehicle = document.querySelector('.vehicles-row .col.active');
+        if(activeVehicle) {
+            activeVehicle.classList.remove('active');
+        }
+        categoryElements.car.addClass('active');
     })
     categoryElements.jeep.on("click", () => {
         console.log("4x4")
-        vehicleType = "4x4"
+        vehicleType = "4x4";
+        let activeVehicle = document.querySelector('.vehicles-row .col.active');
+        if(activeVehicle) {
+            activeVehicle.classList.remove('active');
+        }
+        categoryElements.jeep.addClass('active');
     })
     categoryElements.truck.on("click", () => {
         console.log("Kamioni%20i%20autobusi")
-        vehicleType = "Kamioni%20i%20autobusi"
+        vehicleType = "Kamioni%20i%20autobusi";
+        let activeVehicle = document.querySelector('.vehicles-row .col.active');
+        if(activeVehicle) {
+            activeVehicle.classList.remove('active');
+        }
+        categoryElements.truck.addClass('active');
     })
     categoryElements.combi.on("click", () => {
         console.log("Dostavno%20vozilo")
-        vehicleType = "Dostavno%20vozilo"
+        vehicleType = "Dostavno%20vozilo";
+        let activeVehicle = document.querySelector('.vehicles-row .col.active');
+        if(activeVehicle) {
+            activeVehicle.classList.remove('active');
+        }
+        categoryElements.combi.addClass('active');
     })
     categoryElements.motorbike.on("click", () => {
         console.log("Motocikli%20i%20skuteri")
-        vehicleType = "Motocikli%20i%20skuteri"
+        vehicleType = "Motocikli%20i%20skuteri";
+        let activeVehicle = document.querySelector('.vehicles-row .col.active');
+        if(activeVehicle) {
+            activeVehicle.classList.remove('active');
+        }
+        categoryElements.motorbike.addClass('active');
     })
     categoryElements.bike.on("click", () => {
         console.log("Bicikl")
-        vehicleType = "Bicikl"
+        vehicleType = "Bicikl";
+        let activeVehicle = document.querySelector('.vehicles-row .col.active');
+        if(activeVehicle) {
+            activeVehicle.classList.remove('active');
+        }
+        categoryElements.bike.addClass('active');
     })
     categoryElements.tractor.on("click", () => {
         console.log("Poljoprivredno%20vozilo")
-        vehicleType = "Poljoprivredno%20vozilo"
-
+        vehicleType = "Poljoprivredno%20vozilo";
+        let activeVehicle = document.querySelector('.vehicles-row .col.active');
+        if(activeVehicle) {
+            activeVehicle.classList.remove('active');
+        }
+        categoryElements.tractor.addClass('active');
     })
 }
 

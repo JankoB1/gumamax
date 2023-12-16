@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('scriptsTop')
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+@endsection
+
 @section('content')
 
     <section id="partners-search">
@@ -33,129 +38,48 @@
         </div>
 
         <div class="partners-list">
-            <div class="single-partner-in-list">
-                <div class="row">
-                    <div class="col-md-1">
-                        <img src="{{ asset('images/visuals/product-image.png') }}" alt="product image">
-                    </div>
-                    <div class="col-md-3">
-                        <h4>Pneumatik</h4>
-                        <div>
-                            <span>
-                                <i class="fa-solid fa-location-pin"></i>
-                                Leskovac
-                            </span>
-                            <span>
-                                <i class="fa-solid fa-clock"></i>
-                                Pon - Sub 09:16
-                            </span>
-                        </div>
-                        <span class="tag">Preuzimanje</span>
-                    </div>
-                    <div class="col-md-5 offset-md-1">
-                        <p><strong>Tel:</strong> 032/300-600</p>
-                        <p><strong>Email:</strong> office@test.rs</p>
-                        <p><strong>Adresa:</strong> Autoput Beograd - Novi Sad b. b., 11000 Beograd</p>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#">Više informacija</a>
-                        <button>Pokaži na mapi</button>
-                    </div>
-                </div>
-            </div>
 
-            <div class="single-partner-in-list">
-                <div class="row">
-                    <div class="col-md-1">
-                        <img src="{{ asset('images/visuals/product-image.png') }}" alt="product image">
-                    </div>
-                    <div class="col-md-3">
-                        <h4>Pneumatik</h4>
-                        <div>
+            @foreach($partners as $partner)
+                <div class="single-partner-in-list"
+                     data-partner-id="{{ $partner->id }}"
+                     data-partner-lat="{{ $partner->latitude }}"
+                     data-partner-lng="{{ $partner->longitude }}"
+                     data-partner-description="{{ $partner->description }}"
+                     data-partner-phone="{{ $partner->phone }}"
+                     data-partner-city="{{ $partner->city_name }}"
+                     data-partner-address="{{ $partner->address }}"
+                     data-partner-zip="{{ $partner->postal_code }}">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <img src="{{ asset('images/visuals/product-image.png') }}" alt="product image">
+                        </div>
+                        <div class="col-md-3">
+                            <h4>{{ $partner->description }}</h4>
+                            <div>
                             <span>
                                 <i class="fa-solid fa-location-pin"></i>
-                                Leskovac
-                            </span>
-                            <span>
-                                <i class="fa-solid fa-clock"></i>
-                                Pon - Sub 09:16
-                            </span>
+                                {{ $partner->city_name }}
+{{--                            </span>--}}
+{{--                                <span>--}}
+{{--                                <i class="fa-solid fa-clock"></i>--}}
+{{--                                Pon - Sub 09:16--}}
+{{--                            </span>--}}
+                            </div>
+                            <span class="tag">Preuzimanje</span>
                         </div>
-                        <span class="tag">Preuzimanje</span>
-                    </div>
-                    <div class="col-md-5 offset-md-1">
-                        <p><strong>Tel:</strong> 032/300-600</p>
-                        <p><strong>Email:</strong> office@test.rs</p>
-                        <p><strong>Adresa:</strong> Autoput Beograd - Novi Sad b. b., 11000 Beograd</p>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#">Više informacija</a>
-                        <button>Pokaži na mapi</button>
+                        <div class="col-md-5 offset-md-1">
+                            <p><strong>Tel:</strong> {{ $partner->phone }}</p>
+                            <p><strong>Email:</strong> {{ $partner->email }}</p>
+                            <p><strong>Adresa:</strong> {{ $partner->address }}, {{ $partner->postal_code }} {{ $partner->city_name }}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="#">Više informacija</a>
+                            <button data-partner-id="{{ $partner->id }}">Pokaži na mapi</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
 
-            <div class="single-partner-in-list">
-                <div class="row">
-                    <div class="col-md-1">
-                        <img src="{{ asset('images/visuals/product-image.png') }}" alt="product image">
-                    </div>
-                    <div class="col-md-3">
-                        <h4>Pneumatik</h4>
-                        <div>
-                            <span>
-                                <i class="fa-solid fa-location-pin"></i>
-                                Leskovac
-                            </span>
-                            <span>
-                                <i class="fa-solid fa-clock"></i>
-                                Pon - Sub 09:16
-                            </span>
-                        </div>
-                        <span class="tag">Preuzimanje</span>
-                    </div>
-                    <div class="col-md-5 offset-md-1">
-                        <p><strong>Tel:</strong> 032/300-600</p>
-                        <p><strong>Email:</strong> office@test.rs</p>
-                        <p><strong>Adresa:</strong> Autoput Beograd - Novi Sad b. b., 11000 Beograd</p>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#">Više informacija</a>
-                        <button>Pokaži na mapi</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="single-partner-in-list">
-                <div class="row">
-                    <div class="col-md-1">
-                        <img src="{{ asset('images/visuals/product-image.png') }}" alt="product image">
-                    </div>
-                    <div class="col-md-3">
-                        <h4>Pneumatik</h4>
-                        <div>
-                            <span>
-                                <i class="fa-solid fa-location-pin"></i>
-                                Leskovac
-                            </span>
-                            <span>
-                                <i class="fa-solid fa-clock"></i>
-                                Pon - Sub 09:16
-                            </span>
-                        </div>
-                        <span class="tag">Preuzimanje</span>
-                    </div>
-                    <div class="col-md-5 offset-md-1">
-                        <p><strong>Tel:</strong> 032/300-600</p>
-                        <p><strong>Email:</strong> office@test.rs</p>
-                        <p><strong>Adresa:</strong> Autoput Beograd - Novi Sad b. b., 11000 Beograd</p>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#">Više informacija</a>
-                        <button>Pokaži na mapi</button>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </section>
@@ -238,4 +162,12 @@
         </div>
     </section>
 
+@endsection
+
+@section('scriptsBottom')
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbu6jooaUw8303AME9uzQsU95ol34P9OY&callback=initMap&v=weekly"
+    defer
+></script>
+    <script src="{{ asset('js/all-partners.js') }}" type="text/javascript"></script>
 @endsection

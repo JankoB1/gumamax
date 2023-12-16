@@ -23,7 +23,7 @@ class PartnerController extends Controller
 
     public function __construct(DelmaxCartService $cartService, PartnerLocator $partnerLocator)
     {
-        parent::__construct();
+        //parent::__construct();
 
         $this->cartService = $cartService;
 
@@ -32,11 +32,16 @@ class PartnerController extends Controller
     }
 
     public function showPartners() {
-        return view('partners');
+        $partners = Partner::where('latitude' , '!=', null)
+            ->where('longitude', '!=', null)
+            ->where('is_active', '=', 1)
+            ->get();
+        return view('partners', compact('partners'));
     }
 
-    public function showSinglePartner() {
-        return view('single-partner');
+    public function showSinglePartner($id) {
+        $partner = Partner::where('id', '=', $id)->get()->first();
+        return view('single-partner', compact('partner'));
     }
 
     public function edit(Request $request, $id){

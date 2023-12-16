@@ -71,7 +71,7 @@ Route::get('/proizvod/{id}/{kind}', [ProductController::class, 'showSingleProduc
 Route::get('/gume', [ProductController::class, 'showShop'])->name('show-shop');
 Route::get('/uporedi', [ProductController::class, 'showCompare'])->name('show-compare');
 Route::get('/mreza-partnera', [PartnerController::class, 'showPartners'])->name('show-partners');
-Route::get('/partner', [PartnerController::class, 'showSinglePartner'])->name('show-single-partner');
+Route::get('/partner/{id}', [PartnerController::class, 'showSinglePartner'])->name('show-single-partner');
 Route::get('/porudzbina', [OrderController::class, 'showMakeOrder'])->name('show-make-order');
 Route::get('/gume/items', [ProductController::class, 'showStoreItems'])->name('show-store-items');
 
