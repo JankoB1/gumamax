@@ -41,9 +41,6 @@ class CheckoutController extends Controller
 
         $localCart = $request->get('cart');
 
-        /*dummy data*/
-        $localCart = ["items" => [["qty" => 2], ["qty" => 3]]];
-
         event('checkout.started', [auth()->user(), $localCart]);
 
         $cart_id = null;
@@ -113,10 +110,8 @@ class CheckoutController extends Controller
         $status = $this->paymentService->getStatus($order, $resource_path);
 
         $status->timestamp_local = Carbon::parse($status->timestamp)->timezone(Config::get('app.timezone'))->format('d.m.Y H:i:s');
-        
-        $result = $this->paymentService->processPaymentResultCodes($order, $status);
 
-        dd($result);
+        $result = $this->paymentService->processPaymentResultCodes($order, $status);
 
         if ($result == PaymentResultCode::SUCCESSFUL) {
 

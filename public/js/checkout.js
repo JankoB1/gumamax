@@ -14,7 +14,30 @@ const order = () => {
             orderNPayOnSpot()
             break;
     }*/
-    fetch(urlTo("ordernpay")).then(response => {
+    const csrf = document.querySelector('meta[name="csrf-token"]').content;
+
+    fetch(
+        urlTo("ordernpay"),
+        {
+            method: "POST",
+            body: JSON.stringify({
+                cart: {
+                    items: [
+                        {
+                            qty: 4
+                        },
+                        {
+                            qty: 2
+                        },
+                    ]
+                }
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "X-CSRF-Token": csrf
+            }
+        }
+    ).then(response => {
         response.json()
             .then( data => {
                 console.log(data.erp_result.newOrder.checkout_id)
