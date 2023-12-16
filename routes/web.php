@@ -298,7 +298,7 @@ Route::get('callback-request/create', [CallbackRequestController::class, 'create
 
 Route::middleware(['auth'])->group(function() {
 
-    Route::get('/ordernpay', [CheckoutController::class, 'start'])->name('start-checkout');
+    Route::post('/ordernpay', [CheckoutController::class, 'start'])->name('start-checkout');
     Route::get('/testpay', [CheckoutController::class, 'testpay'])->name('testpay');;
     Route::get('/payment-result', [CheckoutController::class, 'paymentResult'])->name('payres');
 

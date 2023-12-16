@@ -103,7 +103,7 @@ class DelmaxCartService
             $package = $this->createPackage();
 
             //TODO: DIMITRIJE Uncomment - prod APIs!
-            //$response = $merchant->sendCart($package);
+            $response = $merchant->sendCart($package);
             //TODO: dummy response
             $response = json_encode([
                 "status" => "10.00.00",
