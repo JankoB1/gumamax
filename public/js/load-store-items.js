@@ -2,7 +2,9 @@ let current_page = 1
 let last_page
 
 let product_ids = []
-let compare_btn_map = new Map();
+let compare_btn_map = new Map()
+
+let selected_for_compare = []
 
 const PER_PAGE = 4
 
@@ -168,13 +170,24 @@ const loadItemData = async (per_page, manufacturers, seasons, order) => {
     current_page = currPage
 
     compare_btn_map.clear()
-    let compareBtns = [].slice.call(document.getElementById("item-col").getElementsByClassName("compare"))
+    let compareBtns = [].slice.call(document.getElementById("item-col").getElementsByClassName("compare-icon"))
+
+    let selected_for_compare_new = await (
+        await fetch(urlTo('gume/get-selected-for-compare'))
+    ).json()
+    selected_for_compare_new.splice(selected_for_compare_new.length-1, 1)
+
+    for (let pid of selected_for_compare_new.filter(i => !selected_for_compare.includes(i))){
+        addToComparePopup(pid)
+    }
+
+    selected_for_compare = selected_for_compare_new
+
     for (let b of compareBtns){
         let pr_id = product_ids[compareBtns.indexOf(b)]
-        compare_btn_map.set(pr_id,b);
-        if (getCookie(COMPARE_LIST_COOKIE_NAME).includes(pr_id + "#")) {
+        compare_btn_map.set(pr_id,b)
+        if (selected_for_compare.includes(pr_id.toString())) {
             b.style.backgroundColor = "lightgrey"
-            addToComparePopup(pr_id)
         }
     }
 }
@@ -186,7 +199,7 @@ const itemDetails = (index) => {
 
 const addToComparePopup = async (prodId) => {
     let prod = await (await fetch(urlTo("/api/products/tyres/") + prodId)).json()
-    if (getCookie(COMPARE_LIST_COOKIE_NAME).split("#").length !== 1) comparePopup.style.display = "block"
+    if (selected_for_compare.length !== 0) comparePopup.style.display = "block"
     comparePopup.innerHTML = " <div class=\"single-best-seller row\" product_id=\'" + prodId + "\'>\n" +
         "                            <div class=\"col-md-3\">\n" +
         "                                <img src=\"" + prod["image_url"] + "\" alt=\"product image\"\n class=\"compare-popup-product-image\">" +
@@ -209,15 +222,46 @@ const removeFromComparePopup = (prodId) => {
 }
 
 const iconRemoveFromComparePopup = (prodId) => {
-    setCookie(COMPARE_LIST_COOKIE_NAME,getCookie(COMPARE_LIST_COOKIE_NAME).replace(prodId + "#",""),1)
-    compare_btn_map.get(prodId).style.backgroundColor = "white"
-    removeFromComparePopup(prodId);
-    if(getCookie(COMPARE_LIST_COOKIE_NAME).split("#").length === 1) comparePopup.style.display = "none"
+    removeFromCookie(prodId).then( response => {
+        response.json().then( data => {
+            data.splice(data.length-1, 1)
+            selected_for_compare = data
+            if (compare_btn_map.get(prodId) !== undefined)
+                compare_btn_map.get(prodId).style.backgroundColor = "white"
+            removeFromComparePopup(prodId)
+            if (selected_for_compare.length === 0) comparePopup.style.display = "none"
+        })
+    })
 }
 
 const selectForCompare = (caller, index) => {
     let mProdId = product_ids[index]
-    if (getCookie(COMPARE_LIST_COOKIE_NAME).includes(mProdId+"#")){
+    if (selected_for_compare.includes(mProdId.toString())){
+        removeFromCookie(mProdId).then( (response) => response.json().then(
+            data => {
+                data.splice(data.length-1,1)
+                selected_for_compare = data
+            }
+        ));
+        caller.style.backgroundColor = "white"
+        removeFromComparePopup(mProdId);
+        if(selected_for_compare.length === 1) comparePopup.style.display = "none"
+    } else if (selected_for_compare.length < 5){
+        setCookie("",mProdId,"").then(
+            response => {
+                response.json().then(
+                    data => {
+                        data.splice(data.length-1,1)
+                        selected_for_compare = data
+                        addToComparePopup(mProdId)
+                    }
+                )
+            }
+        )
+        caller.style.backgroundColor = "lightgrey"
+    }
+
+    /*if (getCookie(COMPARE_LIST_COOKIE_NAME).includes(mProdId+"#")){
         setCookie(COMPARE_LIST_COOKIE_NAME,getCookie(COMPARE_LIST_COOKIE_NAME).replace(mProdId + "#",""),1)
         caller.style.backgroundColor = "white"
         removeFromComparePopup(mProdId);
@@ -229,7 +273,7 @@ const selectForCompare = (caller, index) => {
     }else{
         //TODO: Upozori o maks 4
         console.log("Max 4 " + getCookie(COMPARE_LIST_COOKIE_NAME).split("#").length)
-    }
+    }*/
 }
 
 const getCookie = (cname) => {
@@ -249,10 +293,16 @@ const getCookie = (cname) => {
 }
 
 const setCookie = (cname, cvalue, exdays) => {
-    const d = new Date();
+    /*const d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     let expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";*/
+    return fetch(urlTo('gume/add-to-compare?id=' + cvalue));
+}
+
+const removeFromCookie = (prodId) => {
+    //setCookie(COMPARE_LIST_COOKIE_NAME,getCookie(COMPARE_LIST_COOKIE_NAME).replace(prodId + "#",""),1)
+    return fetch(urlTo('gume/rm-to-compare?id=' + prodId));
 }
 
 const addToCart = (index,caller) => {

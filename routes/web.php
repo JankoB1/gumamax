@@ -75,6 +75,9 @@ Route::get('/partner/{id}', [PartnerController::class, 'showSinglePartner'])->na
 Route::get('/porudzbina', [OrderController::class, 'showMakeOrder'])->name('show-make-order');
 Route::get('/gume/items', [ProductController::class, 'showStoreItems'])->name('show-store-items');
 
+Route::get('/gume/add-to-compare', [ProductController::class, 'addToCompare'])->name('add-compare');
+Route::get('/gume/rm-to-compare', [ProductController::class, 'removeToCompare'])->name('rm-compare');
+Route::get('/gume/get-selected-for-compare', [ProductController::class, 'getCurrentToCompare'])->name('rm-compare');
 
 //novi proizvodi
 Route::get('/akumulatori', [ProductController::class, 'showShopBatteries'])->name('show-shop-batteries');
