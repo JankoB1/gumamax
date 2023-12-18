@@ -21,16 +21,7 @@ const order = () => {
         {
             method: "POST",
             body: JSON.stringify({
-                cart: {
-                    items: [
-                        {
-                            qty: 4
-                        },
-                        {
-                            qty: 2
-                        },
-                    ]
-                }
+                cart: cart
             }),
             headers: {
                 "Content-type": "application/json; charset=UTF-8",

@@ -5,7 +5,7 @@ const tyreHeightCbx = el.ratio
 const tyreDiameterCbx = el.diameter
 
 let vehicleType = "Putničko"
-let seasons = ""
+let seasons = "Leto"
 
 let commonlyUsedSelectors = new Map()
 
@@ -19,9 +19,57 @@ let categoryElements = {
     tractor: $("#cat-tractor")
 }
 
+let seasonElements = {
+    wint: $("#season-winter"),
+    summ: $("#season-summer"),
+    all: $("#season-all")
+}
+
 const init_home = () => {
     searchBtn.onclick = goToShop
     mapCommonlyUsedDimens()
+
+    seasons = "Letnja"
+    let activeSeason = document.querySelector('.year-seasons .col.active');
+    if(activeSeason) {
+        activeSeason.classList.remove('active');
+    }
+    seasonElements.summ.addClass('active');
+
+    seasonElements.wint.on("click", () => {
+        seasons = "Zimska"
+        console.log(seasons)
+        let activeSeason = document.querySelector('.year-seasons .col.active');
+        if(activeSeason) {
+            activeSeason.classList.remove('active');
+        }
+        seasonElements.wint.addClass('active');
+    });
+    seasonElements.summ.on("click", () => {
+        seasons = "Letnja"
+        console.log(seasons)
+        let activeSeason = document.querySelector('.year-seasons .col.active');
+        if(activeSeason) {
+            activeSeason.classList.remove('active');
+        }
+        seasonElements.summ.addClass('active');
+    });
+    seasonElements.all.on("click", () => {
+        seasons = "Sve+sezone"
+        console.log(seasons)
+        let activeSeason = document.querySelector('.year-seasons .col.active');
+        if(activeSeason) {
+            activeSeason.classList.remove('active');
+        }
+        seasonElements.all.addClass('active');
+    });
+
+    vehicleType = "Putni%C4%8Dko";
+    let activeVehicle = document.querySelector('.vehicles-row .col.active');
+    if(activeVehicle) {
+        activeVehicle.classList.remove('active');
+    }
+    categoryElements.car.addClass('active');
 
     categoryElements.car.on("click", () => {
         console.log("Putni%C4%8Dko")

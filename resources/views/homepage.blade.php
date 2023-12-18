@@ -112,15 +112,15 @@
                             <div class="col-md-3">
                                 <div class="year-seasons">
                                     <p>God. Doba</p>
-                                    <div class="single-season active">
+                                    <div class="single-season active" style="cursor: pointer;" id="season-summer">
                                         <img src="{{ asset('images/visuals/summer.svg') }}" alt="summer">
                                         <span>Leto</span>
                                     </div>
-                                    <div class="single-season">
+                                    <div class="single-season" style="cursor: pointer;" id="season-winter">
                                         <img src="{{ asset('images/visuals/winter.svg') }}" alt="winter">
                                         <span>Zima</span>
                                     </div>
-                                    <div class="single-season">
+                                    <div class="single-season" style="cursor: pointer;" id="season-all">
                                         <img src="{{ asset('images/visuals/all-seasons.svg') }}" alt="all seasons">
                                         <span>Sve sezone</span>
                                     </div>

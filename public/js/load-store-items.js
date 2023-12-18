@@ -18,6 +18,10 @@ const comparePopup = document.getElementById("compare-popup")
 
 let mManufacturers = ""
 let mSeasons = ""
+let mDiameter = ""
+let mWidth = ""
+let mRatio = ""
+let mCat = ""
 
 
 function interceptUndefined(s){
@@ -27,7 +31,14 @@ function interceptUndefined(s){
         return s
 }
 
-const initPage = (seasons,diameter) => {
+const initPage = (seasons,diameter,width,ratio,cat) => {
+
+    mSeasons = seasons
+    mCat = cat
+    mDiameter = diameter
+    mWidth = width
+    mRatio = ratio
+
 
     forward.onclick = navForward
     backward.onclick = navBackward
@@ -41,8 +52,8 @@ const initPage = (seasons,diameter) => {
         backward.onclick = null
     }
 
-    loadStoreItems(PER_PAGE,"", seasons, sort.value).then(() => {
-            loadItemData(PER_PAGE, "", seasons, sort.value).then(() =>  {})
+    loadStoreItems(PER_PAGE,"", seasons, sort.value, diameter, width, ratio, cat).then(() => {
+            loadItemData(PER_PAGE, "", seasons, sort.value, diameter, width, ratio, cat).then(() =>  {})
             for (let elem of document.getElementsByClassName("plus")) {
                 elem.onclick = () => {
                     let qtyElem = elem.parentNode.querySelector(".qty")
@@ -100,8 +111,8 @@ const navForward = () => {
     forward.onclick = null
     backward.onclick = null
 
-    loadStoreItems(PER_PAGE,mManufacturers, mSeasons, sort.value).then( () =>
-        loadItemData(PER_PAGE,mManufacturers, mSeasons, sort.value).then(() => checkNavForward())
+    loadStoreItems(PER_PAGE,mManufacturers, mSeasons, sort.value, mDiameter, mWidth, mRatio, mCat).then( () =>
+        loadItemData(PER_PAGE,mManufacturers, mSeasons, sort.value, mDiameter, mWidth, mRatio, mCat).then(() => checkNavForward())
     )
 }
 
@@ -127,29 +138,37 @@ const navBackward = () => {
     forward.onclick = null
     backward.onclick = null
 
-    loadStoreItems(PER_PAGE,mManufacturers, mSeasons, sort.value).then( () =>
-        loadItemData(PER_PAGE,mManufacturers, mSeasons, sort.value).then(() => checkNavBackward())
+    loadStoreItems(PER_PAGE,mManufacturers, mSeasons, sort.value, mDiameter, mWidth, mRatio, mCat).then( () =>
+        loadItemData(PER_PAGE,mManufacturers, mSeasons, sort.value, mDiameter, mWidth, mRatio, mCat).then(() => checkNavBackward())
     )
 }
 
-const loadStoreItems = async (per_page, manufacturers, seasons, order) => {
+const loadStoreItems = async (per_page, manufacturers, seasons, order, diameter, width, ratio, cat) => {
     let htmlDiv = await fetch(urlTo("gume/items")
         + "?page=" + current_page
         + "&order=" + order
         + "&manufacturers=" + manufacturers
         + "&seasons="+ seasons
         + "&per_page=" + per_page
+        + "&width=" + width
+        + "&ratio=" + ratio
+        + "&diameter=" + diameter
+        + "&vehicle_category=" + cat
         )
     document.getElementById("item-col").innerHTML = await htmlDiv.text()
 }
 
-const loadItemData = async (per_page, manufacturers, seasons, order) => {
+const loadItemData = async (per_page, manufacturers, seasons, order, diameter, width, ratio, cat) => {
     let data = await fetch(urlTo("api/products/tyres/search")
         + "?page=" + current_page
         + "&order=" + order
         + "&manufacturers=" + manufacturers
         + "&seasons="+ seasons
         + "&per_page=" + per_page
+        + "&width=" + width
+        + "&ratio=" + ratio
+        + "&diameter=" + diameter
+        + "&vehicle_category=" + cat
     )
     let jsonData = await data.json()
 
@@ -311,6 +330,7 @@ const addToCart = (index,caller) => {
     let quantity = parseInt(caller.parentNode.querySelector(".qty").innerText)
     console.log("ITEM " + mProdId + " qty " + quantity)
     //TODO: dodavanje proizvoda u korpu
+
 }
 
 const urlTo = (uri) => {
@@ -346,8 +366,8 @@ const refresh = () => {
     document.getElementById("radio-sort")
         .querySelectorAll("input[type=radio]:checked").forEach((e,k,p) => sort.value = e.value)
 
-    loadStoreItems(4,mManufacturers,mSeasons, sort.value).then(
-        () => loadItemData(4,mManufacturers,mSeasons, sort.value).then( () => {
+    loadStoreItems(4,mManufacturers,mSeasons, sort.value, mDiameter, mWidth, mRatio, mCat).then(
+        () => loadItemData(4,mManufacturers,mSeasons, sort.value, mDiameter, mWidth, mRatio, mCat).then( () => {
             checkNavForward()
             checkNavBackward()
             })

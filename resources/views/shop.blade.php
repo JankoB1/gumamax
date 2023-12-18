@@ -408,6 +408,12 @@
 @section("scriptsBottom")
     <script src="{{ asset("js/load-store-items.js") }}"></script>
     <script>
-        initPage(interceptUndefined("{{$request->query("seasons")}}"),{{$request->query("diameter")}})
+        initPage(
+            interceptUndefined("{{$request->query("seasons")}}"),
+            interceptUndefined("{{$request->query("diameter")}}"),
+            interceptUndefined("{{$request->query("width")}}"),
+            interceptUndefined("{{$request->query("ratio")}}"),
+            interceptUndefined("{{$request->query("vehicle_category")}}")
+        )
     </script>
 @endsection
