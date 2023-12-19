@@ -36,6 +36,7 @@ class PartnerController extends Controller
             ->where('longitude', '!=', null)
             ->where('is_active', '=', 1)
             ->get();
+        dd($partners[0]);
         return view('partners', compact('partners'));
     }
 
@@ -147,7 +148,6 @@ class PartnerController extends Controller
 
         return $data;
     }
-
 
     public function availablePaymentMethod($partner_id)
     {

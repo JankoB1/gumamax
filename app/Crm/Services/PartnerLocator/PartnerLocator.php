@@ -89,7 +89,7 @@ class PartnerLocator implements PartnerLocatorInterface
         $sqlSelect .= ' ORDER BY project_turnover.value_decimal DESC';
 
         $sqlSelect .= " LIMIT ".($pagination['page']-1)*$pagination['results_per_page'].", ".$pagination['results_per_page'];
-  
+
         $partners = DB::connection('CRM')->select($sqlSelect, [$x1, $y1, $partnerClass, $partnerType, $partnerType, $x1, $y1, $radius]);
 
         $count = DB::connection('CRM')->select($sqlCount, [$partnerClass, $partnerType, $partnerType, $x1, $y1, $radius]);

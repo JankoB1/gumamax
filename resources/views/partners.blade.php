@@ -12,8 +12,11 @@
         <div class="divider"></div>
 
         <div class="search-box">
-            <input type="text">
+            <input type="text" name="search_partners" id="search_partners">
             <button>Pretraga <i class="fa-solid fa-magnifying-glass"></i></button>
+            <div class="search-content">
+
+            </div>
         </div>
 
         <div class="checkboxes">

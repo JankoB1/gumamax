@@ -1,3 +1,54 @@
+let searchPartnersInput = document.querySelector('#search_partners');
+let searchContent = document.querySelector('.search-content');
+searchPartnersInput.addEventListener('input', function() {
+    jQuery.ajax({
+        url: window.origin + '/cities/json',
+        method: 'GET',
+        data: {
+            term: this.value
+        },
+        success: function (response) {
+            let cities = response;
+            let html = '<div class="search-content-header">' +
+                '<p><strong>Mesto</strong></p><p><strong>Gumamax</strong></p><p><strong>Brza pošta</strong></p>' +
+                '</div>';
+            cities.forEach((city) => {
+                html += '<div class="search-content-line" data-city-id="' + city.city_id + '" data-latitude="' + city.latitude + '" data-longitude="' + city.longitude + '"><p>' + city.city_name + '</p>';
+                html += '<p>' + city.free_shipment + 'h</p>';
+                html += '<p>' + city.courier_shipment + 'h</p></div>';
+            });
+            searchContent.innerHTML = html;
+            if(cities.length > 0) {
+                searchContent.classList.add('active');
+            }
+
+            let searchContentLines = document.querySelectorAll('.search-content-line');
+            searchContentLines.forEach((searchContentLine) => {
+                searchContentLine.addEventListener('click', function() {
+                    jQuery.ajax({
+                        url: window.origin + '/api/partner/locator',
+                        method: 'GET',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: 'json',
+                        data: {
+                            order: 'distance+asc',
+                            radius: 5,
+                            city_id: this.dataset.cityId,
+                            latitude: this.dataset.latitude,
+                            longitude: this.dataset.longitude,
+                            history: false,
+                            delatnost: 2,
+                        },
+                        success: function(response2) {
+                            console.log(response2);
+                        }
+                    });
+                });
+            });
+        }
+    });
+});
+
 function initMap() {
     const initLatLng = { lat: 44.787197, lng: 20.457273 };
     const map = new google.maps.Map(document.getElementById("partners-map"), {

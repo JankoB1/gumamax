@@ -65,11 +65,11 @@ return [
 
         'ApiDB' => [
             'driver' => 'mysql',
-            'host' => 'localhost',
+            'host' => '5.9.54.73',
             'port' => env('DB_DELMAX_GUMAMAX_PORT', '3306'),
             'database' => 'delmaxapi',
-            'username' => 'root',
-            /*'password' => env('DB_PASSWORD', ''),*/
+            'username' => 'nora_adm',
+            'password' => env('DB_PASSWORD', ''),
             // ...
         ],
 
