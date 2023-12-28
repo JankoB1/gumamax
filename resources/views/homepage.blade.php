@@ -112,15 +112,15 @@
                             <div class="col-md-3">
                                 <div class="year-seasons">
                                     <p>God. Doba</p>
-                                    <div class="single-season active">
+                                    <div class="single-season active" style="cursor: pointer;" id="season-summer">
                                         <img src="{{ asset('images/visuals/summer.svg') }}" alt="summer">
                                         <span>Leto</span>
                                     </div>
-                                    <div class="single-season">
+                                    <div class="single-season" style="cursor: pointer;" id="season-winter">
                                         <img src="{{ asset('images/visuals/winter.svg') }}" alt="winter">
                                         <span>Zima</span>
                                     </div>
-                                    <div class="single-season">
+                                    <div class="single-season" style="cursor: pointer;" id="season-all">
                                         <img src="{{ asset('images/visuals/all-seasons.svg') }}" alt="all seasons">
                                         <span>Sve sezone</span>
                                     </div>
@@ -204,25 +204,25 @@
                     <div class="row vehicles-row">
                         <div class="col-md-8">
                             <div class="row">
-                                <div class="col">
+                                <div class="col" id="cat-car-vh">
                                     <img src="{{ asset('images/visuals/car.svg') }}" alt="car">
                                 </div>
-                                <div class="col">
+                                <div class="col" id="cat-jeep-vh">
                                     <img src="{{ asset('images/visuals/jeep.svg') }}" alt="jeep">
                                 </div>
-                                <div class="col">
+                                <div class="col" id="cat-truck-vh">
                                     <img src="{{ asset('images/visuals/truck.svg') }}" alt="truck">
                                 </div>
-                                <div class="col">
+                                <div class="col" id="cat-combi-vh">
                                     <img src="{{ asset('images/visuals/combi.svg') }}" alt="combi">
                                 </div>
-                                <div class="col">
+                                <div class="col" id="cat-moto-vh">
                                     <img src="{{ asset('images/visuals/motocycle.svg') }}" alt="motocycle">
                                 </div>
-                                <div class="col">
+                                <div class="col" id="cat-bike-vh">
                                     <img src="{{ asset('images/visuals/bicycle.svg') }}" alt="bicycle">
                                 </div>
-                                <div class="col">
+                                <div class="col" id="cat-tractor-vh">
                                     <img src="{{ asset('images/visuals/tractor.svg') }}" alt="tractor">
                                 </div>
                             </div>
@@ -240,15 +240,15 @@
                             <div class="col-md-1">
                                 <div class="year-seasons">
                                     <p>God. Doba</p>
-                                    <div class="single-season active">
+                                    <div class="single-season active" style="cursor: pointer;" id="season-summer-vh">
                                         <img src="{{ asset('images/visuals/summer.svg') }}" alt="summer">
                                         <span>Leto</span>
                                     </div>
-                                    <div class="single-season">
+                                    <div class="single-season" style="cursor: pointer;" id="season-winter-vh">
                                         <img src="{{ asset('images/visuals/winter.svg') }}" alt="winter">
                                         <span>Zima</span>
                                     </div>
-                                    <div class="single-season">
+                                    <div class="single-season" style="cursor: pointer;" id="season-all-vh">
                                         <img src="{{ asset('images/visuals/all-seasons.svg') }}" alt="all seasons">
                                         <span>Sve sezone</span>
                                     </div>
@@ -283,7 +283,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <button class="search-button">Pretraga</button>
+                                    <button id="homepage-vehs-search-btn">Pretraga</button>
                                 </div>
                             </div>
                         </div>

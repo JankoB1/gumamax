@@ -9,6 +9,8 @@ use Delmax\Products\SaveBetterPriceRequest;
 use Gumamax\Products\ElasticTyresTransformerExternal;
 use Gumamax\Products\Repositories\ProductRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Response;
 
 class ProductController extends DmxBaseController
 {
@@ -199,8 +201,67 @@ class ProductController extends DmxBaseController
         return view('shop', compact('manufacturersArray', 'bestsellers', 'request'));//, compact("products"));
     }
 
-    public function showCompare() {
-        return view('compare');
+    public function addToCompare(Request $request){
+        $oldCookie = $request->cookie('to_compare');
+        if (!$oldCookie) $oldCookie = "";
+
+        $id = $request->get("id");
+
+        $newCookie = $oldCookie.$id."#";
+
+        $data = explode('#', $newCookie);
+
+        $response = Response::json($data);
+
+        $minutes = 60;
+        $response->withCookie(cookie('to_compare', $newCookie, $minutes));
+        return $response;
+    }
+
+    public function removeToCompare(Request $request){
+        $oldCookie = $request->cookie('to_compare');
+        if (!$oldCookie) $oldCookie = "";
+
+        $id = $request->get("id");
+        $newCookie = str_replace($id."#", "", $oldCookie);
+
+        $data = explode('#', $newCookie);
+
+        $response = Response::json($data);
+
+        if ($newCookie == ""){
+            $response->withoutCookie('to_compare');
+        } else {
+
+            $minutes = 60;
+            $response->withCookie(cookie('to_compare', $newCookie , $minutes));
+        }
+        return $response;
+    }
+
+    public function getCurrentToCompare(Request $request){
+        $compareCookie = $request->cookie('to_compare');
+
+        $productsToCompare = explode('#', $compareCookie);
+
+        return Response::json($productsToCompare);
+    }
+
+    public function showCompare(Request $request) {
+        $compareCookie = Cookie::get('to_compare');
+
+        $productsToCompare = explode('#', $compareCookie);
+
+        $items = [];
+
+        for ($i = 0; $i < count($productsToCompare)-1; $i++){
+            $data = $this->repository->findById($productsToCompare[$i]);
+            $items[] = $data;
+        }
+
+        $unknwVals = self::unknwnVals;
+
+        return view('compare', compact("items", "unknwVals"));
     }
 
     public function showStoreItems(Request $request){

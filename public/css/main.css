@@ -426,9 +426,7 @@ section#tyres-search {
     margin-bottom: 8px;
     text-align: center;
 }
-
-#tyres-search .common-used-dimensions button,
-#tyres-search .search-button {
+#homepage-vehs-search-btn{
     border-radius: 4px;
     background: #E70F18;
     color: #FFF;
@@ -446,7 +444,25 @@ section#tyres-search {
     margin-top: 24px;
 }
 
-#tyres-search .search-button {
+#homepage-dims-search-btn{
+    border-radius: 4px;
+    background: #E70F18;
+    color: #FFF;
+    text-align: center;
+    font-family: Barlow;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: uppercase;
+    padding: 15px;
+    width: calc(100% - 24px);
+    border: none;
+    margin-left: 12px;
+    margin-top: 24px;
+}
+
+#homepage-vehs-search-btn{
     width: 40%;
     margin-right: 12px;
     margin-left: auto;

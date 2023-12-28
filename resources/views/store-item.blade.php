@@ -66,7 +66,7 @@
                 </div>
                 <div class="price-details">
                     <h5 class="single-shop-price"> {{ number_format($products[$cnt]["price_with_tax"], 2, ",", ".") }} RSD</h5>
-                    <a href="/proizvod/{{ $products[$cnt]["product_id"] }}">Detalji o proizvodu</a>
+                    <a href="/proizvod/{{ $products[$cnt]["product_id"] }}/guma">Detalji o proizvodu</a>
                 </div>
                 <p>Isporuka od tri do sedam radnih dana</p>
             </div>
