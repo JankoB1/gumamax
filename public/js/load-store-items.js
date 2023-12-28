@@ -23,6 +23,15 @@ let mWidth = ""
 let mRatio = ""
 let mCat = ""
 
+let mSearchMethod = "byDimension"
+
+let vehicleData = {
+    brand: "",
+    model: "",
+    engine: "",
+    years: "",
+    vehicle_tire_dimension: ""
+}
 
 function interceptUndefined(s){
     if (s === undefined)
@@ -31,14 +40,25 @@ function interceptUndefined(s){
         return s
 }
 
-const initPage = (seasons,diameter,width,ratio,cat) => {
+const initPage = (searchMethod, seasons,diameter,width,ratio,cat, pBrand, pModel, pEngine, pYears, pDimensions) => {
 
+    mSearchMethod = searchMethod
     mSeasons = seasons
     mCat = cat
     mDiameter = diameter
     mWidth = width
     mRatio = ratio
 
+    if (searchMethod === "byVehicle") {
+        vehicleData.brand = pBrand
+        vehicleData.model = pModel
+        vehicleData.engine = pEngine
+        vehicleData.years = pYears
+        vehicleData.vehicle_tire_dimension = pDimensions
+    }
+
+    console.log(vehicleData)
+    console.log(searchMethod)
 
     forward.onclick = navForward
     backward.onclick = navBackward
@@ -84,7 +104,7 @@ const initPage = (seasons,diameter,width,ratio,cat) => {
 
     for(let elem of document.getElementsByClassName("single-best-seller")){
         elem.onclick = () => {
-            window.location.href = urlTo("proizvod/" + elem.getAttribute("product_id"))
+            window.location.href = urlTo("proizvod/" + elem.getAttribute("product_id") + "guma")
         }
     }
 }
@@ -154,6 +174,12 @@ const loadStoreItems = async (per_page, manufacturers, seasons, order, diameter,
         + "&ratio=" + ratio
         + "&diameter=" + diameter
         + "&vehicle_category=" + cat
+        + "&search_method=" + mSearchMethod
+        + "&vehicle_brand=" + vehicleData.brand
+        + "&vehicle_model=" + vehicleData.model
+        + "&vehicle_engine=" + vehicleData.engine
+        + "&vehicle_years=" + vehicleData.years
+        + "&vehicle_tire_dimension=" + vehicleData.vehicle_tire_dimension
         )
     document.getElementById("item-col").innerHTML = await htmlDiv.text()
 }
@@ -169,6 +195,11 @@ const loadItemData = async (per_page, manufacturers, seasons, order, diameter, w
         + "&ratio=" + ratio
         + "&diameter=" + diameter
         + "&vehicle_category=" + cat
+        + "&vehicle_brand=" + vehicleData.brand
+        + "&vehicle_model=" + vehicleData.model
+        + "&vehicle_engine=" + vehicleData.engine
+        + "&vehicle_years=" + vehicleData.years
+        + "&vehicle_tire_dimension=" + vehicleData.vehicle_tire_dimension
     )
     let jsonData = await data.json()
 

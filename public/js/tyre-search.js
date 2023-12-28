@@ -135,6 +135,11 @@ const widthOnChange = function (){
 
         loadRatios(el.ratio, tFilter.ratio);
     }
+
+    for (let d of commonlyUsedSelectors.keys()) {
+        d.querySelector("p").style.backgroundColor = "White"
+        d.querySelector("p").style.color = "Black"
+    }
 };
 
 const ratioOnChange =function () {
@@ -151,6 +156,11 @@ const ratioOnChange =function () {
         setProductFilterCookie();
         clearFacetQuery();
         loadDiameters(el.diameter, tFilter.diameter);
+    }
+
+    for (let d of commonlyUsedSelectors.keys()) {
+        d.querySelector("p").style.backgroundColor = "White"
+        d.querySelector("p").style.color = "Black"
     }
 };
 
@@ -174,6 +184,11 @@ const diameterOnChange = function(){
             showProducts(tFilter);
         }
 */
+    }
+
+    for (let d of commonlyUsedSelectors.keys()) {
+        d.querySelector("p").style.backgroundColor = "White"
+        d.querySelector("p").style.color = "Black"
     }
 };
 

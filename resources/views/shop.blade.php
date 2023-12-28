@@ -409,11 +409,17 @@
     <script src="{{ asset("js/load-store-items.js") }}"></script>
     <script>
         initPage(
+            interceptUndefined("{{$request->query("search_method")}}"),
             interceptUndefined("{{$request->query("seasons")}}"),
             interceptUndefined("{{$request->query("diameter")}}"),
             interceptUndefined("{{$request->query("width")}}"),
             interceptUndefined("{{$request->query("ratio")}}"),
-            interceptUndefined("{{$request->query("vehicle_category")}}")
+            interceptUndefined("{{$request->query("vehicle_category")}}"),
+            interceptUndefined("{{$request->query("vehicle_brand")}}"),
+            interceptUndefined("{{$request->query("vehicle_model")}}"),
+            interceptUndefined("{{$request->query("vehicle_engine")}}"),
+            interceptUndefined("{{$request->query("vehicle_years")}}"),
+            interceptUndefined("{{$request->query("vehicle_tire_dimension")}}")
         )
     </script>
 @endsection
