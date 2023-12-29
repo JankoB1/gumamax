@@ -102,31 +102,37 @@
                     <h3>Vaša porudžbina</h3>
                     <div class="divider"></div>
                     <div class="order-products">
+                        @if($cart == null || $cart["total_qty"] == 0)
+                            <p>Korpa je prazna</p>
+                        @else
+                        @foreach($cart["items"] as $item)
                         <div class="single-order-product">
+                            <img src="{{ $item["item"]["image_url"] }}" alt="">
+                            <p class="product-name">{{$item["item"]["additional_description"]}}</p>
+                            <p class="product-price">{{ number_format($item["item"]["price_with_tax"], 2, ",", ".") }} RSD</p>
+                            <i style="cursor: pointer;" class="fa-solid fa-xmark" onclick="rmCartItem(this,{{json_encode($item)}})"></i>
+                        </div>
+                        @endforeach
+                        @endif
+                        <!--<div class="single-order-product">
                             <img src="{{ asset('images/visuals/product-image.png') }}" alt="">
                             <p class="product-name">Tigar winter 195/65 R15</p>
                             <p class="product-price">4.660 RSD</p>
                             <i class="fa-solid fa-xmark"></i>
-                        </div>
-                        <div class="single-order-product">
-                            <img src="{{ asset('images/visuals/product-image.png') }}" alt="">
-                            <p class="product-name">Tigar winter 195/65 R15</p>
-                            <p class="product-price">4.660 RSD</p>
-                            <i class="fa-solid fa-xmark"></i>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="order-prices">
                         <div class="order-subtotal">
                             <h4>Cena</h4>
-                            <p>8.510 RSD</p>
+                            <p>{{ number_format($cart["total_amount_with_tax"], 2, ",", ".") }} RSD</p>
                         </div>
                         <div class="order-shipping">
                             <h4>Poštarina</h4>
-                            <p>Besplatno</p>
+                            <p>@if($cart["shipping_amount_with_tax"] == 0) Besplatno @else {{ number_format($cart["shipping_amount_with_tax"], 2, ",", ".") }} RSD @endif</p>
                         </div>
                         <div class="order-total">
                             <h4>Ukupno</h4>
-                            <p>8.510 RSD</p>
+                            <p>{{ number_format($cart["total_amount_with_tax"] + $cart["shipping_amount_with_tax"], 2, ",", ".") }} RSD</p>
                         </div>
                     </div>
                     <button id="orderBtn">Poruči</button>

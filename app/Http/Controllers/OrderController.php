@@ -9,7 +9,8 @@ class OrderController extends Controller
 {
 
     public function showMakeOrder() {
-        return view('make-order');
+        $cart = session()->get("cart");
+        return view('make-order', compact("cart"));
     }
 
     public function apiUserOrders()

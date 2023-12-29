@@ -115,7 +115,7 @@
                 <span class="qty">1</span>
                 <span class="plus ripple">+</span>
             </div>
-            <button class="add-to-cart" onclick="addToCart( {{ $cnt }}, this)">Dodaj u korpu</button>
+            <button class="add-to-cart addToCartButton" onclick="addToCart( {{ $cnt }}, this)">Dodaj u korpu</button>
         </div>
     </div>
 </div>

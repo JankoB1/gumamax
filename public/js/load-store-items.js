@@ -359,9 +359,33 @@ const addToCart = (index,caller) => {
     //ovo je prod id konkretnog proizvoda
     let mProdId = product_ids[index]
     let quantity = parseInt(caller.parentNode.querySelector(".qty").innerText)
-    console.log("ITEM " + mProdId + " qty " + quantity)
-    //TODO: dodavanje proizvoda u korpu
 
+    const csrf = document.querySelector('meta[name="csrf-token"]').content;
+
+    fetch(urlTo('/api/products/tyres/' + mProdId)).then((response) => {
+        response.json().then(
+            (data) => {
+                fetch(
+                    urlTo('/api/add-cart-item'),
+                    {
+                        method: "POST",
+                        body: JSON.stringify({product: data, qty: quantity, uuid: generateUUID()}),
+                        headers: {
+                            "Content-type": "application/json; charset=UTF-8",
+                            "X-CSRF-Token": csrf
+                        }
+                    }).then((response) => {
+                    response.text().then(
+                        (data) => {
+                            let numSpan = document.getElementsByClassName("cart-num").item(0)
+                            const currentCartQuantity = Number(numSpan.innerText)
+                            numSpan.innerText = (currentCartQuantity + quantity).toString()
+                        }
+                    )
+                })
+            }
+        )
+    })
 }
 
 const urlTo = (uri) => {
@@ -405,3 +429,14 @@ const refresh = () => {
     )
 }
 
+const generateUUID = () => {
+    var d = new Date().getTime();
+    if(window.performance && typeof window.performance.now === "function"){
+        d += performance.now(); //use high-precision timer if available
+    }
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+}
