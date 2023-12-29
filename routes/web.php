@@ -72,7 +72,7 @@ Route::get('/gume', [ProductController::class, 'showShop'])->name('show-shop');
 Route::get('/uporedi', [ProductController::class, 'showCompare'])->name('show-compare');
 Route::get('/mreza-partnera', [PartnerController::class, 'showPartners'])->name('show-partners');
 Route::get('/partner/{id}', [PartnerController::class, 'showSinglePartner'])->name('show-single-partner');
-Route::get('/porudzbina', [OrderController::class, 'showMakeOrder'])->name('show-make-order');
+Route::get('/korpa', [OrderController::class, 'showMakeOrder'])->name('show-make-order');
 Route::get('/gume/items', [ProductController::class, 'showStoreItems'])->name('show-store-items');
 
 Route::get('/gume/add-to-compare', [ProductController::class, 'addToCompare'])->name('add-compare');
@@ -97,6 +97,8 @@ Route::get('partners/login', [PartnerController::class, 'login']);
 Route::get('partners/membership/create', [MembershipRequestController::class, 'create'])->name('partners.membership.create');
 Route::post('partners/membership', [MembershipRequestController::class, 'store'])->name('partners.membership.store');
 
+Route::post('api/add-cart-item', [CartController::class, 'addCartItem'])->name('addCartItem');
+Route::post('api/rm-cart-item', [CartController::class, 'rmCartItem'])->name('rmCartItem');
 /*
 |--------------------------------------------------------------------------
 | Static pages related routes

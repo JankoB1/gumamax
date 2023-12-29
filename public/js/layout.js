@@ -1,3 +1,8 @@
 let totalAmount = 8510
 
-let cart = {}
+let cart = {
+    items: []
+}
+
+const init = () => {
+}

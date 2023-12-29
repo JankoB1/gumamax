@@ -49,9 +49,11 @@
                                 </a>
                             </li>
                             <li class="cart-li">
-                                <a href="#">
+                                <a id="gotoCart" href=/korpa>
                                     <img src="{{ asset('images/visuals/cart.svg') }}" alt="cart">
-                                    <span class="cart-num">0</span>
+                                    <span class="cart-num">
+                                        @if(session()->has("cart")) {{ session()->get("cart")["total_qty"] }} @else 0 @endif
+                                    </span>
                                 </a>
                             </li>
                             <li>
@@ -166,6 +168,8 @@
 
 @yield('scriptsBottom')
 <script src="{{ asset("js/layout.js") }}"></script>
-
+<script>
+    init()
+</script>
 </body>
 </html>

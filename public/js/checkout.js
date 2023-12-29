@@ -29,11 +29,15 @@ const order = () => {
             }
         }
     ).then(response => {
-        response.json()
-            .then( data => {
-                console.log(data.erp_result.newOrder.checkout_id)
-                window.location.href = urlTo('testpay') + "?coid=" + data.erp_result.newOrder.checkout_id
-            });
+        if (response.redirected){
+           window.location.href = response.url
+        } else {
+            response.json()
+                .then(data => {
+                    console.log(data.erp_result.newOrder.checkout_id)
+                    window.location.href = urlTo('testpay') + "?coid=" + data.erp_result.newOrder.checkout_id
+                });
+        }
     })
 }
 
@@ -91,6 +95,27 @@ const orderNPayByCard = () => {
 }
 const orderNPayOnSpot = () => {
 
+}
+
+const rmCartItem = (caller,item) => {
+    const csrf = document.querySelector('meta[name="csrf-token"]').content;
+
+    fetch(
+        urlTo('/api/rm-cart-item'),
+        {
+            method: "POST",
+            body: JSON.stringify({product: item.item, qty: item.qty}),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "X-CSRF-Token": csrf
+            }
+        }).then((response) => {
+        response.text().then(
+            (data) => {
+                window.location.reload()
+            }
+        )
+    })
 }
 
 const urlTo = (uri) => {
