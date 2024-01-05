@@ -258,6 +258,10 @@ nav.navbar.navbar-expand-md.primary-nav {
     position: relative;
 }
 
+#hero-homepage .swiper-wrapper {
+    height: 72%;
+}
+
 section#tyres-search {
     width: 90%;
     margin: -90px auto 0;
