@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Crm\Models\Member;
+use Crm\Models\MemberPriceList;
 use Crm\Models\Partner;
 use Crm\Services\PartnerLocator\PartnerLocator;
 use Delmax\Cart\Services\DelmaxCartService;
@@ -41,6 +42,34 @@ class PartnerController extends Controller
 
     public function showSinglePartner($id) {
         $partner = Partner::where('id', '=', $id)->get()->first();
+        $member = Member::where('membership_id', '=', $id)->get()->first();
+
+        $whh = $member->workingHours[1]->hours();
+
+        $daySpans = [];
+
+        $currentSpan["start_day"] = $member->workingHours[1]->dayOfWeek->description;
+        $currentSpan["hours"] = $whh;
+
+        for($cnt = 1; $cnt<8; $cnt++){
+            if (strcmp($whh, $member->workingHours[$cnt%7]->hours()) == 0){
+                $currentSpan["end_day"] = $member->workingHours[$cnt%7]->dayOfWeek->description;
+            }else{
+                $daySpans[] = $currentSpan;
+                $whh = $member->workingHours[$cnt%7]->hours();
+                $currentSpan["start_day"] = $member->workingHours[$cnt%7]->dayOfWeek->description;
+                $currentSpan["end_day"] = $member->workingHours[$cnt%7]->dayOfWeek->description;
+                $currentSpan["hours"] = $whh;
+            }
+        }
+
+        $daySpans[] = $currentSpan;
+
+        $services = MemberPriceList::apiDtTyresServices($member->id, "Putničko", 15);
+
+        $partner->daySpans = $daySpans;
+        $partner->member = $member;
+
         return view('single-partner', compact('partner'));
     }
 

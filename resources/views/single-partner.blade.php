@@ -14,10 +14,10 @@
             <div class="col-md-3">
                 <h4>Gumamax partner</h4>
                 <h5>Servis sa mogućnošću montaže</h5>
-                <h2>Pneumatik</h2>
+                <h2>{{$partner->member->page->headline}}</h2>
                 <div class="single-partner-address">
                     <i class="fa-solid fa-location-dot"></i>
-                    Borilačka 5b, Leskovac
+                    {{$partner->member->address.", ".$partner->member->city_name}}
                 </div>
             </div>
         </div>
@@ -28,12 +28,19 @@
             <div class="col-md-6">
                 <div class="as">
                     <h4>O nama</h4>
-                    <p>Pneumatik je kompanija koja se bavi isporukom i montažom. lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+                    <p>{!! $partner->member->page->long_description !!}</p>
                     <div class="phone-time">
                         <i class="fa-solid fa-phone"></i>
-                        060/010-111
+                        {!! $partner->member->phone_number !!}
                         <i class="fa-solid fa-clock"></i>
-                        Pon - Sub 09:16
+                        |
+                        @foreach($partner->daySpans as $daySpan)
+                            @if(strcmp($daySpan["start_day"], $daySpan["end_day"]) == 0)
+                                {{substr($daySpan["start_day"],0,3).": ".$daySpan["hours"]." | "}}
+                            @else
+                                {{substr($daySpan["start_day"],0,3)."-".substr($daySpan["end_day"],0,3).": ".$daySpan["hours"]." | "}}
+                            @endif
+                        @endforeach
                     </div>
                 </div>
                 <div class="cards">
