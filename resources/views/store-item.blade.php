@@ -73,7 +73,7 @@
         </div>
     </div>
     <div class="row bottom-single-product">
-        <div class="col-md-1">
+        <div class="col-md">
             <div class="single-tag">
                 <img src="{{ asset('images/visuals/bi_fuel-pump.svg') }}" alt="gas">
                 <span class="letter">
@@ -85,7 +85,7 @@
                 </span>
             </div>
         </div>
-        <div class="col-md-1">
+        <div class="col-md">
             <div class="single-tag">
                 <img src="{{ asset('images/visuals/carbon_rain-heavy.svg') }}" alt="weather">
                 <span class="letter">
@@ -97,7 +97,7 @@
                 </span>
             </div>
         </div>
-        <div class="col-md-1">
+        <div class="col-md">
             <div class="single-tag">
                 <img src="{{ asset('images/visuals/sound.svg') }}" alt="sound">
                 <span class="letter sound-letters">
@@ -109,7 +109,7 @@
                 </span>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <div class="quantity-area">
                 <span class="minus ripple">-</span>
                 <span class="qty">1</span>

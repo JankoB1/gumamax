@@ -14,8 +14,8 @@
                 <div class="col-md-4">
                     <p id="result-numbering" ></p>
                 </div>
-                <div class="col-md-5 offset-md-3">
-                    <span>Sortiraj prema</span>
+                <div class="col-md-8">
+                    <span>Poredaj po</span>
                     <select name="sort" id="sort">
                         <!--<option value="1">Popularnosti</option>-->
                         <option value="price_with_tax%7Casc">Ceni rastuće</option>
@@ -400,7 +400,7 @@
     </section>
 
     <div id="compare-popup">
-        <button class="compare-popup-btn" onclick="window.location.href = urlTo('uporedi')">Uporedi &gt;</button>
+        <button class="compare-popup-btn" onclick="window.location.href = urlTo('uporedi')">Uporedi</button>
     </div>
 
 @endsection

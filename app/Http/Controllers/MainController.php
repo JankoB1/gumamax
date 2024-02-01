@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Gumamax\Products\Repositories\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -9,9 +10,11 @@ use Illuminate\Support\Facades\File;
 class MainController extends Controller
 {
 
-    public function __construct()
-    {
+    protected $productRepository;
 
+    public function __construct(ProductRepositoryInterface $productRepository)
+    {
+        $this->productRepository = $productRepository;
     }
 
     public function index() {
@@ -34,7 +37,9 @@ class MainController extends Controller
             array_push($logos, url('images/visuals/car-logos/' . $file->getFilename()));
         }
 
-        return view('homepage', compact('logos', 'bestsellingDimens'));
+        $featured = $this->productRepository->getBestsellers(date("Ymd"),4);
+
+        return view('homepage', compact('logos', 'bestsellingDimens', 'featured'));
     }
 
 }

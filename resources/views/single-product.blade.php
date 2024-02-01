@@ -150,7 +150,7 @@
                                     <span class="qty">1</span>
                                     <span class="plus ripple">+</span>
                                 </div>
-                                <button class="add-to-cart" onclick="addToCart()">Dodaj u korpu</button>
+                                <button class="add-to-cart" onclick="addToCart(this)">Dodaj u korpu</button>
                             </div>
                         </div>
                         <div class="product-table-info">
@@ -248,7 +248,7 @@
                                     <p class="stock-status-text">Na stanju <strong>(10 kom)</strong></p>
                                 </div>
                                 <p class="note">Isporuka od tri do sedan radnih dana</p>
-                                <button type="button" onclick="addFeaturedToCart({{$f["product_id"]}})">Dodaj u korpu</button>
+                                <button type="button" onclick="addFeaturedToCart({{$f["product_id"]}}, this)">Dodaj u korpu</button>
                             </div>
                         </div>
                     </div>

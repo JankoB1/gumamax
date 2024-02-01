@@ -52,7 +52,7 @@
                                 </a>
                             </li>
                             <li class="cart-li">
-                                <a id="gotoCart" href=/korpa>
+                                <a id="gotoCart" href="/korpa">
                                     <img src="{{ asset('images/visuals/cart.svg') }}" alt="cart">
                                     <span class="cart-num">
                                         @if(session()->has("cart")) {{ session()->get("cart")["total_qty"] }} @else 0 @endif
@@ -99,6 +99,58 @@
                     </div>
                 </div>
             </nav>
+        </header>
+
+        <header id="mobile-header">
+            <div class="mobile-header-top">
+                <div class="burger-mobile">
+                    <div class="burger-line"></div>
+                    <div class="burger-line"></div>
+                    <div class="burger-line"></div>
+                </div>
+                <div class="logo-mobile">
+                    <a href="{{ route('show-homepage') }}">
+                        <img src="{{ asset('images/visuals/logo.svg') }}" alt="gumamax logo" width="170">
+                    </a>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="location-li">
+                        <a href="#">
+                            <img src="{{ asset('images/visuals/location-pin.svg') }}" alt="location pin">
+                        </a>
+                    </li>
+                    <li class="cart-li">
+                        <a id="gotoCart" href="{{ route('show-make-order') }}">
+                            <img src="{{ asset('images/visuals/cart.svg') }}" alt="cart">
+                            <span class="cart-num">
+                                        @if(session()->has("cart")) {{ session()->get("cart")["total_qty"] }} @else 0 @endif
+                                    </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="{{ asset('images/visuals/account.svg') }}" alt="account">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mobile-header-overlay"></div>
+            <div class="mobile-wide-menu">
+                <ul>
+                    <li><a href="">Gume</a></li>
+                    <li><a href="">Ratkapne</a></li>
+                    <li><a href="">Ulja</a></li>
+                    <li><a href="">Akumulatori</a></li>
+                    <li><a href="">Auto oprema</a></li>
+                    <li><a href="">O nama</a></li>
+                    <li><a href="">Kontakt</a></li>
+                </ul>
+                @if(Auth::guest())
+                    <a href="/login" class="sign-in">Prijavi se</a>
+                @else
+                    <a href="/logout" class="sign-in">Odjavi se</a>
+                @endif
+            </div>
         </header>
 
         <main>

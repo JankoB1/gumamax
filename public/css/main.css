@@ -372,7 +372,7 @@ section#tyres-search {
     height: 65px;
     width: 65px;
     text-align: center;
-    padding: 10px;
+    padding: 0;
     margin-bottom: 10px;
 }
 
@@ -382,7 +382,7 @@ section#tyres-search {
 
 #tyres-search .single-season img {
     display: block;
-    margin: 0 auto;
+    margin: 10px auto 5px;
 }
 
 #tyres-search .single-season span {
@@ -1068,6 +1068,7 @@ section#single-product-container {
     margin: 0 auto 15px;
     display: block;
     height: 25px;
+    filter: brightness(0) invert(1) invert(1);
 }
 
 .vws-cont .row {
@@ -1227,8 +1228,10 @@ button.add-to-cart, #order-details .order-summary button {
     border-radius: 4px;
     border: 1px solid #FCB6BD;
     background: #FFF;
-    padding: 15px 15px 20px;
+    padding: 15px 0 20px;
     position: relative;
+    padding-bottom: 0 !important;
+    width: 70px !important;
 }
 
 .single-tag img {
@@ -1238,9 +1241,6 @@ button.add-to-cart, #order-details .order-summary button {
 }
 
 span.letter {
-    position: absolute;
-    bottom: -14px;
-    left: 32%;
     color: #FFF;
     text-align: center;
     font-family: Barlow;
@@ -1250,7 +1250,14 @@ span.letter {
     line-height: normal;
     background: #E70F18;
     padding: 3px 7px;
+    position: relative;
     border-radius: 4px;
+    left: 0 !important;
+    bottom: unset;
+    top: 15px;
+    display: block;
+    margin: 0 auto;
+    width: fit-content;
 }
 
 span.letter.sound-letters {
@@ -1487,6 +1494,7 @@ span.letter.sound-letters {
     border-top: 1px solid #dedede;
     width: calc(100% - 40px);
     margin: 0 auto;
+    align-items: center;
 }
 
 #shop-inner button.add-to-cart, #shop-inner .quantity-area {
@@ -1746,9 +1754,14 @@ span.letter.sound-letters {
     margin: 0 auto;
 }
 
+.compare-inner .row .col-md-2 div.single-tag {
+    margin-bottom: 25px;
+}
+
 .compare-inner .season-row img {
     display: block;
     margin: 0 auto;
+    filter: brightness(0) invert(1) invert(1);
 }
 
 .compare-inner .season-row p {
@@ -2473,7 +2486,8 @@ button.compare-popup-btn {
     background: #E70F18;
     border: none;
     outline: none;
-    margin: 25px auto auto 23%;
+    margin: 25px auto 0;
+    display: block;
 }
 
 .compare-popup-product-image{
@@ -2549,7 +2563,171 @@ button.compare-popup-btn {
     cursor: pointer;
 }
 
+button.add-to-cart.added, #featured-products button.added {
+    background-color: #9AE278;
+    pointer-events: none;
+}
+
+.single-season img {
+    filter: brightness(0) invert(1) invert(1);
+}
+
+.single-season.active img {
+    filter: brightness(0) invert(1) ;
+}
+
+#mobile-header {
+    display: none;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background: white;
+    z-index: 1000;
+}
+
+.mobile-wide-menu {
+    position: fixed;
+    transition: all 0.3s ease-in-out;
+    width: 80vw;
+    left: -100vw;
+    height: 100vh;
+    background: white;
+}
+
+.mobile-header-overlay {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    top: 69px;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    background: rgba(0, 0, 0, 0.55);
+}
+
+#mobile-header.active .mobile-wide-menu {
+    left: 0;
+}
+
+#mobile-header.active .mobile-header-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    box-shadow: 0px 4px 4px 0px #00000014;
+    position: relative;
+    z-index: 10;
+}
+
+#mobile-header .navbar-nav {
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+}
+
+.burger-mobile .burger-line {
+    width: 22px;
+    height: 3px;
+    margin-bottom: 3px;
+    background: black;
+}
+
+.mobile-wide-menu ul {
+    border-bottom: 1px solid #E7E7E7;
+    padding-top: 50px;
+    padding-left: 20px;
+    padding-bottom: 30px;
+    margin-left: 0;
+}
+
+.mobile-wide-menu li {
+    list-style: none;
+}
+
+.mobile-wide-menu li a {
+    font-family: Barlow;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 63px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #000000;
+    text-decoration: none;
+    padding-bottom: 20px;
+}
+
+.mobile-wide-menu a.sign-in {
+    position: absolute;
+    bottom: 14vh;
+    width: calc(100% - 40px);
+    left: 20px;
+}
+
+.sort-bar .col-md-8 {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+p.product-name {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.single-order-product {
+    align-items: center;
+}
+
+.single-order-product i {
+    color: #BFBFBF;
+}
+
 @media only screen and (max-width: 768px) {
+    header, .brands-row {
+        display: none !important;
+    }
+
+    #mobile-header {
+        display: block !important;
+    }
+
+    .brands-inputs {
+        padding: 30px 20px;
+    }
+
+    .brands-inputs .col-6 {
+        margin-bottom: 20px;
+    }
+
+    .brands-inputs .col-6 p {
+        margin-bottom: 10px;
+    }
+
+    #homepage-vehs-search-btn {
+        width: calc(100% - 60px);
+        margin: 0 0 40px 30px !important;
+    }
+
+    #tyres-search select {
+        padding: 15px 10px;
+    }
+
+    #hero-homepage {
+        padding-top: 9vh;
+    }
+
+    #hero-homepage .swiper-wrapper {
+        height: 46%;
+    }
+
     #hero-homepage .swiper-slide {
         padding: 0 5% 6vh;
     }

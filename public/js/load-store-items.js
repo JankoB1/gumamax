@@ -92,7 +92,22 @@ const initPage = (searchMethod, seasons,diameter,width,ratio,cat, pBrand, pModel
         }
     )
 
-    refreshBtn.onclick = refresh
+    refreshBtn.onclick = function() {
+        document.getElementById("brands-filter")
+            .querySelectorAll("input[type=checkbox]:checked")
+            .forEach((e,k,p) => {
+                e.checked = false
+            })
+        refresh();
+    }
+
+    document.getElementById("brands-filter")
+        .querySelectorAll("input[type=checkbox]")
+        .forEach((e,k,p) => {
+            e.onclick = refresh
+        })
+
+
     sort.onchange = () => {
         document.getElementById("radio-sort")
             .querySelectorAll("input[type=radio]")
@@ -104,7 +119,7 @@ const initPage = (searchMethod, seasons,diameter,width,ratio,cat, pBrand, pModel
 
     for(let elem of document.getElementsByClassName("single-best-seller")){
         elem.onclick = () => {
-            window.location.href = urlTo("proizvod/" + elem.getAttribute("product_id") + "guma")
+            window.location.href = urlTo("proizvod/" + elem.getAttribute("product_id") + "/guma")
         }
     }
 }
@@ -259,7 +274,7 @@ const addToComparePopup = async (prodId) => {
         "                                <h6>" + parseFloat(prod["price_with_tax"]).toString().replace(".",",") + " RSD</h6>\n" +
         "                            </div>" +
         "                           <div class=\"col-md-2\">" +
-        "                               <img src=\"http://localhost/images/visuals/delete-icon.svg\" id=\"compare-popup-delete\" onclick=\"iconRemoveFromComparePopup(" + prodId + ")\">" +
+        "                               <img src=\"" + window.origin + "/images/visuals/delete-icon.svg\" id=\"compare-popup-delete\" onclick=\"iconRemoveFromComparePopup(" + prodId + ")\">" +
         "                           </div>"+
         "                        </div>"+
          comparePopup.innerHTML
@@ -377,6 +392,12 @@ const addToCart = (index,caller) => {
                     }).then((response) => {
                     response.text().then(
                         (data) => {
+                            caller.classList.add('added');
+                            caller.innerText = 'Dodato u korpu';
+                            setTimeout(function() {
+                                caller.classList.remove('added');
+                                caller.innerText = 'Dodaj u korpu';
+                            }, 2000);
                             let numSpan = document.getElementsByClassName("cart-num").item(0)
                             const currentCartQuantity = Number(numSpan.innerText)
                             numSpan.innerText = (currentCartQuantity + quantity).toString()

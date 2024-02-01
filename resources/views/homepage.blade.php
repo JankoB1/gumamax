@@ -255,29 +255,29 @@
                                 </div>
                             </div>
                             <div class="col-md-11">
-                                <div class="row">
+                                <div class="row brands-row">
                                     @foreach($logos as $logo)
                                         <img src="{{ $logo }}" alt="">
                                     @endforeach
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-2">
+                                <div class="row brands-inputs">
+                                    <div class="col-md-2 col-6">
                                         <p>Marka</p>
                                         <select name="brand" id="brand"></select>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 col-6">
                                         <p>Model</p>
                                         <select name="model" id="model"></select>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 col-6">
                                         <p>Tip</p>
                                         <select name="type" id="type"></select>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 col-6">
                                         <p>Godište</p>
                                         <select name="year" id="year"></select>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 col-6">
                                         <p>Veličina</p>
                                         <select name="size" id="size"></select>
                                     </div>
@@ -340,98 +340,30 @@
         </div>
         <div class="featured-products-list products-list">
             <div class="row">
-                <div class="col-md-3 col-6">
-                    <div class="product-wrapper">
-                        <div class="top-area">
-                            <img src="{{ asset('images/visuals/product-image.png') }}" alt="product image" class="featured-image">
-                            <img src="{{ asset('images/visuals/dot-tag.png') }}" alt="dot tag" class="dot-tag">
-                            <div class="product-main-meta">
-                                <h5 class="product-price">4,650 rsd</h5>
-                                <p>Tigar winter 195/65 R15 winter tigar 2 red</p>
+                @foreach($featured as $f)
+                    <div class="col-md-3 col-6">
+                        <div class="product-wrapper">
+                            <div class="top-area">
+                                <img src="{{ $f["image_url"] }}" alt="product image" class="featured-image">
+                                @if(sizeof(explode("/",$f["cat_no"])) > 1 && explode("/",$f["cat_no"])[1] == "2021") <img src="{{ asset('images/visuals/dot-tag.png') }}" class="dot-tag" alt="dot"> @endif                                <div class="product-main-meta">
+                                    <h5 class="product-price">{{ number_format($f["price_with_tax"], 2, ",", ".") }} RSD</h5>
+                                    <p>{{ $f["manufacturer"] }} {{ $f["additional_description"] }}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="bottom-area">
-                            <div class="product-tags">
-                                <img src="{{ asset('images/visuals/product-tags.png') }}" alt="product tags">
+                            <div class="bottom-area">
+                                <div class="product-tags">
+                                    <img src="{{ asset('images/visuals/product-tags.png') }}" alt="product tags">
+                                </div>
+                                <div class="stock">
+                                    <div class="stock-status in-stock"></div>
+                                    <p class="stock-status-text">Na stanju <strong>(10 kom)</strong></p>
+                                </div>
+                                <p class="note">Isporuka od tri do sedan radnih dana</p>
+                                <button type="button" onclick="addToCart({{$f["product_id"]}}, this)">Dodaj u korpu</button>
                             </div>
-                            <div class="stock">
-                                <div class="stock-status in-stock"></div>
-                                <p class="stock-status-text">Na stanju <strong>(10 kom)</strong></p>
-                            </div>
-                            <p class="note">Isporuka od tri do sedan radnih dana</p>
-                            <button type="button">Dodaj u korpu</button>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="product-wrapper">
-                        <div class="top-area">
-                            <img src="{{ asset('images/visuals/product-image.png') }}" alt="product image" class="featured-image">
-                            <img src="{{ asset('images/visuals/dot-tag.png') }}" alt="dot tag" class="dot-tag">
-                            <div class="product-main-meta">
-                                <h5 class="product-price">4,650 rsd</h5>
-                                <p>Tigar winter 195/65 R15 winter tigar 2 red</p>
-                            </div>
-                        </div>
-                        <div class="bottom-area">
-                            <div class="product-tags">
-                                <img src="{{ asset('images/visuals/product-tags.png') }}" alt="product tags">
-                            </div>
-                            <div class="stock">
-                                <div class="stock-status in-stock"></div>
-                                <p class="stock-status-text">Na stanju <strong>(10 kom)</strong></p>
-                            </div>
-                            <p class="note">Isporuka od tri do sedan radnih dana</p>
-                            <button type="button">Dodaj u korpu</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="product-wrapper">
-                        <div class="top-area">
-                            <img src="{{ asset('images/visuals/product-image.png') }}" alt="product image" class="featured-image">
-                            <img src="{{ asset('images/visuals/dot-tag.png') }}" alt="dot tag" class="dot-tag">
-                            <div class="product-main-meta">
-                                <h5 class="product-price">4,650 rsd</h5>
-                                <p>Tigar winter 195/65 R15 winter tigar 2 red</p>
-                            </div>
-                        </div>
-                        <div class="bottom-area">
-                            <div class="product-tags">
-                                <img src="{{ asset('images/visuals/product-tags.png') }}" alt="product tags">
-                            </div>
-                            <div class="stock">
-                                <div class="stock-status in-stock"></div>
-                                <p class="stock-status-text">Na stanju <strong>(10 kom)</strong></p>
-                            </div>
-                            <p class="note">Isporuka od tri do sedan radnih dana</p>
-                            <button type="button">Dodaj u korpu</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="product-wrapper">
-                        <div class="top-area">
-                            <img src="{{ asset('images/visuals/product-image.png') }}" alt="product image" class="featured-image">
-                            <img src="{{ asset('images/visuals/dot-tag.png') }}" alt="dot tag" class="dot-tag">
-                            <div class="product-main-meta">
-                                <h5 class="product-price">4,650 rsd</h5>
-                                <p>Tigar winter 195/65 R15 winter tigar 2 red</p>
-                            </div>
-                        </div>
-                        <div class="bottom-area">
-                            <div class="product-tags">
-                                <img src="{{ asset('images/visuals/product-tags.png') }}" alt="product tags">
-                            </div>
-                            <div class="stock">
-                                <div class="stock-status in-stock"></div>
-                                <p class="stock-status-text">Na stanju <strong>(10 kom)</strong></p>
-                            </div>
-                            <p class="note">Isporuka od tri do sedan radnih dana</p>
-                            <button type="button">Dodaj u korpu</button>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

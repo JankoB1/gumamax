@@ -108,8 +108,7 @@
                         @foreach($cart["items"] as $item)
                         <div class="single-order-product">
                             <img src="{{ $item["item"]["image_url"] }}" alt="">
-                            <p class="product-name">{{$item["item"]["additional_description"]}}</p>
-                            <p class="product-price">{{ number_format($item["item"]["price_with_tax"], 2, ",", ".") }} RSD</p>
+                            <p class="product-name"><span>{{$item["item"]["additional_description"]}}</span><span>{{ number_format($item["item"]["price_with_tax"], 2, ",", ".") }} RSD</span></p>
                             <i style="cursor: pointer;" class="fa-solid fa-xmark" onclick="rmCartItem(this,{{json_encode($item)}})"></i>
                         </div>
                         @endforeach

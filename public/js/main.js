@@ -24,6 +24,12 @@ let seasonElements = {
     all: $("#season-all")
 }
 
+let mobileHeader = document.querySelector('#mobile-header');
+let mobileBurger = document.querySelector('#mobile-header .burger-mobile');
+mobileBurger.addEventListener('click', function() {
+    mobileHeader.classList.toggle('active');
+});
+
 const init_home = () => {
     searchBtn.onclick = goToShop
 
@@ -82,7 +88,7 @@ const init_home = () => {
     if(tFilter.search_method === "byDimension") {mapCommonlyUsedDimens()}
 
     seasons = "Letnja"
-    let activeSeason = document.querySelector('.year-seasons .col.active');
+    let activeSeason = document.querySelector('.year-seasons .single-season.active');
     if(activeSeason) {
         activeSeason.classList.remove('active');
     }
@@ -91,7 +97,7 @@ const init_home = () => {
     seasonElements.wint.on("click", () => {
         seasons = "Zimska"
         console.log(seasons)
-        let activeSeason = document.querySelector('.year-seasons .col.active');
+        let activeSeason = document.querySelector('.year-seasons .single-season.active');
         if(activeSeason) {
             activeSeason.classList.remove('active');
         }
@@ -100,7 +106,7 @@ const init_home = () => {
     seasonElements.summ.on("click", () => {
         seasons = "Letnja"
         console.log(seasons)
-        let activeSeason = document.querySelector('.year-seasons .col.active');
+        let activeSeason = document.querySelector('.year-seasons .single-season.active');
         if(activeSeason) {
             activeSeason.classList.remove('active');
         }
@@ -109,7 +115,7 @@ const init_home = () => {
     seasonElements.all.on("click", () => {
         seasons = "Sve+sezone"
         console.log(seasons)
-        let activeSeason = document.querySelector('.year-seasons .col.active');
+        let activeSeason = document.querySelector('.year-seasons .single-season.active');
         if(activeSeason) {
             activeSeason.classList.remove('active');
         }
