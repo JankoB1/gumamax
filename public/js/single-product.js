@@ -44,6 +44,7 @@ const addToCart = (caller) => {
                                 caller.classList.remove('added');
                                 caller.innerText = 'Dodaj u korpu';
                             }, 2000);
+                            document.querySelector('#cart-popup').classList.add('active');
                             let numSpan = document.getElementsByClassName("cart-num").item(0)
                             const currentCartQuantity = Number(numSpan.innerText)
                             numSpan.innerText = (currentCartQuantity + quantity).toString()
@@ -101,6 +102,7 @@ const addFeaturedToCart = (mProdId, caller) => {
                                 caller.classList.remove('added');
                                 caller.innerText = 'Dodaj u korpu';
                             }, 2000);
+                            document.querySelector('#cart-popup').classList.add('active');
                             let numSpan = document.getElementsByClassName("cart-num").item(0)
                             const currentCartQuantity = Number(numSpan.innerText)
                             numSpan.innerText = (currentCartQuantity + 1).toString()

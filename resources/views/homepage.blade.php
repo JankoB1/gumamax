@@ -22,7 +22,7 @@
                                     <h2>5,300 din</h2>
                                     <p>It has survived not only five centuries, but also the leap into
                                         electronic typesetting, remaining essentially unchanged.</p>
-                                    <a href="#">Saznaj više</a>
+                                    <a href="{{ route('show-single-product', ['id' => '366109', 'kind' => 'guma']) }}">Saznaj više</a>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -41,7 +41,7 @@
                                     <h2>5,300 din</h2>
                                     <p>It has survived not only five centuries, but also the leap into
                                         electronic typesetting, remaining essentially unchanged.</p>
-                                    <a href="#">Saznaj više</a>
+                                    <a href="{{ route('show-single-product', ['id' => '366109', 'kind' => 'guma']) }}">Saznaj više</a>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -344,7 +344,7 @@
                     <div class="col-md-3 col-6">
                         <div class="product-wrapper">
                             <div class="top-area">
-                                <img src="{{ $f["image_url"] }}" alt="product image" class="featured-image">
+                                <div class="featured-image" style="background-image: url({{ $f["image_url"] }});"></div>
                                 @if(sizeof(explode("/",$f["cat_no"])) > 1 && explode("/",$f["cat_no"])[1] == "2021") <img src="{{ asset('images/visuals/dot-tag.png') }}" class="dot-tag" alt="dot"> @endif                                <div class="product-main-meta">
                                     <h5 class="product-price">{{ number_format($f["price_with_tax"], 2, ",", ".") }} RSD</h5>
                                     <p>{{ $f["manufacturer"] }} {{ $f["additional_description"] }}</p>
@@ -356,7 +356,7 @@
                                 </div>
                                 <div class="stock">
                                     <div class="stock-status in-stock"></div>
-                                    <p class="stock-status-text">Na stanju <strong>(10 kom)</strong></p>
+                                    <p class="stock-status-text">Na stanju <strong>({{ (int) $f["stock_status_qty"] }} kom)</strong></p>
                                 </div>
                                 <p class="note">Isporuka od tri do sedan radnih dana</p>
                                 <button type="button" onclick="addToCart({{$f["product_id"]}}, this)">Dodaj u korpu</button>
@@ -376,7 +376,7 @@
                         <img src="{{ asset('images/visuals/pirelli.svg') }}" alt="pirelli">
                         <h3>Letnja guma</h3>
                         <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantiu</p>
-                        <a href="#">Pogledaj ponudu</a>
+                        <a href="/gume?seasons=Letnja">Pogledaj ponudu</a>
                     </div>
                 </div>
             </div>
@@ -386,7 +386,7 @@
                         <img src="{{ asset('images/visuals/shell.svg') }}" alt="pirelli">
                         <h3>Motorno ulje</h3>
                         <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantiu</p>
-                        <a href="#">Pogledaj ponudu</a>
+                        <a href="/ulja">Pogledaj ponudu</a>
                     </div>
                 </div>
             </div>
@@ -404,7 +404,7 @@
                                     <p>Sigurno</p>
                                 </div>
                                 <div class="col-3">
-                                    <img src="{{ asset('images/visuals/reliable.svg') }}" alt="reliable">
+                                    <img style="margin-bottom: 4px;" src="{{ asset('images/visuals/reliable.svg') }}" alt="reliable">
                                     <p>Pouzdano</p>
                                 </div>
                                 <div class="col-3">

@@ -72,7 +72,7 @@
                             </div>
                         </div>
 
-                        <button id="refresh-btn">Osveži</button>
+                        <button id="refresh-btn">Resetuj</button>
                     </div>-->
 
                     <div class="shop-filter-banner">

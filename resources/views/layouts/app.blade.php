@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Gumamax | Delmax</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,6 +27,15 @@
 </head>
 <body>
     <div id="app">
+
+        <div id="cart-popup">
+            <p>Uspešno ste dodali proizvod u korpu!</p>
+            <div class="cart-popup-buttons">
+                <a href="{{ route('show-make-order') }}">Pogledaj korpu</a>
+                <button>Nastavi kupovinu</button>
+            </div>
+        </div>
+
         <header class="{{ Request::path() == '/'? 'homepage-header': '' }}">
             <nav class="navbar navbar-expand-md secondary-nav">
                 <div class="container-fluid">
@@ -40,7 +49,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto">
                             <li class="location-li">
-                                <a href="#">
+                                <a href="{{ route('show-partners') }}">
                                     <img src="{{ asset('images/visuals/location-pin.svg') }}" alt="location pin">
                                     <span>Lokacije<br>Partnera</span>
                                 </a>
@@ -137,13 +146,13 @@
             <div class="mobile-header-overlay"></div>
             <div class="mobile-wide-menu">
                 <ul>
-                    <li><a href="">Gume</a></li>
-                    <li><a href="">Ratkapne</a></li>
-                    <li><a href="">Ulja</a></li>
-                    <li><a href="">Akumulatori</a></li>
-                    <li><a href="">Auto oprema</a></li>
-                    <li><a href="">O nama</a></li>
-                    <li><a href="">Kontakt</a></li>
+                    <li><a href="{{ route('show-shop') }}">Gume</a></li>
+                    <li><a href="/ratkapne">Ratkapne</a></li>
+                    <li><a href="/ulja">Ulja</a></li>
+                    <li><a href="/akumulatori">Akumulatori</a></li>
+                    <li><a href="#">Auto oprema</a></li>
+                    <li><a href="#">O nama</a></li>
+                    <li><a href="#">Kontakt</a></li>
                 </ul>
                 @if(Auth::guest())
                     <a href="/login" class="sign-in">Prijavi se</a>
@@ -183,7 +192,7 @@
                     <ul>
                         <li><a href="#">O nama</a></li>
                         <li><a href="#">Kontakt</a></li>
-                        <li><a href="#">Prijava</a></li>
+                        <li><a href="/login">Prijava</a></li>
                     </ul>
                 </div>
                 <div class="col-md-2 col-6">
@@ -226,5 +235,11 @@
 <script>
     init()
 </script>
+    <script>
+        let cartPopupCont = document.querySelector('#cart-popup button');
+        cartPopupCont.addEventListener('click', function() {
+            document.querySelector('#cart-popup').classList.remove('active');
+        })
+    </script>
 </body>
 </html>
