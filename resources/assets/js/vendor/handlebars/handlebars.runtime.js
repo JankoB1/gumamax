@@ -1403,7 +1403,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  templateSpec.main.decorator = templateSpec.main_d;
 
-	  // Note: Using env.VM references rather than local var references throughout this section to allow
+	  // Note: Using .env.VM references rather than local var references throughout this section to allow
 	  // for external users to override these as pseudo-supported APIs.
 	  env.VM.checkRevision(templateSpec.compiler);
 

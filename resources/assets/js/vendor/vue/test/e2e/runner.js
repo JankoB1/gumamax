@@ -11,8 +11,8 @@ var args = process.argv.slice(2)
 if (args.indexOf('--config') === -1) {
   args = args.concat(['--config', 'build/nightwatch.config.js'])
 }
-if (args.indexOf('--env') === -1) {
-  args = args.concat(['--env', 'chrome,phantomjs'])
+if (args.indexOf('--.env') === -1) {
+  args = args.concat(['--.env', 'chrome,phantomjs'])
 }
 var i = args.indexOf('--test')
 if (i > -1) {

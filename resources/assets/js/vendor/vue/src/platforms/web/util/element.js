@@ -1,6 +1,6 @@
 /* @flow */
 
-import { inBrowser } from 'core/util/env'
+import { inBrowser } from 'core/util/.env'
 import { makeMap } from 'shared/util'
 
 export const namespaceMap = {

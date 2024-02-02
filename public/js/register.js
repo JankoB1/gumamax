@@ -119,3 +119,27 @@ $(function(){
 		}
 	});
 });
+
+function showCompanyFields(customerType)
+{
+    if(customerType==='2') {
+        $('.company_fields').removeClass('hidden');
+        $('#company_name').focus();
+    } else {
+        $('#company_name').val('');
+        $('#tax_identification_number').val('');
+        $('.company_fields').addClass('hidden');
+
+    }
+}
+
+
+function urlTo(uri){
+    var i = uri.indexOf('/'),
+        s='';
+    if (i!==0) {
+        s = window.location.hostname + '/'+uri
+    }else
+        s = window.location.hostname + uri;
+    return  window.location.protocol+'//'+ s;
+}

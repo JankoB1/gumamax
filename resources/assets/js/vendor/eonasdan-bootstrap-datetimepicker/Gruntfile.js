@@ -100,7 +100,7 @@ module.exports = function (grunt) {
         },
         env: {
             paris: {
-                TZ: 'Europe/Paris' // sets env for phantomJS https://github.com/ariya/phantomjs/issues/10379#issuecomment-36058589
+                TZ: 'Europe/Paris' // sets .env for phantomJS https://github.com/ariya/phantomjs/issues/10379#issuecomment-36058589
             }
         },
         connect: {
@@ -152,26 +152,26 @@ module.exports = function (grunt) {
 
     grunt.loadTasks('tasks');
 
-    grunt.loadNpmTasks('grunt-env');
+    grunt.loadNpmTasks('grunt-.env');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-nuget');
 
     require('load-grunt-tasks')(grunt);
-    grunt.registerTask('default', ['jshint', 'jscs', 'less', 'env:paris', 'connect', 'jasmine']);
+    grunt.registerTask('default', ['jshint', 'jscs', 'less', '.env:paris', 'connect', 'jasmine']);
     grunt.registerTask('build:travis', [
         // code style
         'jshint', 'jscs',
         // build
         'uglify', 'less',
         // tests
-        'env:paris', 'connect', 'jasmine'
+        '.env:paris', 'connect', 'jasmine'
     ]);
 
     // Task to be run when building
     grunt.registerTask('build', ['jshint', 'jscs', 'uglify', 'less']);
 
-    grunt.registerTask('test', ['jshint', 'jscs', 'uglify', 'less', 'env:paris', 'connect', 'jasmine']);
+    grunt.registerTask('test', ['jshint', 'jscs', 'uglify', 'less', '.env:paris', 'connect', 'jasmine']);
 
     grunt.registerTask('docs', 'Generate docs', function () {
         grunt.util.spawn({
