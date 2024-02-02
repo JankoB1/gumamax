@@ -1,7 +1,7 @@
 /* @flow */
 
 import { extend, genStaticKeys, noop } from 'shared/util'
-import { isIE } from 'core/util/env'
+import { isIE } from 'core/util/.env'
 import { warn } from 'core/util/debug'
 import { compile as baseCompile } from 'compiler/index'
 import { detectErrors } from 'compiler/error-detector'

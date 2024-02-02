@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { UA } from 'core/util/env'
+import { UA } from 'core/util/.env'
 
 describe('Options components', () => {
   it('should accept plain object', () => {
