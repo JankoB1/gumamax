@@ -24,12 +24,6 @@ let seasonElements = {
     all: $("#season-all")
 }
 
-let mobileHeader = document.querySelector('#mobile-header');
-let mobileBurger = document.querySelector('#mobile-header .burger-mobile');
-mobileBurger.addEventListener('click', function() {
-    mobileHeader.classList.toggle('active');
-});
-
 const init_home = () => {
     searchBtn.onclick = goToShop
 

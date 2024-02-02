@@ -236,10 +236,16 @@
     init()
 </script>
     <script>
+        let mobileHeader = document.querySelector('#mobile-header');
+        let mobileBurger = document.querySelector('#mobile-header .burger-mobile');
+        mobileBurger.addEventListener('click', function() {
+            mobileHeader.classList.toggle('active');
+        });
+
         let cartPopupCont = document.querySelector('#cart-popup button');
         cartPopupCont.addEventListener('click', function() {
             document.querySelector('#cart-popup').classList.remove('active');
-        })
+        });
     </script>
 </body>
 </html>
