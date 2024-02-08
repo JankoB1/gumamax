@@ -30,9 +30,9 @@
                             <label for="family-name" class="col-md-4 col-form-label text-md-end">Prezime<sup>*</sup></label>
 
                             <div class="col-md-6">
-                                <input id="family-name" type="text" class="form-control @error('family-name') is-invalid @enderror" name="family-name" value="{{ old('family-name') }}" required autocomplete="family-name" autofocus>
+                                <input id="family_name" type="text" class="form-control @error('family_name') is-invalid @enderror" name="family_name" value="{{ old('family_name') }}" required autocomplete="family_name" autofocus>
 
-                                @error('family-name')
+                                @error('family_name')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
