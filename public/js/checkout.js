@@ -1,5 +1,6 @@
 let paymentMethod
 let orderBtn
+let saveShippingInfoBtn
 
 var wpwlOptions = {style:"card"}
 
@@ -21,7 +22,7 @@ const order = () => {
         {
             method: "POST",
             body: JSON.stringify({
-                cart: cart
+                cart: JSON.parse(sessionStorage.getItem("gmx-cart"))
             }),
             headers: {
                 "Content-type": "application/json; charset=UTF-8",
@@ -41,11 +42,17 @@ const order = () => {
     })
 }
 
+const saveShippingInfo = () => {
+
+}
+
 $(document).ready(() => {
     paymentMethod = document.getElementById("payment_method")
     orderBtn = document.getElementById("orderBtn")
     orderBtn.onclick = order
 
+    saveShippingInfoBtn = document.getElementById("saveShippingBtn")
+    saveShippingInfoBtn.onclick = saveShippingInfo
 })
 
 const prepareCheckout = async () => {
@@ -110,8 +117,10 @@ const rmCartItem = (caller,item) => {
                 "X-CSRF-Token": csrf
             }
         }).then((response) => {
-        response.text().then(
+        response.json().then(
             (data) => {
+                sessionStorage.setItem("gmx-cart", JSON.stringify(data))
+                console.log(data)
                 window.location.reload()
             }
         )

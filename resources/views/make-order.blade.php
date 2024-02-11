@@ -62,16 +62,21 @@
                                 <div class="divider"></div>
                                 <div class="delivery-3-fields">
                                     <div class="custom-fg">
-                                        <label for="first_name">Ime</label>
+                                        <label for="first_name">Ime primaoca</label>
                                         <input type="text" name="first_name" id="first_name">
                                     </div>
                                     <div class="custom-fg">
-                                        <label for="last_name">Prezime</label>
+                                        <label for="last_name">Prezime primaoca</label>
                                         <input type="text" name="last_name" id="last_name">
                                     </div>
                                     <div class="custom-fg">
-                                        <label for="city_d1">Grad</label>
-                                        <input type="text" name="city_d1" id="city_d1">
+                                        <label for="city_d1">Mesto</label>
+                                        <select type="text" name="city_d1" id="city_d1">
+                                            <option value="" disabled selected>Izaberite mesto</option>
+                                            @foreach($srbCities as $city)
+                                                <option value="{{ $city->postal_code }}">{{ $city->city_name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="custom-fg">
                                         <label for="address">Adresa</label>
@@ -90,7 +95,7 @@
                                         <input type="tel" name="tel" id="tel">
                                     </div>
                                 </div>
-                                <button>Sačuvaj</button>
+                                <button id="saveShippingBtn">Sačuvaj</button>
                             </div>
                         </div>
 
