@@ -324,7 +324,7 @@ class CartController extends DmxBaseController
         $mLocalCart["shipping_method_id"] = 1; //1 - Free(gumamax), 2 - courier
         $mLocalCart["shipping_to_partner_id"] = null;
 
-        $mLocalCart["payment_method_id"] = 5; //Kartica
+        $mLocalCart["payment_method_id"] = null; //Kartica
 
         $mLocalCart["shipping_recipient"] = null;
         $mLocalCart["shipping_address"] = null;
@@ -334,9 +334,9 @@ class CartController extends DmxBaseController
         $mLocalCart["shipping_phone"] = null;
         $mLocalCart["shipping_email"] = null;
         $mLocalCart["shipping_additional_info"] = null;
-        $mLocalCart["shipping_country_code"] = null;
-        $mLocalCart["shipping_country_iso_alpha_2"] = null;
-        $mLocalCart["shipping_country_iso_alpha_3"] = null;
+        $mLocalCart["shipping_country_code"] = "SRB";
+        $mLocalCart["shipping_country_iso_alpha_2"] = "RS";
+        $mLocalCart["shipping_country_iso_alpha_3"] = "SRB";
 
         $mLocalCart["shipping_courier_price"] = 0.00;
 
@@ -384,5 +384,41 @@ class CartController extends DmxBaseController
         $request->session()->put('cart', $mCart);
 
         return $mCart;
+    }
+
+    public function saveShippingInfo(Request $request){
+        $request->validate([
+            "cart.shipping_option_id" => "required",
+            "cart.shipping_method_id" => "required",
+            "cart.payment_method_id" => "required",
+            "cart.shipping_recipient" => "required|max:255",
+            "cart.shipping_address" => "required|max:255",
+            "cart.shipping_postal_code" => "required|numeric",
+            "cart.shipping_city" => "required",
+            "cart.shipping_phone" => "required",
+            "cart.shipping_email" => "required|email"
+        ]);
+
+        $requestCart = $request->get('cart');
+
+        $mLocalCart = $request->session()->get('cart');
+
+        $mLocalCart["shipping_option_id"] = $requestCart["shipping_option_id"]; //1 - Shipping to gumamax partner location, 2 - custom address
+        $mLocalCart["shipping_method_id"] = $requestCart["shipping_method_id"]; //1 - Free(gumamax), 2 - courier
+        $mLocalCart["shipping_to_partner_id"] = $requestCart["shipping_to_partner_id"];
+
+        $mLocalCart["payment_method_id"] = $requestCart["payment_method_id"]; //Kartica
+
+        $mLocalCart["shipping_recipient"] = $requestCart["shipping_recipient"];
+        $mLocalCart["shipping_address"] = $requestCart["shipping_address"];
+        $mLocalCart["shipping_address2"] = $requestCart["shipping_address2"];
+        $mLocalCart["shipping_postal_code"] = $requestCart["shipping_postal_code"];
+        $mLocalCart["shipping_city"] = $requestCart["shipping_city"];
+        $mLocalCart["shipping_phone"] = $requestCart["shipping_phone"];
+        $mLocalCart["shipping_email"] = $requestCart["shipping_email"];
+
+        $request->session()->put('cart', $mLocalCart);
+
+        return $mLocalCart;
     }
 }

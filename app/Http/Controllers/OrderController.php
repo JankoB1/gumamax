@@ -12,7 +12,6 @@ class OrderController extends Controller
     public function showMakeOrder() {
         $cart = session()->get("cart");
         $srbCities = City::serbianCities();
-
         return view('make-order', compact("cart", "srbCities"));
     }
 

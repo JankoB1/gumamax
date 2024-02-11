@@ -1,6 +1,7 @@
 let paymentMethod
 let orderBtn
 let saveShippingInfoBtn
+let citySelect
 
 var wpwlOptions = {style:"card"}
 
@@ -43,7 +44,44 @@ const order = () => {
 }
 
 const saveShippingInfo = () => {
+    let mCart = JSON.parse(sessionStorage.getItem("gmx-cart"))
+    mCart.payment_method_id = document.getElementById("payment_method").value
+    mCart.shipping_city = citySelect.options[citySelect.selectedIndex].text
+    mCart.shipping_postal_code = document.getElementById("zip").value
+    mCart.shipping_address = document.getElementById("address").value
+    mCart.shipping_recipient = document.getElementById("first_name").value + " " + document.getElementById("last_name").value
+    mCart.shipping_email = document.getElementById("email").value
+    mCart.shipping_phone = document.getElementById("tel").value
 
+    if (document.getElementById("delivery_place2").checked) {
+        mCart.shipping_method_id = 1
+        mCart.shipping_option_id = 1
+    } else if (document.getElementById("delivery_place3").checked) {
+        mCart.shipping_method_id = 2
+        mCart.shipping_option_id = 2
+    } else {
+
+    }
+
+    sessionStorage.setItem("gmx-cart", JSON.stringify(mCart))
+
+    const csrf = document.querySelector('meta[name="csrf-token"]').content;
+
+    fetch(
+        urlTo("/api/save-shipping-info"),
+        {
+            method: "POST",
+            body: JSON.stringify({cart: mCart}),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "X-CSRF-Token": csrf
+            }
+        }
+    ).then(response => {
+        response.json().then(data => {
+            sessionStorage.setItem("gmx-cart", JSON.stringify(data))
+        })
+    })
 }
 
 $(document).ready(() => {
@@ -51,8 +89,25 @@ $(document).ready(() => {
     orderBtn = document.getElementById("orderBtn")
     orderBtn.onclick = order
 
+    citySelect = document.getElementById("city_d1")
+    citySelect.onchange = () => {
+        document.getElementById("zip").value = citySelect.value
+    }
+
     saveShippingInfoBtn = document.getElementById("saveShippingBtn")
     saveShippingInfoBtn.onclick = saveShippingInfo
+
+    if (JSON.parse(sessionStorage.getItem("gmx-cart")).shipping_method_id === 1) {
+        document.getElementById("delivery_place2").setAttribute("checked", "true")
+        const event = document.createEvent("HTMLEvents");
+        event.initEvent('click', false, true);
+        document.getElementById("delivery_place2").dispatchEvent(event);
+    } else if (JSON.parse(sessionStorage.getItem("gmx-cart")).shipping_method_id === 2) {
+        document.getElementById("delivery_place3").setAttribute("checked", "true")
+        const event = document.createEvent("HTMLEvents");
+        event.initEvent('click', false, true);
+        document.getElementById("delivery_place3").dispatchEvent(event);
+    }
 })
 
 const prepareCheckout = async () => {
