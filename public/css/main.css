@@ -2735,6 +2735,14 @@ p.product-name {
     color: #BFBFBF;
 }
 
+.delivery-1.hidden, .delivery-3.hidden {
+    display: none;
+}
+
+.custom-fg-cb.hidden {
+    opacity: 0.3;
+}
+
 @media only screen and (max-width: 768px) {
     header, .brands-row {
         display: none !important;

@@ -43,7 +43,7 @@
 
                         <div class="delivery-details">
 
-                            <div class="delivery-1">
+                            <div class="delivery-1 hidden">
                                 <h2>Željeni termin</h2>
                                 <div class="divider"></div>
                                 <p>Odaberite preferirani termin za montažu</p>
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
 
-                            <div class="delivery-3">
+                            <div class="delivery-3 hidden">
                                 <h2>Kontakt i adresa</h2>
                                 <div class="divider"></div>
                                 <div class="delivery-3-fields">
@@ -218,6 +218,8 @@
 
 @endsection
 
-@yield('scriptsBottom')
-<script src="{{ asset("js/vendor/jquery.js") }}"></script>
-<script src="{{ asset("js/checkout.js") }}"></script>
+@section('scriptsBottom')
+    <script src="{{ asset("js/vendor/jquery.js") }}"></script>
+    <script src="{{ asset("js/checkout.js") }}"></script>
+    <script src="{{ asset('js/cart.js') }}"></script>
+@endsection
