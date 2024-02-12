@@ -115,7 +115,7 @@ ul.navbar-nav.ms-auto li span {
     font-weight: 500;
 }
 
-.sign-in {
+.sign-in, .register-container button {
     background: #E70F18;
     border-radius: 4px;
     color: #FFF;
@@ -127,6 +127,12 @@ ul.navbar-nav.ms-auto li span {
     padding: 14px 35px;
     line-height: 12px;
     text-decoration: none;
+}
+
+.register-container button {
+    border: none !important;
+    box-shadow: none !important;
+    background: #E70F18 !important;
 }
 
 #hero-homepage {
@@ -1863,8 +1869,16 @@ span.letter.sound-letters {
     display: none;
 }
 
+.custom-fg .search-content {
+    top: 90px;
+}
+
 .search-content.active {
     display: block;
+}
+
+.search-content-line p, .search-content-header p {
+    margin-bottom: 15px !important;
 }
 
 .switch {
@@ -2741,6 +2755,18 @@ p.product-name {
 
 .custom-fg-cb.hidden {
     opacity: 0.3;
+}
+
+.register-container {
+    margin: 8vh auto !important;
+}
+
+.register-container input, .register-container select {
+    margin-bottom: 15px;
+}
+
+.radio input {
+    margin-right: 5px;
 }
 
 @media only screen and (max-width: 768px) {

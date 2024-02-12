@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('scriptsTop')
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+@endsection
+
 @section('content')
 
     <section id="order-details">
@@ -12,11 +16,12 @@
 
                     <form action="#" method="POST">
                         @csrf
-                        <div class="custom-fg">
+                        <div class="custom-fg" style="position: relative;">
                             <label for="city">Izbor mesta isporuke</label>
-                            <select name="city" id="city">
+                            <input name="city" id="search_partners">
+                            <div class="search-content">
 
-                            </select>
+                            </div>
                         </div>
                         <div class="checkboxes-delivery">
                             <div class="custom-fg-cb">
@@ -222,4 +227,9 @@
     <script src="{{ asset("js/vendor/jquery.js") }}"></script>
     <script src="{{ asset("js/checkout.js") }}"></script>
     <script src="{{ asset('js/cart.js') }}"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbu6jooaUw8303AME9uzQsU95ol34P9OY&&v=weekly"
+        defer
+    ></script>
+    <script src="{{ asset('js/all-partners-cart.js') }}" type="text/javascript"></script>
 @endsection
