@@ -52,8 +52,8 @@ return [
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
             'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,
@@ -70,6 +70,8 @@ return [
             'database' => 'delmaxapi',
             'username' => 'nora_adm',
             'password' => env('DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci'
             // ...
         ],
 
@@ -80,6 +82,8 @@ return [
             'database' => 'delmax_catalog',
             'username' => 'nora_adm',
             'password' => env('DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci'
             // ...
         ],
 
@@ -90,6 +94,8 @@ return [
             'database' => 'delmax_crm',
             'username' => 'nora_adm',
             'password' => env('DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci'
             // ...
         ],
 
@@ -100,6 +106,8 @@ return [
             'database' => 'fw_001',
             'username' => 'nora_adm',
             'password' => env('DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci'
             // ...
         ],
 
