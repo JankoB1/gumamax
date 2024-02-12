@@ -25,6 +25,16 @@ searchPartnersInput.addEventListener('input', function() {
             let searchContentLines = document.querySelectorAll('.search-content-line');
             searchContentLines.forEach((searchContentLine) => {
                 searchContentLine.addEventListener('click', function() {
+                    let data = {
+                        order: 'distance+asc',
+                        radius: 5,
+                        city_id: this.dataset.cityId,
+                        latitude: this.dataset.latitude,
+                        longitude: this.dataset.longitude,
+                        history: false,
+                        delatnost: 2,
+                    }
+                    console.log(data)
                     jQuery.ajax({
                         url: window.origin + '/api/partner/locator',
                         method: 'GET',

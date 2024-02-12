@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "dev": "npm run development",
-        "development": "node_modules\\.bin\\vite",
+        "development": "node_modules/.bin/vite",
         "watch": "node_modules/.bin/mix watch",
         "production": "node_modules/.<bin/mix --production"
     },
