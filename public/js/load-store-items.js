@@ -390,8 +390,10 @@ const addToCart = (index,caller) => {
                             "X-CSRF-Token": csrf
                         }
                     }).then((response) => {
-                    response.text().then(
+                    response.json().then(
                         (data) => {
+                            sessionStorage.setItem("gmx-cart", JSON.stringify(data))
+
                             caller.classList.add('added');
                             caller.innerText = 'Dodato u korpu';
                             setTimeout(function() {

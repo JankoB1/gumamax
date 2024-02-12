@@ -99,6 +99,7 @@ Route::post('partners/membership', [MembershipRequestController::class, 'store']
 
 Route::post('api/add-cart-item', [CartController::class, 'addCartItem'])->name('addCartItem');
 Route::post('api/rm-cart-item', [CartController::class, 'rmCartItem'])->name('rmCartItem');
+Route::post('api/save-shipping-info', [CartController::class, 'saveShippingInfo'])->name('saveShippingInfo');
 /*
 |--------------------------------------------------------------------------
 | Static pages related routes

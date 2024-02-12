@@ -14,7 +14,7 @@
                     <div class="divider"></div>
                     <p>Odaberite iz ponuđenih opcija radi isporuke vaše porudžbine</p>
 
-                    <form action="#" method="POST">
+                    <form action="#" onsubmit="return false;">
                         @csrf
                         <div class="custom-fg" style="position: relative;">
                             <label for="city">Izbor mesta isporuke</label>
@@ -25,7 +25,7 @@
                         </div>
                         <div class="checkboxes-delivery">
                             <div class="custom-fg-cb">
-                                <input type="checkbox" name="delivery_place" id="delivery_place1">
+                                <input type="checkbox" name="delivery_place" id="delivery_place1" >
                                 <label for="delivery_place1">Isporuka sa mogućnošću montaže</label>
                             </div>
                             <div class="custom-fg-cb">
@@ -40,9 +40,9 @@
 
                         <div class="custom-fg">
                             <label for="city">Način plaćanja</label>
-                            <select name="payment_method" id="payment_method">
-                                <option value="card">Karticom na sajtu</option>
-                                <option value="on-spot">Pouzećem</option>
+                            <select name="payment_method" id="payment_method" >
+                                <option value="5">Karticom na sajtu</option>
+                                <option value="4">Pouzećem</option>
                             </select>
                         </div>
 
@@ -67,35 +67,39 @@
                                 <div class="divider"></div>
                                 <div class="delivery-3-fields">
                                     <div class="custom-fg">
-                                        <label for="first_name">Ime</label>
-                                        <input type="text" name="first_name" id="first_name">
+                                        <label for="first_name">Ime primaoca</label>
+                                        <input type="text" name="first_name" id="first_name" required autocomplete="first_name" @if($cart["shipping_recipient"] != null) value="{{  explode(' ', $cart["shipping_recipient"])[0] }}" @endif>
                                     </div>
                                     <div class="custom-fg">
-                                        <label for="last_name">Prezime</label>
-                                        <input type="text" name="last_name" id="last_name">
+                                        <label for="last_name">Prezime primaoca</label>
+                                        <input type="text" name="last_name" id="last_name" required autocomplete="family_name" @if($cart["shipping_recipient"] != null) value="{{  explode(' ', $cart[ "shipping_recipient"])[1] }}" @endif>
                                     </div>
                                     <div class="custom-fg">
-                                        <label for="city_d1">Grad</label>
-                                        <input type="text" name="city_d1" id="city_d1">
+                                        <label for="city_d1">Mesto</label>
+                                        <select type="text" name="city_d1" id="city_d1" required  @if($cart["shipping_recipient"] != null) value="{{  $cart[ "shipping_postal_code"] }}" @endif>
+                                            @foreach($srbCities as $city)
+                                                <option value="{{ $city->postal_code }}">{{ $city->city_name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="custom-fg">
                                         <label for="address">Adresa</label>
-                                        <input type="text" name="address" id="address">
+                                        <input type="text" name="address" id="address" required autocomplete="address" @if($cart["shipping_recipient"] != null) value="{{  $cart[ "shipping_address"] }}" @endif>
                                     </div>
                                     <div class="custom-fg">
                                         <label for="zip">Poštanski broj</label>
-                                        <input type="text" name="zip" id="zip">
+                                        <input type="text" name="zip" id="zip" required autocomplete="zip" @if($cart["shipping_recipient"] != null) value="{{  $cart[ "shipping_postal_code"] }}" @endif>
                                     </div>
                                     <div class="custom-fg">
                                         <label for="email">Email</label>
-                                        <input type="email" name="email" id="email">
+                                        <input type="email" name="email" id="email" required autocomplete="email" @if($cart["shipping_recipient"] != null) value="{{  $cart[ "shipping_email"] }}" @endif>
                                     </div>
                                     <div class="custom-fg">
                                         <label for="tel">Broj telefona</label>
-                                        <input type="tel" name="tel" id="tel">
+                                        <input type="tel" name="tel" id="tel" required autocomplete="tel" @if($cart["shipping_recipient"] != null) value="{{  $cart[ "shipping_phone"] }}" @endif>
                                     </div>
                                 </div>
-                                <button>Sačuvaj</button>
+                                <button id="saveShippingBtn">Sačuvaj</button>
                             </div>
                         </div>
 
