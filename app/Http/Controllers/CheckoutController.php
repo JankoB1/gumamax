@@ -122,8 +122,9 @@ class CheckoutController extends Controller
         } else {
             $available_payment_methods = MemberPaymentMethod::availableByShipping($order->shipping_option_id,
                     $order->shipping_method_id, $order->shipping_to_partner_id);
+            session()->remove("cart");
 
-            return view('checkout.pay-online.message-not-ok', compact('status', 'order', 'available_payment_methods'));
+            return view('checkout.pay-onligne.message-not-ok', compact('status', 'order', 'available_payment_methods'));
         }
     }
 

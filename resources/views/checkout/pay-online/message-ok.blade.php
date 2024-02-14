@@ -31,5 +31,11 @@
             </div>
         </div>
     </div>
+@stop
 
+@section('scriptsBottom')
+<script>
+    console.log("deleting cart from session")
+    sessionStorage.removeItem("gmx-cart")
+</script>
 @stop
