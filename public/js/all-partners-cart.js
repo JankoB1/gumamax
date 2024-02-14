@@ -1,5 +1,6 @@
 let searchPartnersInput = document.querySelector('#search_partners');
 let searchContent = document.querySelector('.search-content');
+let partnerBoxesCont = document.querySelector('#choose-partner .row .col-md-6');
 searchPartnersInput.addEventListener('input', function() {
     jQuery.ajax({
         url: window.origin + '/cities/json',
@@ -34,7 +35,6 @@ searchPartnersInput.addEventListener('input', function() {
                         history: false,
                         delatnost: 2,
                     }
-                    console.log(data)
                     jQuery.ajax({
                         url: window.origin + '/api/partner/locator',
                         method: 'GET',
@@ -50,7 +50,32 @@ searchPartnersInput.addEventListener('input', function() {
                             delatnost: 2,
                         },
                         success: function(response2) {
-                            console.log(response2);
+                            searchContent.classList.remove('active');
+                            document.querySelector('#choose-partner').scrollIntoView(true);
+                            let partners = response2.rows;
+                            initMap(partners);
+                            partnerBoxesCont.innerHTML = '';
+                            partners.forEach((partner) => {
+                                let partnerHtml = `<div class="single-choose-partner">
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                    <img src="http://127.0.0.1/images/visuals/product-image.png" alt="">
+                                                                </div>
+                                                                <div class="col-md-8">
+                                                                    <h5>${partner.name}</h5>`;
+                                if(partner.is_installer === 1) {
+                                    partnerHtml += `<p><i class="fa-solid fa-gear"></i> servis sa mogućnošću montaže</p>`;
+                                }
+                                partnerHtml += `<p><i class="fa-solid fa-location-dot"></i> ${partner.city_name}, ${partner.address}</p>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <img src="http://127.0.0.1/images/visuals/delmax-logo.png" alt="">
+                                                <h6>DELMAX PRODAVNICA</h6>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                                partnerBoxesCont.innerHTML += partnerHtml;
+                            });
                         }
                     });
                 });
@@ -59,17 +84,16 @@ searchPartnersInput.addEventListener('input', function() {
     });
 });
 
-function initMap() {
+function initMap(partners) {
     const initLatLng = { lat: 44.787197, lng: 20.457273 };
     const map = new google.maps.Map(document.getElementById("partners-map"), {
         zoom: 7,
         center: initLatLng,
     });
 
-    let partners = document.querySelectorAll('.single-partner-in-list');
     partners.forEach((partner) => {
-        let lat = parseFloat(partner.dataset.partnerLat);
-        let lng = parseFloat(partner.dataset.partnerLng);
+        let lat = partner.latitude;
+        let lng = partner.longitude;
 
         let marker = new google.maps.Marker({
             position: { lat: lat, lng: lng },
@@ -78,11 +102,11 @@ function initMap() {
         });
 
         let content = document.createElement('div');
-        let title = partner.dataset.partnerDescription;
-        let address = partner.dataset.partnerAddress;
-        let city = partner.dataset.partnerCity;
-        let phone = partner.dataset.partnerPhone;
-        let zip = partner.dataset.partnerZip;
+        let title = partner.name;
+        let address = partner.address;
+        let city = partner.city_name;
+        let phone = partner.phone;
+        let zip = partner.postal_code;
         content.innerHTML = `<div>
                                 <p><strong>${title}</strong><br>
                                 ${address}<br>
