@@ -36,8 +36,6 @@
 @section('scriptsBottom')
 <script>
     console.log("deleting cart from session")
-    let cart = JSON.parse(sessionStorage.getItem("gmx-cart"))
-    cart.items = []
-    sessionStorage.setItem("gmx-cart", JSON.stringify(cart))
+    sessionStorage.removeItem("gmx-cart")
 </script>
 @stop

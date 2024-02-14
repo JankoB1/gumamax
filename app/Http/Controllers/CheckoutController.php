@@ -114,9 +114,7 @@ class CheckoutController extends Controller
         $result = $this->paymentService->processPaymentResultCodes($order, $status);
 
         if ($result == PaymentResultCode::SUCCESSFUL) {
-            $sCart = session()->get("cart");
-            $sCart['items'] = [];
-            session()->put('cart', $sCart);
+            $sCart = session()->remove("cart");
             return view('checkout.pay-online.message-ok', compact('status', 'order'));
         } elseif ($result == PaymentResultCode::MANUAL_REVIEW) {
 
