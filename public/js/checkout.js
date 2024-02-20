@@ -80,6 +80,15 @@ const saveShippingInfo = () => {
     ).then(response => {
         response.json().then(data => {
             sessionStorage.setItem("gmx-cart", JSON.stringify(data))
+            document.querySelector('.saved-name').innerText = data.shipping_recipient;
+            let addressBoxes = document.querySelectorAll('.address-box');
+            addressBoxes[0].querySelector('p').innerText = data.shipping_address + ', ' + data.shipping_city;
+            addressBoxes[0].querySelectorAll('p')[1].innerText.shipping_postal_code;
+            addressBoxes[1].querySelector('p').innerText = 'Email: ' + data.shipping_email;
+            addressBoxes[1].querySelectorAll('p')[1].innerText = 'Telefon: ' + data.shipping_phone;
+            document.querySelector('.saved-details').classList.add('active');
+            document.querySelector('.delivery-3-fields').classList.add('hidden');
+            document.querySelector('#saveShippingBtn').classList.add('hidden');
         })
     })
 }
@@ -191,3 +200,9 @@ const urlTo = (uri) => {
         s = window.location.hostname + uri;
     return  window.location.protocol+'//'+ s;
 }
+
+document.querySelector('.change').addEventListener('click', function() {
+    document.querySelector('.saved-details').classList.remove('active');
+    document.querySelector('.delivery-3-fields').classList.remove('hidden');
+    document.querySelector('#saveShippingBtn').classList.remove('hidden');
+});

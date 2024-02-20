@@ -1,6 +1,8 @@
 let searchPartnersInput = document.querySelector('#search_partners');
 let searchContent = document.querySelector('.search-content');
 let partnerBoxesCont = document.querySelector('#choose-partner .row .col-md-6');
+let deliveryPlace1 = document.querySelector('#delivery_place1');
+let deliveryPlace2 = document.querySelector('#delivery_place2');
 searchPartnersInput.addEventListener('input', function() {
     jQuery.ajax({
         url: window.origin + '/cities/json',
@@ -56,17 +58,18 @@ searchPartnersInput.addEventListener('input', function() {
                             initMap(partners);
                             partnerBoxesCont.innerHTML = '';
                             partners.forEach((partner) => {
-                                let partnerHtml = `<div class="single-choose-partner">
+                                if((partner.is_installer === 1 && deliveryPlace1.checked) || (partner.is_installer !== 1 && deliveryPlace2.checked)) {
+                                    let partnerHtml = `<div class="single-choose-partner">
                                                             <div class="row">
                                                                 <div class="col-md-2">
                                                                     <img src="http://127.0.0.1/images/visuals/product-image.png" alt="">
                                                                 </div>
                                                                 <div class="col-md-8">
                                                                     <h5>${partner.name}</h5>`;
-                                if(partner.is_installer === 1) {
-                                    partnerHtml += `<p><i class="fa-solid fa-gear"></i> servis sa mogućnošću montaže</p>`;
-                                }
-                                partnerHtml += `<p><i class="fa-solid fa-location-dot"></i> ${partner.city_name}, ${partner.address}</p>
+                                    if(partner.is_installer === 1) {
+                                        partnerHtml += `<p><i class="fa-solid fa-gear"></i> servis sa mogućnošću montaže</p>`;
+                                    }
+                                    partnerHtml += `<p><i class="fa-solid fa-location-dot"></i> ${partner.city_name}, ${partner.address}</p>
                                             </div>
                                             <div class="col-md-2">
                                                 <img src="http://127.0.0.1/images/visuals/delmax-logo.png" alt="">
@@ -74,7 +77,8 @@ searchPartnersInput.addEventListener('input', function() {
                                             </div>
                                         </div>
                                     </div>`;
-                                partnerBoxesCont.innerHTML += partnerHtml;
+                                    partnerBoxesCont.innerHTML += partnerHtml;
+                                }
                             });
                         }
                     });

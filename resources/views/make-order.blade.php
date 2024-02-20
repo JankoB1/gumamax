@@ -65,7 +65,7 @@
                             <div class="delivery-3 hidden">
                                 <h2>Kontakt i adresa</h2>
                                 <div class="divider"></div>
-                                <div class="delivery-3-fields">
+                                <div class="delivery-3-fields {{ $cart['shipping_recipient'] != null? 'hidden': '' }}">
                                     <div class="custom-fg">
                                         <label for="first_name">Ime primaoca</label>
                                         <input type="text" name="first_name" id="first_name" required autocomplete="first_name" @if($cart["shipping_recipient"] != null) value="{{  explode(' ', $cart["shipping_recipient"])[0] }}" @endif>
@@ -99,8 +99,22 @@
                                         <input type="tel" name="tel" id="tel" required autocomplete="tel" @if($cart["shipping_recipient"] != null) value="{{  $cart[ "shipping_phone"] }}" @endif>
                                     </div>
                                 </div>
-                                <button id="saveShippingBtn">Sačuvaj</button>
+                                <button id="saveShippingBtn" class="{{ $cart['shipping_recipient'] != null? 'hidden': '' }}">Sačuvaj</button>
                             </div>
+                        </div>
+
+                        <div class="saved-details {{ $cart['shipping_recipient'] != null? 'active': '' }}">
+                            <p class="saved-name">@if($cart["shipping_recipient"] != null){{ $cart['shipping_recipient'] }}@endif</p>
+                            <p class="address-title">Adresa i kontakt podaci</p>
+                            <div class="address-box">
+                                <p>{{ $cart['shipping_recipient'] != null? $cart['shipping_address'] . ', ' . $cart['shipping_city']: '' }}</p>
+                                <p>{{ $cart['shipping_recipient'] != null? $cart['shipping_postal_code']: '' }}</p>
+                            </div>
+                            <div class="address-box">
+                                <p>Email: {{ $cart['shipping_recipient'] != null? $cart['shipping_email']: '' }}</p>
+                                <p>Telefon: {{ $cart['shipping_recipient'] != null? $cart['shipping_phone']: '' }}</p>
+                            </div>
+                            <p class="change">Promeni</p>
                         </div>
 
                     </form>
@@ -154,70 +168,6 @@
         <div class="divider"></div>
         <div class="row">
             <div class="col-md-6">
-                <div class="single-choose-partner">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img src="{{ asset('images/visuals/product-image.png') }}" alt="">
-                        </div>
-                        <div class="col-md-8">
-                            <h5>Pneumatik</h5>
-                            <p><i class="fa-solid fa-gear"></i> servis sa mogućnošću montaže</p>
-                            <p><i class="fa-solid fa-location-dot"></i> Niš, Dragoslava jovanovića 8b</p>
-                        </div>
-                        <div class="col-md-2">
-                            <img src="{{ asset('images/visuals/delmax-logo.png') }}" alt="">
-                            <h6>DELMAX PRODAVNICA</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-choose-partner">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img src="{{ asset('images/visuals/product-image.png') }}" alt="">
-                        </div>
-                        <div class="col-md-8">
-                            <h5>Pneumatik</h5>
-                            <p><i class="fa-solid fa-gear"></i> servis sa mogućnošću montaže</p>
-                            <p><i class="fa-solid fa-location-dot"></i> Niš, Dragoslava jovanovića 8b</p>
-                        </div>
-                        <div class="col-md-2">
-                            <img src="{{ asset('images/visuals/delmax-logo.png') }}" alt="">
-                            <h6>DELMAX PRODAVNICA</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-choose-partner">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img src="{{ asset('images/visuals/product-image.png') }}" alt="">
-                        </div>
-                        <div class="col-md-8">
-                            <h5>Pneumatik</h5>
-                            <p><i class="fa-solid fa-gear"></i> servis sa mogućnošću montaže</p>
-                            <p><i class="fa-solid fa-location-dot"></i> Niš, Dragoslava jovanovića 8b</p>
-                        </div>
-                        <div class="col-md-2">
-                            <img src="{{ asset('images/visuals/delmax-logo.png') }}" alt="">
-                            <h6>DELMAX PRODAVNICA</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-choose-partner">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img src="{{ asset('images/visuals/product-image.png') }}" alt="">
-                        </div>
-                        <div class="col-md-8">
-                            <h5>Pneumatik</h5>
-                            <p><i class="fa-solid fa-gear"></i> servis sa mogućnošću montaže</p>
-                            <p><i class="fa-solid fa-location-dot"></i> Niš, Dragoslava jovanovića 8b</p>
-                        </div>
-                        <div class="col-md-2">
-                            <img src="{{ asset('images/visuals/delmax-logo.png') }}" alt="">
-                            <h6>DELMAX PRODAVNICA</h6>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="col-md-6">
                 <div id="partners-map"></div>
