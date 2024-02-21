@@ -290,6 +290,36 @@ class ProductController extends DmxBaseController
         return $data;
     }
 
+    public function fetchSingleOilItem($productId){
+        $data = $this->repository->findOilById($productId);
+
+        if (!$data){
+            abort(404);
+        }
+
+        return $data;
+    }
+
+    public function fetchSingleHubcapItem($productId){
+        $data = $this->repository->findHubcapById($productId);
+
+        if (!$data){
+            abort(404);
+        }
+
+        return $data;
+    }
+
+    public function fetchSingleBatteryItem($productId){
+        $data = $this->repository->findBatteryById($productId);
+
+        if (!$data){
+            abort(404);
+        }
+
+        return $data;
+    }
+
     /**
      * @param $productId
      * @return \Illuminate\View\View

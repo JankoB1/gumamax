@@ -301,7 +301,9 @@ class CartController extends DmxBaseController
         }
 
         $mCart["total_qty"] += $qty;
-        $mCart["total_weight"] += $prod["dimensions"][0]["value_num"] * $qty;
+        if (count($prod["dimensions"]) > 0) {
+            $mCart["total_weight"] += $prod["dimensions"][0]["value_num"] * $qty;
+        }
 
         $mCart["total_amount_without_tax"] += $prod["price_without_tax"] * $qty;
         $mCart["total_tax_amount"] +=  ($prod["tax_rate"]/100) * $prod["price_without_tax"] * $qty;
@@ -375,7 +377,9 @@ class CartController extends DmxBaseController
 
 
         $mCart["total_qty"] -= $qty;
-        $mCart["total_weight"] -= $prod["dimensions"][0]["value_num"] * $qty;
+        if (count($prod["dimensions"]) > 0) {
+            $mCart["total_weight"] -= $prod["dimensions"][0]["value_num"] * $qty;
+        }
 
         $mCart["total_amount_without_tax"] -= $prod["price_without_tax"] * $qty;
         $mCart["total_tax_amount"] -=  ($prod["tax_rate"]/100) * $prod["price_without_tax"] * $qty;

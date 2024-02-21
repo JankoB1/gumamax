@@ -134,8 +134,42 @@ const addToCart = (index,caller) => {
     //ovo je prod id konkretnog proizvoda
     let mProdId = product_ids[index]
     let quantity = parseInt(caller.parentNode.querySelector(".qty").innerText)
-    console.log("ITEM " + mProdId + " qty " + quantity)
-    //TODO: dodavanje proizvoda u korpu
+
+    const csrf = document.querySelector('meta[name="csrf-token"]').content;
+
+    fetch(urlTo('/api/products/hubcaps/' + mProdId)).then((response) => {
+        response.json().then(
+            (data) => {
+                fetch(
+                    urlTo('/api/add-cart-item'),
+                    {
+                        method: "POST",
+                        body: JSON.stringify({product: data, qty: quantity, uuid: generateUUID()}),
+                        headers: {
+                            "Content-type": "application/json; charset=UTF-8",
+                            "X-CSRF-Token": csrf
+                        }
+                    }).then((response) => {
+                    response.json().then(
+                        (data) => {
+                            sessionStorage.setItem("gmx-cart", JSON.stringify(data))
+
+                            caller.classList.add('added');
+                            caller.innerText = 'Dodato u korpu';
+                            setTimeout(function() {
+                                caller.classList.remove('added');
+                                caller.innerText = 'Dodaj u korpu';
+                            }, 2000);
+                            document.querySelector('#cart-popup').classList.add('active');
+                            let numSpan = document.getElementsByClassName("cart-num").item(0)
+                            const currentCartQuantity = Number(numSpan.innerText)
+                            numSpan.innerText = (currentCartQuantity + quantity).toString()
+                        }
+                    )
+                })
+            }
+        )
+    })
 }
 
 const itemDetails = (index) => {

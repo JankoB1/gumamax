@@ -115,6 +115,9 @@ Route::get('/popup/{slug}', [HomeController::class, 'popup']);
 Route::get('/read-tyre', [HomeController::class, 'howToReadTyre']);
 
 Route::get('/api/products/tyres/{id}', [ProductController::class, 'fetchSingleItem'])->where('id', '[0-9]+')->name('fetch_tyres');
+Route::get('/api/products/oils/{id}', [ProductController::class, 'fetchSingleOilItem'])->where('id', '[0-9]+')->name('fetch_oil');
+Route::get('/api/products/hubcaps/{id}', [ProductController::class, 'fetchSingleHubcapItem'])->where('id', '[0-9]+')->name('fetch_hub');
+Route::get('/api/products/batteries/{id}', [ProductController::class, 'fetchSingleBatteryItem'])->where('id', '[0-9]+')->name('fetch_bat');
 
 /*
 |--------------------------------------------------------------------------
@@ -305,7 +308,7 @@ Route::get('callback-request/create', [CallbackRequestController::class, 'create
 Route::middleware(['auth'])->group(function() {
 
     Route::post('/ordernpay', [CheckoutController::class, 'start'])->name('start-checkout');
-    Route::get('/testpay', [CheckoutController::class, 'testpay'])->name('testpay');;
+    Route::get('/testpay', [CheckoutController::class, 'tesftpay'])->name('testpay');;
     Route::get('/payment-result', [CheckoutController::class, 'paymentResult'])->name('payres');
 
     Route::get('logout', [LoginController::class, 'logout'])->name("logout");
