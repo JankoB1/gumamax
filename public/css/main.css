@@ -2769,6 +2769,77 @@ p.product-name {
     margin-right: 5px;
 }
 
+.saved-name {
+    font-family: Barlow;
+    font-size: 18px;
+    font-weight: 600 !important;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: black;
+    border-bottom: 1px solid #CDCDCD;
+    padding-bottom: 15px !important;
+}
+
+.address-title {
+    font-family: Barlow;
+    font-size: 15px;
+    font-weight: 500 !important;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: black;
+    margin: 30px 0 15px !important
+}
+
+.address-box {
+    border: 1px solid #C6C3C3;
+    padding: 30px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.change {
+    color: white !important;
+    font-family: Barlow;
+    font-size: 13px;
+    font-weight: 600 !important;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    background: #101010;
+    border-radius: 4px;
+    width: 112px;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+#order-details .saved-details p {
+    margin-bottom: 0;
+}
+
+.saved-details {
+    display: none;
+}
+
+.saved-details.active {
+    display: block;
+}
+
+.delivery-3-fields.hidden, #saveShippingBtn.hidden {
+    display: none;
+}
+
+section#choose-partner .col-md-6:first-child {
+    max-height: 500px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
 @media only screen and (max-width: 768px) {
     header, .brands-row {
         display: none !important;

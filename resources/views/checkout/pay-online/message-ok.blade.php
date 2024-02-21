@@ -5,30 +5,36 @@
 @stop
 
 @section('content')
-    <div class="main">
-        <div class="page-title content clearfix">
-            <h1 class="pull-left">Rezultat transakcije</h1>
-        </div>
-        <div class="row" id="static-page">
-            <div class="payment-result-caption">Uspešno ste izvršili plaćanje.</div>
-            <p>Vaša porudžbenica je uspešno plaćena karticom
-                <strong>{{ $status->paymentBrand. ' **** '. $status->card->last4Digits }}</strong> u iznosu od
-                <strong>{{ $status->amount. ' '. $status->currency }}</strong></p>
-
-            <div class="col-md-6 col-xs-12">
-                <div class="well">
-                    <strong>Detalji transakcije:</strong><br>
-                    Broj online porudžbenice: <strong> {{ $order->number }}</strong><br>
-                    Autorizacioni kod banke: <strong> </strong><br>
-                    Vreme transakcije: <strong>{{ $status->timestamp_local }}
-                    </strong>
-                </div>
-
-                <p>Na Vašu email adresu biće poslati detaljniji podaci o izvršenoj kupovini. Ukoliko imate bilo kakvih pitanja možete
-                   nas kontaktirati na <strong>{{config('gumamax.web_support_email_address')}}</strong> ili putem telefona
-                    <strong>{{Config::get('gumamax.web_support_phone')}}</strong>.</p>
-                <p>Hvala na ukazanom poverenju!</p>
+    <div class="ty-page">
+        <div class="order-success">
+            <div class="ty-icon">
+                <img src="{{ asset('images/visuals/order-check.svg') }}" alt="check">
             </div>
+            <span>Vaša porudžbina je uspešno obavljena</span>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="ty-icon">
+                    <img src="{{ asset('images/visuals/ty1.svg') }}" alt="ty">
+                </div>
+                <p>Kontaktiraćemo vas sa povratnim informacijama</p>
+            </div>
+            <div class="col-md-4">
+                <div class="ty-icon">
+                    <img src="{{ asset('images/visuals/ty1.svg') }}" alt="ty">
+                </div>
+                <p>Termin isporuke<br><span>(Maksimalno do 48 sati na željenu adresu)</span></p>
+            </div>
+            <div class="col-md-4">
+                <div class="ty-icon">
+                    <img src="{{ asset('images/visuals/ty1.svg') }}" alt="ty">
+                </div>
+                <p>Mogućnost povrata</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-7"></div>
+            <div class="col-md-5"></div>
         </div>
     </div>
 @stop
