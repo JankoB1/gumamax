@@ -3,7 +3,6 @@
 @section('content')
 
     <section id="single-partner-banner">
-
     </section>
 
     <section id="single-partner-meta">
@@ -19,6 +18,9 @@
                     <i class="fa-solid fa-location-dot"></i>
                     {{$partner->member->address.", ".$partner->member->city_name}}
                 </div>
+            </div>
+            <div class="col-sm-1" >
+                    <img  id="edit-icon" src="{{ asset('images/edit.svg') }}"/>
             </div>
         </div>
     </section>
@@ -56,42 +58,22 @@
     <section id="services">
         <h2>Usluge</h2>
         <div class="row">
+            @foreach($services as $service)
             <div class="col-md-2">
                 <div class="single-service">
                     <img src="{{ asset('images/visuals/tyre.svg') }}" alt="tyres">
-                    <p>Gume</p>
+                    <p>{{ $service->description }}</p>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="single-service">
-                    <img src="{{ asset('images/visuals/tyre.svg') }}" alt="tyres">
-                    <p>Gume</p>
+            @endforeach
+            @foreach($servicesOther as $service)
+                <div class="col-md-2">
+                    <div class="single-service">
+                        <img src="{{ asset('images/visuals/tyre.svg') }}" alt="tyres">
+                        <p>{{ $service->description }}</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-2">
-                <div class="single-service">
-                    <img src="{{ asset('images/visuals/tyre.svg') }}" alt="tyres">
-                    <p>Gume</p>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="single-service">
-                    <img src="{{ asset('images/visuals/tyre.svg') }}" alt="tyres">
-                    <p>Gume</p>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="single-service">
-                    <img src="{{ asset('images/visuals/tyre.svg') }}" alt="tyres">
-                    <p>Gume</p>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="single-service">
-                    <img src="{{ asset('images/visuals/tyre.svg') }}" alt="tyres">
-                    <p>Gume</p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </section>
 

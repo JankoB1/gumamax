@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Crm\Models\Member;
 use Crm\Models\MemberPriceList;
 use Crm\Models\Partner;
@@ -40,9 +41,11 @@ class PartnerController extends Controller
         return view('partners', compact('partners'));
     }
 
-    public function showSinglePartner($id) {
+    public function showSinglePartner(Request $request, $id) {
         $partner = Partner::where('id', '=', $id)->get()->first();
         $member = Member::where('membership_id', '=', $id)->get()->first();
+
+        $isPartnerOwner = $request->user()->members()->allRelatedIds()[0] == $member->id;
 
         $whh = $member->workingHours[1]->hours();
 
@@ -65,12 +68,16 @@ class PartnerController extends Controller
 
         $daySpans[] = $currentSpan;
 
-        $services = MemberPriceList::apiDtTyresServices($member->id, "Putničko", 15);
+        $services = MemberPriceList::apiDtTyresServicesAllDistinct($member->id);
+        $services = json_decode($services->content())->data;
+
+        $servicesOther = MemberPriceList::apiDtTyresOtherServices($member->id);
+        $servicesOther = json_decode($servicesOther->content())->data;
 
         $partner->daySpans = $daySpans;
         $partner->member = $member;
 
-        return view('single-partner', compact('partner'));
+        return view('single-partner', compact('partner', 'isPartnerOwner', 'services', 'servicesOther'));
     }
 
     public function edit(Request $request, $id){

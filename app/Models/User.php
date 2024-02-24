@@ -160,7 +160,7 @@ class User extends Authenticatable
 
     public function members(){
 
-        return $this->belongsToMany(Member::class, 'delmax_crm.member_user_role', 'user_id', 'role_id');
+        return $this->belongsToMany(Member::class, 'delmax_crm.member_user_role', 'user_id', 'member_id');
 
     }
 

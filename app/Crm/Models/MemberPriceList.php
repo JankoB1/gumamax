@@ -22,11 +22,11 @@ class MemberPriceList extends Model
     protected $connection = 'CRM';
 
     protected $table = 'member_price_list';
-    
+
     protected $fillable = ['member_id', 'product_id', 'price_without_tax', 'price_with_tax'];
 
     public static function tyreServicePrices($memberId, $vehicleCategory = 'Putničko', $diameter=0) {
-        
+
         if (is_null($memberId)||($memberId=='')) {
 
             return [
@@ -109,6 +109,42 @@ class MemberPriceList extends Model
             ->select(
                 'product_group.description as product_group',
                 'vehicle_category.value_text as vehicle_category',
+                'product.product_id',
+                'description.description',
+                'product.additional_description',
+                'diameter.value_text AS diameter',
+                'wheel_material.value_text AS wheel_material',
+                'member_price_list.id',
+                DB::raw("coalesce(member_price_list.price_with_tax,'') as price_with_tax"));
+
+        return datatables()::of($query)->make(true);
+
+    }
+
+    public static function apiDtTyresServicesAllDistinct($memberId){
+
+        $query = Product::join('product_group', 'product.group_id', '=', 'product_group.group_id')
+            ->join('description', 'product.description_id','=', 'description.description_id')
+            ->leftJoin('product_dimension as vehicle_category', function ($join) {
+                $join->on('vehicle_category.product_id', '=', 'product.product_id')->where('vehicle_category.dimension_id', '=', 10);})
+            ->leftJoin('product_dimension as diameter', function ($join) {
+                $join->on('diameter.product_id', '=', 'product.product_id')
+                    ->where('diameter.dimension_id', '=', 13);})
+            ->leftJoin('product_dimension as wheel_material', function ($join) {
+                $join->on('wheel_material.product_id', '=', 'product.product_id')->where('wheel_material.dimension_id', '=', 24);})
+            ->leftJoin('delmax_crm.member_price_list', function ($join) use($memberId){
+                $join->on('delmax_crm.member_price_list.product_id', '=', 'product.product_id')
+                    ->where('delmax_crm.member_price_list.member_id', '=', $memberId);})
+            ->whereIn('product_group.group_id', [438])
+            ->whereNull('member_price_list.deleted_at')
+            ->where('member_price_list.price_with_tax','<>','')
+            ->orderBy('product_group.description','desc')
+            ->orderBy('product_group.description')
+            ->orderBy('vehicle_category.value_text')
+            ->orderBy('product.product_id')
+            ->orderBy('product_group.description')
+            ->groupBy('description.description')
+            ->select(
                 'product.product_id',
                 'description.description',
                 'product.additional_description',
