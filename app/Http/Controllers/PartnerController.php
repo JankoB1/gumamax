@@ -42,11 +42,13 @@ class PartnerController extends Controller
     }
 
     public function showSinglePartner(Request $request, $id) {
-        $partner = Partner::where('id', '=', $id)->get()->first();
+        $partner = Partner::find($id);
         $member = Member::where('membership_id', '=', $id)->get()->first();
 
-        $isPartnerOwner = $request->user()->members()->allRelatedIds()[0] == $member->id;
-
+        $isPartnerOwner = false;
+        if($request->user()) {
+            $isPartnerOwner = $request->user()->members()->allRelatedIds()[0] == $member->id;
+        }
         $whh = $member->workingHours[1]->hours();
 
         $daySpans = [];
@@ -77,7 +79,7 @@ class PartnerController extends Controller
         $partner->daySpans = $daySpans;
         $partner->member = $member;
 
-        return view('single-partner', compact('partner', 'isPartnerOwner', 'services', 'servicesOther'));
+        return view('single-partner', compact('partner', 'isPartnerOwner', 'services', 'servicesOther', 'id'));
     }
 
     public function edit(Request $request, $id){
@@ -103,8 +105,7 @@ class PartnerController extends Controller
         abort(404);
     }
 
-    public function update(SavePartnerRequest $request, $id){
-
+    public function update(Request $request, $id){
         $model = Partner::find($id);
 
         if ($model){
@@ -141,7 +142,7 @@ class PartnerController extends Controller
                 return $this->respond($model);
             }else{
                 flash()->success('OK','');
-                return redirect()->back();
+                return redirect()->to('partner/'.$id);
             }
         }
 

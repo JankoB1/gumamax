@@ -9,8 +9,9 @@
 namespace Gumamax\Partners;
 
 
-use App\Http\Requests\Request;
+
 use Delmax\Webapp\Traits\CyrToLatTrait;
+use Illuminate\Http\Request;
 
 class SavePartnerRequest extends Request
 {

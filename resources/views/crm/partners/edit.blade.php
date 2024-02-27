@@ -74,15 +74,14 @@
     </div>
 </fieldset>
 @if(!$modal)
-<div class="form-actions center">
-    {!! Button::primary(_('Save'))->withAttributes(['class'=>'btnPartnerSubmit'])->submit() !!}
-</div>
+    {!! Former::submit("Sačuvaj") !!}
+
 @endif
 
 {!!Former::close()!!}
 
 @if(!$modal)    @section('page-plugin-js') @parent @endif
-{!! Html::script(mix('js/maps.js')) !!}
+<script src="{{asset("js/maps.js")}}"></script>
 @if(!$modal) @endsection @endif
 
 @if(!$modal)

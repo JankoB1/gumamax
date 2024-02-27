@@ -13,15 +13,19 @@
             <div class="col-md-3">
                 <h4>Gumamax partner</h4>
                 <h5>Servis sa mogućnošću montaže</h5>
-                <h2>{{$partner->member->page->headline}}</h2>
+                <h2>{{$partner->description}}</h2>
                 <div class="single-partner-address">
                     <i class="fa-solid fa-location-dot"></i>
-                    {{$partner->member->address.", ".$partner->member->city_name}}
+                    {{$partner->address.", ".$partner->city_name}}
                 </div>
             </div>
+            @if($isPartnerOwner)
             <div class="col-sm-1" >
-                    <img  id="edit-icon" src="{{ asset('images/edit.svg') }}"/>
+                <a href="{{route("crm.partners.edit", $id)}}">
+                    <img id="edit-icon" src="{{ asset('images/edit.svg') }}"/>
+                </a>
             </div>
+            @endif
         </div>
     </section>
 
@@ -33,9 +37,8 @@
                     <p>{!! $partner->member->page->long_description !!}</p>
                     <div class="phone-time">
                         <i class="fa-solid fa-phone"></i>
-                        {!! $partner->member->phone_number !!}
+                        {!! $partner->phone !!}
                         <i class="fa-solid fa-clock"></i>
-                        |
                         @foreach($partner->daySpans as $daySpan)
                             @if(strcmp($daySpan["start_day"], $daySpan["end_day"]) == 0)
                                 {{substr($daySpan["start_day"],0,3).": ".$daySpan["hours"]." | "}}
